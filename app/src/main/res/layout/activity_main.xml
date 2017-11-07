@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.professor.traficinspiration.activity.MainActivity">
+
+
+    <!-- дла отображения списка -->
+    <!--<ListView-->
+        <!--android:id="@+id/listView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+    <!--</ListView>-->
+
+
+    <!-- order list-->
+
+
+
+
+    <!-- tapmoney style menu -->
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:orientation="vertical"-->
+        <!--android:weightSum="5">-->
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1">-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/accountInfoButton"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--app:srcCompat="@drawable/image" />-->
+        <!--</LinearLayout>-->
+        <!---->
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1">-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/bannerButton"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--app:srcCompat="@drawable/image" />-->
+        <!--</LinearLayout>-->
+
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:weightSum="3"-->
+            <!--android:layout_weight="1">-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/newButton"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--app:srcCompat="@drawable/main_new"-->
+                <!--android:layout_weight="1" />-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/activeButton"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--app:srcCompat="@drawable/main_active"-->
+                <!--android:layout_weight="1" />-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/moneyButton"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1"-->
+                <!--app:srcCompat="@drawable/main_money" />-->
+        <!--</LinearLayout>-->
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:weightSum="3"-->
+            <!--android:layout_weight="1">-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/historyButton"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--app:srcCompat="@drawable/main_history"-->
+                <!--android:layout_weight="1" />-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/newsButton"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--app:srcCompat="@drawable/main_news"-->
+                <!--android:layout_weight="1" />-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/referralsButton"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1"-->
+                <!--app:srcCompat="@drawable/main_referrals" />-->
+        <!--</LinearLayout>-->
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:weightSum="3"-->
+            <!--android:layout_weight="1">-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/networkButton"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--app:srcCompat="@drawable/main_networks"-->
+                <!--android:layout_weight="1" />-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/supportButton"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--app:srcCompat="@drawable/main_support"-->
+                <!--android:layout_weight="1" />-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/helpButton"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1"-->
+                <!--app:srcCompat="@drawable/main_info" />-->
+        <!--</LinearLayout>-->
+    <!--</LinearLayout>-->
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="10">
+
+        <LinearLayout
+            android:id="@+id/accountInfoButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/main_green"
+            android:gravity="top|bottom|center_vertical|fill_vertical|center|fill"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:layout_weight="2"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/avatar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:text="user name"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtMoney"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:text="user balance" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:scaleType="centerInside"
+            android:background="@drawable/banner"
+            android:layout_weight="3"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="2"
+            android:weightSum="3">
+
+            <LinearLayout
+                android:id="@+id/newButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/icon_margin"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:background="@drawable/main_new"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/icon_size" />
+                <TextView
+                    android:background="@drawable/yellow_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/icon_name_size"
+                    android:text="НОВЫЕ"
+                    android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                    android:textAlignment="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/activeButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/icon_margin"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:background="@drawable/main_active"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/icon_size" />
+                <TextView
+                    android:background="@drawable/yellow_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/icon_name_size"
+                    android:text="АКТИВНЫЕ"
+                    android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                    android:textAlignment="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/moneyButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/icon_margin"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:background="@drawable/main_money"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/icon_size" />
+                <TextView
+                    android:background="@drawable/yellow_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/icon_name_size"
+                    android:text="КОШЕЛЕК"
+                    android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                    android:textAlignment="center" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="2"
+            android:weightSum="3">
+
+            <LinearLayout
+                android:id="@+id/historyButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/icon_margin"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:background="@drawable/main_history"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/icon_size" />
+                <TextView
+                    android:background="@drawable/yellow_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/icon_name_size"
+                    android:text="АРХИВ"
+                    android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                    android:textAlignment="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/newsButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/icon_margin"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:background="@drawable/main_news"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/icon_size" />
+                <TextView
+                    android:background="@drawable/yellow_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/icon_name_size"
+                    android:text="НОВОСТИ"
+                    android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                    android:textAlignment="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/referralsButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/icon_margin"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:background="@drawable/main_referrals"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/icon_size" />
+                <TextView
+                    android:background="@drawable/yellow_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/icon_name_size"
+                    android:text="РЕФЕРАЛЫ"
+                    android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                    android:textAlignment="center" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="2"
+            android:weightSum="3">
+
+            <LinearLayout
+                android:id="@+id/networkButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/icon_margin"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:background="@drawable/main_networks"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/icon_size" />
+                <TextView
+                    android:background="@drawable/yellow_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/icon_name_size"
+                    android:text="СОЦ.СЕТИ"
+                    android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                    android:textAlignment="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/supportButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/icon_margin"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:background="@drawable/main_support"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/icon_size" />
+                <TextView
+                    android:background="@drawable/yellow_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/icon_name_size"
+                    android:text="ПОДДЕРЖКА"
+                    android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                    android:textAlignment="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/infoButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/icon_margin"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:background="@drawable/main_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/icon_size" />
+                <TextView
+                    android:background="@drawable/yellow_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/icon_name_size"
+                    android:text="СПРАВКА"
+                    android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                    android:textAlignment="center" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:keepScreenOn="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_height"
+        android:background="@color/divider" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/btnMobile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:clickable="true"
+                android:descendantFocusability="blocksDescendants"
+                android:gravity="top|bottom|center_vertical|fill_vertical|center|fill"
+                android:orientation="horizontal"
+                android:padding="20dp">
+
+                <ImageView
+                    android:layout_width="@dimen/money_menu_icon_size"
+                    android:layout_height="@dimen/money_menu_icon_size"
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/money_mobile" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="МОБИЛЬНЫЙ СЧЕТ"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Мгновенное пополнение мобильного счета" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider_height"
+                android:background="@color/divider" />
+
+            <!--<LinearLayout-->
+                <!--android:id="@+id/btnQiwi"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1.0"-->
+                <!--android:clickable="true"-->
+                <!--android:descendantFocusability="blocksDescendants"-->
+                <!--android:gravity="top|bottom|center_vertical|fill_vertical|center|fill"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:padding="20dp">-->
+
+                <!--<ImageView-->
+                    <!--android:layout_width="@dimen/money_menu_icon_size"-->
+                    <!--android:layout_height="@dimen/money_menu_icon_size"-->
+                    <!--android:layout_marginRight="20dp"-->
+                    <!--android:src="@drawable/image" />-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="vertical">-->
+
+                    <!--<TextView-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="QIWI КОШЕЛЕК"-->
+                        <!--android:textSize="18sp"-->
+                        <!--android:textStyle="bold" />-->
+
+                    <!--<TextView-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="Мгновенный перевод на любой qiwi кошелек"/>-->
+                <!--</LinearLayout>-->
+            <!--</LinearLayout>-->
+
+            <!--<FrameLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/divider_height"-->
+                <!--android:background="@color/divider" />-->
+
+            <!--<LinearLayout-->
+                <!--android:id="@+id/btnWm"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1.0"-->
+                <!--android:clickable="true"-->
+                <!--android:descendantFocusability="blocksDescendants"-->
+                <!--android:gravity="top|bottom|center_vertical|fill_vertical|center|fill"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:padding="20dp">-->
+
+                <!--<ImageView-->
+                    <!--android:layout_width="@dimen/money_menu_icon_size"-->
+                    <!--android:layout_height="@dimen/money_menu_icon_size"-->
+                    <!--android:layout_marginRight="20dp"-->
+                    <!--android:src="@drawable/image" />-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="vertical">-->
+
+                    <!--<TextView-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="WEB MONEY"-->
+                        <!--android:textSize="18sp"-->
+                        <!--android:textStyle="bold" />-->
+
+                    <!--<TextView-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="Мгновенное пополнение любого WMR кошелька" />-->
+                <!--</LinearLayout>-->
+            <!--</LinearLayout>-->
+
+            <!--<FrameLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/divider_height"-->
+                <!--android:background="@color/divider" />-->
+
+            <!--<LinearLayout-->
+                <!--android:id="@+id/btnYandex"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1.0"-->
+                <!--android:clickable="true"-->
+                <!--android:descendantFocusability="blocksDescendants"-->
+                <!--android:gravity="top|bottom|center_vertical|fill_vertical|center|fill"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:padding="20dp">-->
+
+                <!--<ImageView-->
+                    <!--android:layout_width="@dimen/money_menu_icon_size"-->
+                    <!--android:layout_height="@dimen/money_menu_icon_size"-->
+                    <!--android:layout_marginRight="20dp"-->
+                    <!--android:src="@drawable/image" />-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="vertical">-->
+
+                    <!--<TextView-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="ЯНДЕКС ДЕНЬГИ"-->
+                        <!--android:textSize="18sp"-->
+                        <!--android:textStyle="bold" />-->
+
+                    <!--<TextView-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="Мгновенное пополнение Яндекс кошелька" />-->
+                <!--</LinearLayout>-->
+            <!--</LinearLayout>-->
+
+            <!--<FrameLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/divider_height"-->
+                <!--android:background="@color/divider" />-->
+
+            <LinearLayout
+                android:id="@+id/btnHistory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:clickable="true"
+                android:descendantFocusability="blocksDescendants"
+                android:gravity="top|bottom|center_vertical|fill_vertical|center|fill"
+                android:orientation="horizontal"
+                android:padding="20dp">
+
+                <ImageView
+                    android:layout_width="@dimen/money_menu_icon_size"
+                    android:layout_height="@dimen/money_menu_icon_size"
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/money_history" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="ИСТОРИЯ ВЫПЛАТ"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Вся история вывода денег" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

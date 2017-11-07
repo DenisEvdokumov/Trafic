@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="icon_size">100dp</dimen>
+    <dimen name="icon_name_size">20dp</dimen>
+    <dimen name="icon_margin">10dp</dimen>
+    <dimen name="input_field_text_size">20sp</dimen>
+    <dimen name="label_field_text_size">20sp</dimen>
+    <dimen name="divider_height">2dp</dimen>
+    <dimen name="money_menu_icon_size">60dp</dimen>
+</resources>

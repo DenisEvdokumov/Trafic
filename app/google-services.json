@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "252203805123",
+    "project_id": "powerful-vertex-181911"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:252203805123:android:e0305fa9d8ae5e29",
+        "android_client_info": {
+          "package_name": "com.trafic.motivator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "252203805123-5e974ams625kkb268l9bogq6nirf2bec.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.trafic.motivator",
+            "certificate_hash": "dc1dabbecf5b4877e2ae4caa1b96e90aa01938ac"
+          }
+        },
+        {
+          "client_id": "252203805123-qg4h4omjn5ichi8b951n9k4bsg2i11jd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCESrqhghL2t7HrIxh9wGZFSpdH01H1_ho"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
