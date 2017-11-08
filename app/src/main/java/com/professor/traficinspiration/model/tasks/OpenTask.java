@@ -36,7 +36,7 @@ public class OpenTask extends Task {
 //    }
 
     @Override
-    public void executeTask(Activity activity) {
+    public boolean executeTask(Activity activity) {
         Intent launchIntent = activity.getPackageManager().getLaunchIntentForPackage(order.getPackageName());
         if (launchIntent != null) {
 
@@ -48,8 +48,10 @@ public class OpenTask extends Task {
             // отметить задачу как выполненную
             complete();
 
+            return true;
         } else {
             Toast.makeText(activity, "Приложение не установлено", Toast.LENGTH_SHORT).show();
+            return false;
         }
     }
 }

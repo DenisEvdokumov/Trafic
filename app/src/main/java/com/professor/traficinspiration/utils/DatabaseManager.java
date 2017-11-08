@@ -22,12 +22,13 @@ public class DatabaseManager {
 
 //        Toast.makeText(ApplicationContext.getContext(), "write to database...", Toast.LENGTH_LONG).show();
 
-
         // создаем объект для данных
         ContentValues cv = new ContentValues();
 
         // подключаемся к БД
         SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        // нужна оптимизация - вынести в отдельный метод...
 
 //        db.beginTransaction();
         for (Order order : ApplicationContext.getActiveOrderList()) {
@@ -44,9 +45,13 @@ public class DatabaseManager {
             cv.put("tasks_status", order.getTasksStatus());
             cv.put("img_url", order.getImageUrl());
 
+//            Toast.makeText(ApplicationContext.getContext(), order.getName() + " - status: " + order.getTasksStatus(), Toast.LENGTH_LONG).show();
 
-            // вставляем запись и получаем ее ID
-            db.insert("orders", null, cv);
+            // вставляем или обновляем запись
+            int updateCount = db.update("orders", cv, "_id=?", new String[]{String.valueOf(order.getId())});
+            if (updateCount == 0) {
+                db.insert("orders", null, cv);
+            }
 
 //            Toast.makeText(ApplicationContext.getContext(), "wrote " + order.getName(), Toast.LENGTH_LONG).show();
         }
@@ -65,8 +70,11 @@ public class DatabaseManager {
             cv.put("tasks_status", order.getTasksStatus());
             cv.put("img_url", order.getImageUrl());
 
-            // вставляем запись и получаем ее ID
-            db.insert("orders", null, cv);
+            // вставляем или обновляем запись
+            int updateCount = db.update("orders", cv, "_id=?", new String[]{String.valueOf(order.getId())});
+            if (updateCount == 0) {
+                db.insert("orders", null, cv);
+            }
         }
 //        db.setTransactionSuccessful();
 //        db.endTransaction();
@@ -125,6 +133,7 @@ public class DatabaseManager {
 //            Toast.makeText(ApplicationContext.getContext(), "read... " + resultCursor.getString(nameColIndex) + " - finished: " + resultCursor.getString(finishedColIndex) + ", payed: " + resultCursor.getString(payedColIndex), Toast.LENGTH_LONG).show();
 //            Toast.makeText(ApplicationContext.getContext(), "id: " + resultCursor.getLong(idColIndex), Toast.LENGTH_LONG).show();
 //            Toast.makeText(ApplicationContext.getContext(), "open date value: " + resultCursor.getLong(openDateColIndex), Toast.LENGTH_LONG).show();
+//            Toast.makeText(ApplicationContext.getContext(), resultCursor.getString(nameColIndex) + " - status: " + resultCursor.getString(tasksStatusColIndex), Toast.LENGTH_LONG).show();
 
             Order order = new Order(
                     resultCursor.getLong(idColIndex),

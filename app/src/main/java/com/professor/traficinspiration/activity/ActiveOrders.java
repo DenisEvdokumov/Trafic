@@ -25,7 +25,7 @@ public class ActiveOrders extends AppCompatActivity implements AdapterView.OnIte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_active_orders);
+        setContentView(R.layout.activity_orders_list);
 
         findViewById(R.id.back_button).setOnClickListener(this);
         ((TextView)findViewById(R.id.header_title)).setText("Активные заказы");

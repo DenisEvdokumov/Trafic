@@ -22,6 +22,8 @@
         android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
         android:textAlignment="center"
         android:textSize="20sp"
+        android:paddingEnd="50dp"
+        android:paddingRight="50dp"
         android:textColor="#FFFFFF"/>
 
     <!--<Button-->

@@ -49,7 +49,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
         Button taskButton = (Button) row.findViewById(R.id.task_item_button);
         TextView taskDescriptionTextView = (TextView) row.findViewById(R.id.task_item_description);
         TextView taskTitleTextView = (TextView) row.findViewById(R.id.task_item_title);
-        ImageView taskCompleteCheckBox = (ImageView) row.findViewById(R.id.task_item_check_box_image);
+        final ImageView taskCompleteCheckBox = (ImageView) row.findViewById(R.id.task_item_check_box_image);
 
 
         taskButton.setText(item.buttonString);
@@ -58,7 +58,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
 
         if (item.isCompleted()) {
             taskCompleteCheckBox.setImageResource(R.drawable.checked);
-            taskButton.setVisibility(View.GONE);
+//            taskButton.setVisibility(View.GONE);
         } else {
             taskCompleteCheckBox.setImageResource(R.drawable.unchecked);
             taskButton.setVisibility(View.VISIBLE);
@@ -69,7 +69,10 @@ public class TaskAdapter extends ArrayAdapter<Task> {
         taskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                item.executeTask(ApplicationContext.getContext());
+                boolean success = item.executeTask(ApplicationContext.getContext());
+                if (success) {
+                    taskCompleteCheckBox.setImageResource(R.drawable.checked);
+                }
             }
         });
 

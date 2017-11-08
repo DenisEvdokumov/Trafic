@@ -215,17 +215,17 @@ public class Order {
     }
 
     public String getTasksStatus() {
-        String tasksStatusString = "";
+        StringBuilder tasksStatusString = new StringBuilder();
 
         for (Task task: taskList) {
             if (task.isCompleted()) {
-                tasksStatusString = tasksStatusString + 1;
+                tasksStatusString.append(1);
             } else {
-                tasksStatusString = tasksStatusString + 0;
+                tasksStatusString.append(0);
             }
         }
 
-        return tasksStatusString;
+        return tasksStatusString.toString();
     }
 
     public void setTasksStatus(String tasksStatusString) {

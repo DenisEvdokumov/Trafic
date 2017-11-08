@@ -18,7 +18,7 @@ public class FindTask extends Task {
     }
 
     @Override
-    public void executeTask(Activity activity) {
+    public boolean executeTask(Activity activity) {
         String baseUrl = "https://play.google.com/store/apps/details?id=";
 
         complete();
@@ -27,6 +27,6 @@ public class FindTask extends Task {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(baseUrl + order.getPackageName()));
         activity.startActivity(browserIntent);
 
-
+        return true;
     }
 }

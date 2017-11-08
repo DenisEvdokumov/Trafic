@@ -119,9 +119,7 @@ public class ApplicationContext {
     public static List<Order> getActiveOrderList() {
         // optimization needed
         List<Order> orderList = new ArrayList<>();
-        for (Order order: idToActiveOrderMap.values()){
-            orderList.add(order);
-        }
+        orderList.addAll(idToActiveOrderMap.values());
         return orderList;
     }
 

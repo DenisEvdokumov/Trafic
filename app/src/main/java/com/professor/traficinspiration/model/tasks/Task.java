@@ -49,7 +49,7 @@ public abstract class Task {
         this.completed = completed;
     }
 
-    public abstract void executeTask(Activity activity);
+    public abstract boolean executeTask(Activity activity);
 
     public void complete() {
         completed = true;

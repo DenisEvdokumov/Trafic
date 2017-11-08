@@ -22,7 +22,7 @@ public class CheckInstallTask extends Task {
     }
 
     @Override
-    public void executeTask(Activity activity) {
+    public boolean executeTask(Activity activity) {
         PackageManager pm = ApplicationContext.getContext().getPackageManager();
         List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
 
@@ -38,9 +38,9 @@ public class CheckInstallTask extends Task {
             Toast.makeText(activity, "Приложение установлено", Toast.LENGTH_SHORT).show();
             complete();
         } else {
-            // TODO: выдача сообщения, что приложение не установлено
             Toast.makeText(activity, "Приложение не установлено", Toast.LENGTH_SHORT).show();
         }
 
+        return installed;
     }
 }

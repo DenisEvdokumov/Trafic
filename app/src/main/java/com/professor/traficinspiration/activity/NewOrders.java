@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.professor.traficinspiration.ApplicationContext;
 import com.professor.traficinspiration.R;
@@ -23,7 +22,7 @@ public class NewOrders extends AppCompatActivity implements AdapterView.OnItemCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_orders);
+        setContentView(R.layout.activity_orders_list);
 
         findViewById(R.id.back_button).setOnClickListener(this);
         ((TextView)findViewById(R.id.header_title)).setText("Новые заказы");

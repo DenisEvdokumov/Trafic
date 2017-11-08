@@ -18,10 +18,12 @@ public class CommentTask extends Task {
     }
 
     @Override
-    public void executeTask(Activity activity) {
+    public boolean executeTask(Activity activity) {
         String baseUrl = "https://play.google.com/store/apps/details?id=";
 
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(baseUrl + order.getPackageName()));
         activity.startActivity(browserIntent);
+
+        return false;
     }
 }

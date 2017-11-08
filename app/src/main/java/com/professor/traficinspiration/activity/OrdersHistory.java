@@ -22,7 +22,7 @@ public class OrdersHistory extends AppCompatActivity implements AdapterView.OnIt
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_orders_history);
+        setContentView(R.layout.activity_orders_list);
 
         findViewById(R.id.back_button).setOnClickListener(this);
         ((TextView)findViewById(R.id.header_title)).setText("История заказов");

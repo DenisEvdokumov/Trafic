@@ -23,7 +23,7 @@ public class ReopenTask extends Task {
     }
 
     @Override
-    public void executeTask(Activity activity) {
+    public boolean executeTask(Activity activity) {
         Intent launchIntent = activity.getPackageManager().getLaunchIntentForPackage(order.getPackageName());
         if (launchIntent != null) {
             Date currentDate = new Date(System.currentTimeMillis());
@@ -31,11 +31,12 @@ public class ReopenTask extends Task {
             Date openDate = order.getOpenDate();
             if (openDate.equals(new Date(0))) {
                 Toast.makeText(activity, "Для первого открытия используйте кнопку \"Открыть приложение\"", Toast.LENGTH_SHORT).show();
-                return;
+                return false;
             }
             Date neededDate = new Date(openDate.getTime() + daysDelay * 24 * 60 * 60 * 1000);
 
-            if (currentDate.after(neededDate)) {
+            boolean completed = currentDate.after(neededDate);
+            if (completed) {
                 Toast.makeText(activity, "Выполнено", Toast.LENGTH_SHORT).show();
                 order.setOpenDate(currentDate);
                 // отметить задачу как выполненную
@@ -45,9 +46,11 @@ public class ReopenTask extends Task {
                 Toast.makeText(activity, "Указанное для повторного открытия время еще не пришло", Toast.LENGTH_SHORT).show();
             }
             activity.startActivity(launchIntent);
+            return completed;
 
         } else {
             Toast.makeText(activity, "Приложение не установлено", Toast.LENGTH_SHORT).show();
+            return false;
         }
 
     }

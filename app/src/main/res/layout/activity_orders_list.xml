@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.professor.traficinspiration.activity.NewOrders">
+    tools:context="com.professor.traficinspiration.activity.NewOrders"
+    android:background="@color/grey">
 
     <include layout="@layout/toolbar" />
 
@@ -13,6 +14,7 @@
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:dividerHeight="5dp"/>
+        android:dividerHeight="5dp"
+        android:divider="@color/grey"/>
 
 </LinearLayout>

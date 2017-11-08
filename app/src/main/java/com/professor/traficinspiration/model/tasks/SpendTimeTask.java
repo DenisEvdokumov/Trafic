@@ -65,7 +65,8 @@ public class SpendTimeTask extends Task {
     }
 
     @Override
-    public void executeTask(Activity activity) {
+    public boolean executeTask(Activity activity) {
+        return false;
 
     }
 }

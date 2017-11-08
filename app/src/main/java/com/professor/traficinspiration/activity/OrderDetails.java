@@ -61,33 +61,9 @@ public class OrderDetails extends AppCompatActivity implements View.OnClickListe
             orderIcon.setImageDrawable(savedImage);
         }
 
-//        Toast.makeText(ApplicationContext.getContext(), order.getIconImage().toString(), Toast.LENGTH_LONG).show();
-//        ((ImageView) this.findViewById(R.id.order_icon)).setImageDrawable(order.getIconImage());
-//        this.findViewById(R.id.order_icon).refreshDrawableState();
-
         taskList = order.getTaskList();
         tasksListView = (ListView) findViewById(R.id.listView);
 
-//        tasksListView.setAdapter(new TaskAdapter(OrderDetails.this, taskList));
-//        tasksListView.setOnItemClickListener(this);
-
-
-//        setContentView(R.layout.orders_test);
-//
-//        Long orderId = getIntent().getLongExtra("id_order", -1L);
-//
-//        order = ApplicationContext.getIdToActiveOrderMap().get(orderId);
-//
-//
-//        ((TextView) findViewById(R.id.txtTitle)).setText(order.getName());
-//        ((TextView) findViewById(R.id.txtPrice)).setText(String.valueOf(order.getPayment()));
-//        ((TextView) findViewById(R.id.txtId)).setText((int) order.getId());
-//
-//
-//        List<Task> taskList = order.getTaskList();
-//        tasksListView = (ListView) findViewById(R.id.listView);
-//        tasksListView.setAdapter(new TaskAdapter(OrderDetails.this, taskList));
-//        tasksListView.setOnItemClickListener(this);
     }
 
     @Override
@@ -101,26 +77,10 @@ public class OrderDetails extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    //    @Override
-//    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//        String taskName = (String) view.getTag();
-//
-//        List<Task> taskList = order.getTaskList();
-//
-//        for (Task task: taskList) {
-//            if (task.taskName.equals(taskName)) {
-//                task.executeTask(this);
-//            }
-//        }
-//
-//    }
-
-
     public static void setListViewHeightBasedOnChildren(ListView listView) {
 
         ListAdapter listAdapter = listView.getAdapter();
         if (listAdapter == null) {
-
             return;
         }
 
@@ -129,11 +89,11 @@ public class OrderDetails extends AppCompatActivity implements View.OnClickListe
         for (int i = 0; i < listAdapter.getCount(); i++) {
             View listItem = listAdapter.getView(i, null, listView);
             listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-            totalHeight += listItem.getMeasuredHeight();
+            totalHeight += listItem.getMeasuredHeight() + 15;
         }
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount())) + 20;
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount()));
         listView.setLayoutParams(params);
         listView.requestLayout();
     }
