@@ -33,7 +33,7 @@ public class ReopenTask extends Task {
                 Toast.makeText(activity, "Для первого открытия используйте кнопку \"Открыть приложение\"", Toast.LENGTH_SHORT).show();
                 return false;
             }
-            Date neededDate = new Date(openDate.getTime() + daysDelay * 24 * 60 * 60 * 1000);
+            Date neededDate = new Date(openDate.getTime() + daysDelay * /*24 * 60 * 60 * */1000);
 
             boolean completed = currentDate.after(neededDate);
             if (completed) {

@@ -26,6 +26,9 @@ import com.professor.traficinspiration.model.Order;
 import com.professor.traficinspiration.model.User;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
     ListView listView;
@@ -69,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             ((TextView) ApplicationContext.getContext().findViewById(R.id.txtMoney)).setText(balanceString);
             ApplicationContext.getContext().findViewById(R.id.accountInfoButton).setVisibility(View.VISIBLE);
         }
+
 
         // при текущей реализации следующий код выполняется больше раз чем нужно...
 
@@ -170,23 +174,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         // попытка отправить сообщение о завершении задач которые сервер не принял до этого
+        // по идее, это будет происходить очень редко
         for (Order order : ApplicationContext.getActiveOrderList()) {
-//            Toast.makeText(this, order.getName() + ": finished - " + order.isFinished() + ", payed - " + order.isPayed(), Toast.LENGTH_SHORT).show();
-
             if (order.isFinished() && !order.isPayed()) {
                 ApplicationContext.getMessageService().completeOrder(order);
             }
         }
 
-        // задержка нужна для того, чтобы успеть получить ответ о выполнении задачи с сервера
-        // желательно переделать на thread.join()
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        // сохранение информации о состоянии заказов в локальную БД
-        ApplicationContext.getDatabaseManager().writeOrdersToDB();
+//        // задержка нужна для того, чтобы успеть получить ответ о выполнении задачи с сервера
+//        // желательно переделать на thread.join()
+//        try {
+//            Thread.sleep(3000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        // сохранение информации о состоянии заказов в локальную БД
+        ApplicationContext.getDatabaseManager().writeListToDB(ApplicationContext.getActiveOrderList());
 
     }
 
@@ -220,7 +223,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             user.setName(googleAccount.getDisplayName());
             user.setEmail(email);
             user.setPhotoUrl(googleAccount.getPhotoUrl());
-
 
             ApplicationContext.setUser(user);
 

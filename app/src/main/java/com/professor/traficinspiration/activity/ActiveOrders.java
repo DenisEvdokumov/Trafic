@@ -30,15 +30,19 @@ public class ActiveOrders extends AppCompatActivity implements AdapterView.OnIte
         findViewById(R.id.back_button).setOnClickListener(this);
         ((TextView)findViewById(R.id.header_title)).setText("Активные заказы");
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
         List<Order> orderList = ApplicationContext.getActiveOrderList();
 
         ordersListView = (ListView) findViewById(R.id.listView);
         ordersListView.setAdapter(new OrderAdapter(ActiveOrders.this, orderList));
 
         ordersListView.setOnItemClickListener(this);
-
     }
-
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

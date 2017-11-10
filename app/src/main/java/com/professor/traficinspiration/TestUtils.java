@@ -7,6 +7,13 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.Shader;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.view.View;
@@ -17,7 +24,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.professor.traficinspiration.activity.MainActivity;
+import com.professor.traficinspiration.activity.UserInfoActivity;
 import com.professor.traficinspiration.model.User;
+import com.squareup.picasso.Picasso;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -238,4 +247,85 @@ public class TestUtils {
 //            }
 //        });
 //    }
+
+
+
+
+
+
+    class CircleImageCreator {
+
+        // make image round and set to view
+//        Bitmap photo = getBitmap(user.getPhotoUrl());
+//        ((ImageView)findViewById(R.id.avatar)).setImageBitmap(photo);
+
+        private Bitmap getBitmap(final Uri photoUrl) {
+
+            final Bitmap[] bitmap = new Bitmap[1];
+
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        bitmap[0] = Picasso.with(ApplicationContext.getContext()).load(photoUrl).get();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            thread.start();
+
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            return getCircleMaskedBitmapUsingShader(bitmap[0], bitmap[0].getWidth());
+        }
+
+        public Bitmap getCircleMaskedBitmapUsingShader(Bitmap source, int radius) {
+            if (source == null)
+            {
+                return null;
+            }
+
+            int diam = radius << 1;
+
+            Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
+            Bitmap scaledBitmap = scaleTo(source, diam);
+            final Shader shader = new BitmapShader(scaledBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+            paint.setShader(shader);
+
+            Bitmap targetBitmap = Bitmap.createBitmap(diam, diam, Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(targetBitmap);
+
+            canvas.drawCircle(radius, radius, radius, paint);
+
+            return targetBitmap;
+        }
+
+        public Bitmap scaleTo(Bitmap source, int size) {
+            int destWidth = source.getWidth();
+
+            int destHeight = source.getHeight();
+
+            destHeight = destHeight * size / destWidth;
+            destWidth = size;
+
+            if (destHeight < size)
+            {
+                destWidth = destWidth * size / destHeight;
+                destHeight = size;
+            }
+
+            Bitmap destBitmap = Bitmap.createBitmap(destWidth, destHeight, Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(destBitmap);
+            canvas.drawBitmap(source, new Rect(0, 0, source.getWidth(), source.getHeight()), new Rect(0, 0, destWidth, destHeight), new Paint(Paint.ANTI_ALIAS_FLAG));
+            return destBitmap;
+        }
+    }
+
+
 }

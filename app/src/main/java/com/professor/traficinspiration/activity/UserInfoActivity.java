@@ -1,15 +1,16 @@
 package com.professor.traficinspiration.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.professor.traficinspiration.ApplicationContext;
 import com.professor.traficinspiration.R;
 import com.professor.traficinspiration.model.User;
 import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserInfoActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -25,9 +26,7 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
 
         Picasso.with(this)
                 .load(user.getPhotoUrl())
-                .into((ImageView) findViewById(R.id.avatar));
-
-//        Picasso.with(this).load("").get();
+                .into((CircleImageView) findViewById(R.id.avatar));
 
 
         TextView idTextView = (TextView) findViewById(R.id.text_user_id);
@@ -43,10 +42,10 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
         emailTextView.setText(user.getEmail());
 
         TextView ordersCompletedTextView = (TextView) findViewById(R.id.text_user_orders_completed);
-        ordersCompletedTextView.setText(String.valueOf(user.getOrdersCompleted() + "\nВИПОЛНЕННЫХ\n ЗАКАЗОВ"));
+        ordersCompletedTextView.setText(String.valueOf(user.getOrdersCompleted() + "\nВИПОЛНЕННЫХ\nЗАКАЗОВ"));
 
         TextView referralsCountTextView = (TextView) findViewById(R.id.text_user_referrals_count);
-        referralsCountTextView.setText(String.valueOf(user.getReferralsCount() + "\n РЕФЕРАЛОВ"));
+        referralsCountTextView.setText(String.valueOf(user.getReferralsCount() + "\nРЕФЕРАЛОВ"));
     }
 
     @Override
@@ -57,4 +56,5 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
             finish();
         }
     }
+
 }

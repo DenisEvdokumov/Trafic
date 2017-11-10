@@ -84,7 +84,7 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginTop="15dip"
-            android:textSize="20sp"
+            android:textSize="@dimen/button_text_size"
             android:text="ВОЙТИ" />
 
         <Button
@@ -94,7 +94,7 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginTop="15dip"
-            android:textSize="20sp"
+            android:textSize="@dimen/button_text_size"
             android:textColor="#FFFFFF"
             android:text="РЕГИСТРАЦИЯ" />
 
@@ -104,13 +104,13 @@
             android:layout_margin="10dp"
             android:background="@drawable/yellow_button"/>
 
-        <TextView
-            android:id="@+id/forgot_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
-            android:textAlignment="center"
-            android:text="ЗАБЫЛИ ПАРОЛЬ?" />
+        <!--<TextView-->
+            <!--android:id="@+id/forgot_password"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"-->
+            <!--android:textAlignment="center"-->
+            <!--android:text="ЗАБЫЛИ ПАРОЛЬ?"/>-->
 
         <ImageView
             android:id="@+id/imageView"

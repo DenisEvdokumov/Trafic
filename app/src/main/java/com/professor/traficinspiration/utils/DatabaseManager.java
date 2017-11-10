@@ -17,79 +17,92 @@ import java.util.List;
 public class DatabaseManager {
 
     DBHelper dbHelper = new DBHelper(ApplicationContext.getContext());
+    SQLiteDatabase db;
 
     public void writeOrdersToDB() {
-
-//        Toast.makeText(ApplicationContext.getContext(), "write to database...", Toast.LENGTH_LONG).show();
-
-        // создаем объект для данных
-        ContentValues cv = new ContentValues();
-
         // подключаемся к БД
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-
-        // нужна оптимизация - вынести в отдельный метод...
+        db = dbHelper.getWritableDatabase();
 
 //        db.beginTransaction();
-        for (Order order : ApplicationContext.getActiveOrderList()) {
-            // подготовим данные для вставки в виде пар: наименование столбца - значение
-            cv.put("_id", order.getId());
-            cv.put("name", order.getName());
-            cv.put("package_name", order.getPackageName());
-            cv.put("payment", order.getPayment());
-            cv.put("finished", String.valueOf(order.isFinished()));
-            cv.put("payed", String.valueOf(order.isPayed()));
-            cv.put("open_date", order.getOpenDate().getTime());
-            cv.put("open_count", order.getOpenCount());
-            cv.put("open_interval", order.getOpenInterval());
-            cv.put("tasks_status", order.getTasksStatus());
-            cv.put("img_url", order.getImageUrl());
-
-//            Toast.makeText(ApplicationContext.getContext(), order.getName() + " - status: " + order.getTasksStatus(), Toast.LENGTH_LONG).show();
-
-            // вставляем или обновляем запись
-            int updateCount = db.update("orders", cv, "_id=?", new String[]{String.valueOf(order.getId())});
-            if (updateCount == 0) {
-                db.insert("orders", null, cv);
-            }
-
-//            Toast.makeText(ApplicationContext.getContext(), "wrote " + order.getName(), Toast.LENGTH_LONG).show();
-        }
-
-        for (Order order : ApplicationContext.getHistoryOrderList()) {
-            // подготовим данные для вставки в виде пар: наименование столбца - значение
-            cv.put("_id", order.getId());
-            cv.put("name", order.getName());
-            cv.put("package_name", order.getPackageName());
-            cv.put("payment", order.getPayment());
-            cv.put("finished", String.valueOf(order.isFinished()));
-            cv.put("payed", String.valueOf(order.isPayed()));
-            cv.put("open_date", order.getOpenDate().getTime());
-            cv.put("open_count", order.getOpenCount());
-            cv.put("open_interval", order.getOpenInterval());
-            cv.put("tasks_status", order.getTasksStatus());
-            cv.put("img_url", order.getImageUrl());
-
-            // вставляем или обновляем запись
-            int updateCount = db.update("orders", cv, "_id=?", new String[]{String.valueOf(order.getId())});
-            if (updateCount == 0) {
-                db.insert("orders", null, cv);
-            }
-        }
+        writeListToDB(ApplicationContext.getActiveOrderList());
+        writeListToDB(ApplicationContext.getHistoryOrderList());
 //        db.setTransactionSuccessful();
 //        db.endTransaction();
 
         // для ускорения также можно использовать SQLiteStatement
 
-
-        db.close();
         // закрываем подключение к БД
+        db.close();
         dbHelper.close();
+    }
+
+    public void writeListToDB(List<Order> orderList) {
+        // подключаемся к БД
+        db = dbHelper.getWritableDatabase();
+
+        // создаем объект для данных
+        ContentValues cv = new ContentValues();
+
+        for (Order order : orderList) {
+            // подготовим данные для вставки в виде пар: наименование столбца - значение
+            cv.put("_id", order.getId());
+            cv.put("name", order.getName());
+            cv.put("package_name", order.getPackageName());
+            cv.put("payment", order.getPayment());
+            cv.put("finished", String.valueOf(order.isFinished()));
+            cv.put("payed", String.valueOf(order.isPayed()));
+            cv.put("open_date", order.getOpenDate().getTime());
+            cv.put("open_count", order.getOpenCount());
+            cv.put("open_interval", order.getOpenInterval());
+            cv.put("tasks_status", order.getTasksStatus());
+            cv.put("img_url", order.getImageUrl());
+
+            // вставляем или обновляем запись
+            int updateCount = db.update("orders", cv, "_id=?", new String[]{String.valueOf(order.getId())});
+            if (updateCount == 0) {
+                db.insert("orders", null, cv);
+            }
+        }
+
+        // закрываем подключение к БД
+        db.close();
+        dbHelper.close();
+    }
+
+    public void writeOrderToDB(Order order) {
+        // подключаемся к БД
+        db = dbHelper.getWritableDatabase();
+
+        // создаем объект для данных
+        ContentValues cv = new ContentValues();
+
+        // подготовим данные для вставки в виде пар: наименование столбца - значение
+        cv.put("_id", order.getId());
+        cv.put("name", order.getName());
+        cv.put("package_name", order.getPackageName());
+        cv.put("payment", order.getPayment());
+        cv.put("finished", String.valueOf(order.isFinished()));
+        cv.put("payed", String.valueOf(order.isPayed()));
+        cv.put("open_date", order.getOpenDate().getTime());
+        cv.put("open_count", order.getOpenCount());
+        cv.put("open_interval", order.getOpenInterval());
+        cv.put("tasks_status", order.getTasksStatus());
+        cv.put("img_url", order.getImageUrl());
+
+        // вставляем или обновляем запись
+        int updateCount = db.update("orders", cv, "_id=?", new String[]{String.valueOf(order.getId())});
+        if (updateCount == 0) {
+            db.insert("orders", null, cv);
+        }
+
+        // закрываем подключение к БД
+        db.close();
+        dbHelper.close();
+
     }
 
 
     public void readOrdersFromDB() {
-
         // подключаемся к БД
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
@@ -98,14 +111,13 @@ public class DatabaseManager {
 
         // ставим позицию курсора на первую строку выборки
         // если в выборке нет строк, вернется false
-
         if (!resultCursor.moveToFirst()) {
-            Toast.makeText(ApplicationContext.getContext(), "no rows", Toast.LENGTH_LONG).show();
+//            Toast.makeText(ApplicationContext.getContext(), "no rows", Toast.LENGTH_LONG).show();
 
             resultCursor.close();
 
-            db.close();
             // закрываем подключение к БД
+            db.close();
             dbHelper.close();
 
             return;
@@ -126,15 +138,8 @@ public class DatabaseManager {
 
         List<Order> activeOrderList = new ArrayList<>();
         List<Order> historyOrderList = new ArrayList<>();
-//        List<Order> newOrderList = ApplicationContext.getNewOrderList();
-
 
         do {
-//            Toast.makeText(ApplicationContext.getContext(), "read... " + resultCursor.getString(nameColIndex) + " - finished: " + resultCursor.getString(finishedColIndex) + ", payed: " + resultCursor.getString(payedColIndex), Toast.LENGTH_LONG).show();
-//            Toast.makeText(ApplicationContext.getContext(), "id: " + resultCursor.getLong(idColIndex), Toast.LENGTH_LONG).show();
-//            Toast.makeText(ApplicationContext.getContext(), "open date value: " + resultCursor.getLong(openDateColIndex), Toast.LENGTH_LONG).show();
-//            Toast.makeText(ApplicationContext.getContext(), resultCursor.getString(nameColIndex) + " - status: " + resultCursor.getString(tasksStatusColIndex), Toast.LENGTH_LONG).show();
-
             Order order = new Order(
                     resultCursor.getLong(idColIndex),
                     resultCursor.getString(nameColIndex),
@@ -156,28 +161,18 @@ public class DatabaseManager {
                 activeOrderList.add(order);
             }
 
-
-            // убрать задачи из списка новых задач, полученных с сервера
-//            newOrderList.remove(order);
-//            Toast.makeText(ApplicationContext.getContext(), "removed from new order list - " + newOrderList.remove(order), Toast.LENGTH_LONG).show();
-
-//            newOrderList.remove(order);
-
             // переход на следующую строку
             // а если следующей нет (текущая - последняя), то false - выходим из цикла
         } while (resultCursor.moveToNext());
 
-        Toast.makeText(ApplicationContext.getContext(), "local data is read", Toast.LENGTH_LONG).show();
-
+//        Toast.makeText(ApplicationContext.getContext(), "local data is read", Toast.LENGTH_LONG).show();
 
         ApplicationContext.setActiveOrderList(activeOrderList);
         ApplicationContext.setHistoryOrderList(historyOrderList);
-//        ApplicationContext.setNewOrderList(newOrderList);
 
         resultCursor.close();
 
         // закрываем подключение к БД
         dbHelper.close();
-
     }
 }

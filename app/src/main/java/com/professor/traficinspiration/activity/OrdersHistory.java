@@ -11,8 +11,11 @@ import android.widget.TextView;
 import com.professor.traficinspiration.ApplicationContext;
 import com.professor.traficinspiration.R;
 import com.professor.traficinspiration.model.Order;
+import com.professor.traficinspiration.service.MessageService;
 import com.professor.traficinspiration.service.adapter.OrderAdapter;
+import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.List;
 
 public class OrdersHistory extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
@@ -27,12 +30,43 @@ public class OrdersHistory extends AppCompatActivity implements AdapterView.OnIt
         findViewById(R.id.back_button).setOnClickListener(this);
         ((TextView)findViewById(R.id.header_title)).setText("История заказов");
 
+
+
+
+//        Thread thread = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                ApplicationContext.getMessageService().getOrderHistory();
+//            }
+//        });
+//        thread.start();
+//
+//        try {
+//            thread.join();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+
+
+
+        // получить историю с сервера
+//        ApplicationContext.getMessageService().getOrderHistory();
+
+
+//        try {
+//            Thread.sleep(3000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+
+        // отрисовка происходит раньше чем с сервера приходят данные
+
         List<Order> orderList = ApplicationContext.getHistoryOrderList();
 
         ordersListView = (ListView) findViewById(R.id.listView);
         ordersListView.setAdapter(new OrderAdapter(OrdersHistory.this, orderList));
 
-//        ordersListView.setOnItemClickListener(this);
+        ordersListView.setOnItemClickListener(this);
     }
 
     @Override

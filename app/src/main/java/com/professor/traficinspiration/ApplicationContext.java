@@ -44,12 +44,15 @@ public class ApplicationContext {
 
 //    static List<Task> taskList = new ArrayList<>();
 //    static List<Order> newOrderList = new ArrayList<>();
-    static List<Order> historyOrderList = new ArrayList<>();
+//    static List<Order> historyOrderList = new ArrayList<>();
 
 //    static List<Order> activeOrderList = new ArrayList<>();
 
     static Map<Long, Order> idToNewOrderMap = new HashMap<>();
     static Map<Long, Order> idToActiveOrderMap = new HashMap<>();
+
+    static Map<Long, Order> idToHistoryOrderMap = new HashMap<>();
+
 
 //    static {
 //        taskList.add(new FindTask());
@@ -131,11 +134,20 @@ public class ApplicationContext {
     }
 
     public static List<Order> getHistoryOrderList() {
-        return historyOrderList;
+        List<Order> orderList = new ArrayList<>();
+        orderList.addAll(idToHistoryOrderMap.values());
+        return orderList;
+
+//        return historyOrderList;
     }
 
     public static void setHistoryOrderList(List<Order> historyOrderList) {
-        ApplicationContext.historyOrderList = historyOrderList;
+        idToHistoryOrderMap.clear();
+        for (Order order: historyOrderList) {
+            ApplicationContext.idToHistoryOrderMap.put(order.getId(), order);
+        }
+
+//        ApplicationContext.historyOrderList = historyOrderList;
     }
 
     public static MessageService getMessageService() {
@@ -156,6 +168,14 @@ public class ApplicationContext {
 
     public static void setIdToActiveOrderMap(Map<Long, Order> idToActiveOrderMap) {
         ApplicationContext.idToActiveOrderMap = idToActiveOrderMap;
+    }
+
+    public static Map<Long, Order> getIdToHistoryOrderMap() {
+        return idToHistoryOrderMap;
+    }
+
+    public static void setIdToHistoryOrderMap(Map<Long, Order> idToHistoryOrderMap) {
+        ApplicationContext.idToHistoryOrderMap = idToHistoryOrderMap;
     }
 
     public static String getSessionToken() {

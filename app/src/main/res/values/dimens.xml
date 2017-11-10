@@ -4,7 +4,8 @@
     <dimen name="icon_name_size">20dp</dimen>
     <dimen name="icon_margin">10dp</dimen>
     <dimen name="input_field_text_size">20sp</dimen>
-    <dimen name="label_field_text_size">20sp</dimen>
+    <dimen name="label_field_text_size">18sp</dimen>
     <dimen name="divider_height">2dp</dimen>
     <dimen name="money_menu_icon_size">60dp</dimen>
+    <dimen name="button_text_size">20sp</dimen>
 </resources>

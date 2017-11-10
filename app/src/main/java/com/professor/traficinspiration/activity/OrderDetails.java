@@ -39,6 +39,10 @@ public class OrderDetails extends AppCompatActivity implements View.OnClickListe
 
         order = ApplicationContext.getIdToActiveOrderMap().get(orderId);
 
+        if (order == null) {
+            order = ApplicationContext.getIdToHistoryOrderMap().get(orderId);
+        }
+
         String name = order.getName();
         double payment = order.getPayment();
 
@@ -73,6 +77,16 @@ public class OrderDetails extends AppCompatActivity implements View.OnClickListe
         tasksListView.setAdapter(new TaskAdapter(OrderDetails.this, taskList));
 
         setListViewHeightBasedOnChildren(tasksListView);
+
+        if (order.isFinished()) {
+            ((TextView)findViewById(R.id.txtAlert)).setText("Заказ выполнен!");
+        }
+
+        findViewById(R.id.header_title).setFocusable(true);
+        findViewById(R.id.header_title).setFocusableInTouchMode(true);
+        findViewById(R.id.header_title).requestFocusFromTouch();
+        findViewById(R.id.header_title).requestFocus();
+        findViewById(R.id.header_title).requestLayout();
 
     }
 

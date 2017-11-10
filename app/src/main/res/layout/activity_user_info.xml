@@ -17,7 +17,7 @@
         android:background="@color/main_green"
         android:orientation="vertical">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/avatar"
             android:layout_width="60dp"
             android:layout_height="60dp"

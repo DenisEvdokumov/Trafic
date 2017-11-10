@@ -21,7 +21,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Toast.makeText(ApplicationContext.getContext(), "creating database", Toast.LENGTH_LONG).show();
+//        Toast.makeText(ApplicationContext.getContext(), "creating database", Toast.LENGTH_LONG).show();
 
         // создаем таблицу с полями
         db.execSQL("create table orders(" +

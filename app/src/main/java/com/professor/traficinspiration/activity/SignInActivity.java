@@ -52,7 +52,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
         findViewById(R.id.btn_login).setOnClickListener(this);
         findViewById(R.id.btn_register).setOnClickListener(this);
-        findViewById(R.id.forgot_password).setOnClickListener(this);
+//        findViewById(R.id.forgot_password).setOnClickListener(this);
 
     }
 
@@ -84,15 +84,20 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 //                this.finish();
 
                 break;
-            case R.id.forgot_password:
-
-                Toast.makeText(SignInActivity.this, "Сочувствую :-). Функция востановления пароля пока не поддерживается.", Toast.LENGTH_SHORT).show();
-
-                break;
+//            case R.id.forgot_password:
+//
+//                Toast.makeText(SignInActivity.this, "Сочувствую :-). Функция востановления пароля пока не поддерживается.", Toast.LENGTH_SHORT).show();
+//
+//                break;
 
             case R.id.back_button:
                 finish();
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        // do nothing
     }
 }

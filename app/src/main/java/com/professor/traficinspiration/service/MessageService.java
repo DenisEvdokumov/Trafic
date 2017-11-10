@@ -4,20 +4,15 @@ package com.professor.traficinspiration.service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.api.Auth;
 import com.professor.traficinspiration.ApplicationContext;
 import com.professor.traficinspiration.MyAlertDialogFragment;
 import com.professor.traficinspiration.R;
-import com.professor.traficinspiration.TestErrorMessage;
-import com.professor.traficinspiration.activity.MainActivity;
-import com.professor.traficinspiration.activity.RegistrationActivity;
 import com.professor.traficinspiration.activity.SignInActivity;
 import com.professor.traficinspiration.model.CompleteOrderRequest;
 import com.professor.traficinspiration.model.CompleteOrderResponse;
@@ -35,9 +30,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -117,6 +110,14 @@ public class MessageService {
 
                     getOrders();
 
+                    // запрашивание истории если локальная история пуста
+                    // (избыточный запрос если история в принципе пуста)
+                    // (более рационально было бы запрашивать историю непосредственно при переходе на экран истории...)
+                    List<Order> historyOrderList = ApplicationContext.getHistoryOrderList();
+                    if (historyOrderList.size() == 0) {
+                        ApplicationContext.getMessageService().getOrderHistory();
+                    }
+
                 } else {
                     MyAlertDialogFragment.createAndShowErrorDialog("error during creating or retrieving user");
                 }
@@ -177,7 +178,7 @@ public class MessageService {
 
                     ApplicationContext.setNewOrderList(newOrderList);
 
-                    Toast.makeText(ApplicationContext.getContext(), "newOrderList is set", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(ApplicationContext.getContext(), "newOrderList is set", Toast.LENGTH_LONG).show();
 
 
                 } else {
@@ -192,7 +193,72 @@ public class MessageService {
                 MyAlertDialogFragment.createAndShowErrorDialog("something went wrong in getOrders: " + Arrays.toString(t.getCause().getStackTrace()));
             }
         });
+    }
 
+    public void getOrderHistory() {
+        OrderService orderService = retrofit.create(OrderService.class);
+
+        Call<GetOrdersResponse> call = orderService.getOrdersHistory(ApplicationContext.getUser().getId(), ApplicationContext.getSessionToken());
+
+        call.enqueue(new Callback<GetOrdersResponse>() {
+            @Override
+            public void onResponse(Call<GetOrdersResponse> call, Response<GetOrdersResponse> response) {
+                if (response.isSuccessful()) {
+
+                    // check response body
+                    if (response.body().getErrors() != null) {
+                        Toast.makeText(ApplicationContext.getContext(), Arrays.deepToString(response.body().getErrors().values().toArray()), Toast.LENGTH_LONG).show();
+                        return;
+                    }
+
+                    GetOrdersResponse getOrdersResponse = response.body();
+
+
+                    List<Order> historyOrderList = new ArrayList<>();
+
+                    List<Order> currentHistoryOrderList = ApplicationContext.getHistoryOrderList();
+
+                    for (Order order : getOrdersResponse.getOrderList()) {
+
+//                        Toast.makeText(ApplicationContext.getContext(), "order - " + order.getId(), Toast.LENGTH_LONG).show();
+
+                        if (currentHistoryOrderList.contains(order)) {
+//                            Toast.makeText(ApplicationContext.getContext(), "already in history", Toast.LENGTH_LONG).show();
+
+                            continue;
+                        }
+
+                        List<Task> taskList = new ArrayList<>(Arrays.asList(
+                                new FindTask(order),
+                                new CheckInstallTask(order),
+                                new OpenTask(order)
+                        ));
+
+                        for (int i = 1; i < order.getOpenCount(); i++) {
+                            taskList.add(new ReopenTask(order.getOpenInterval()));
+                        }
+                        order.setTaskList(taskList);
+
+                        order.setFinished(true);
+                        order.setPayed(true);
+
+                        historyOrderList.add(order);
+                    }
+
+                    ApplicationContext.setHistoryOrderList(historyOrderList);
+
+                    ApplicationContext.getDatabaseManager().writeListToDB(historyOrderList);
+
+                } else {
+                    MyAlertDialogFragment.createAndShowErrorDialog("Error during retrieving orders history. Try again later");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetOrdersResponse> call, Throwable t) {
+                MyAlertDialogFragment.createAndShowErrorDialog("something went wrong in getOrdersHistory: " + Arrays.toString(t.getCause().getStackTrace()));
+            }
+        });
     }
 
     public void completeOrder(final Order order) {
@@ -225,12 +291,14 @@ public class MessageService {
                 double payment = order.getPayment();
                 user.setBalance(user.getBalance() + payment);
                 order.setPayed(true);
-                Toast.makeText(ApplicationContext.getContext(), "Order completed", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(ApplicationContext.getContext(), "Order completed", Toast.LENGTH_SHORT).show();
 
                 // переместить выполненную задачу в архив
                 ApplicationContext.getIdToActiveOrderMap().remove(order.getId());
-                ApplicationContext.getHistoryOrderList().add(order);
+                ApplicationContext.getIdToHistoryOrderMap().put(order.getId(), order);
 
+
+                ApplicationContext.getDatabaseManager().writeOrderToDB(order);
 
 //                Toast.makeText(ApplicationContext.getContext(), "Can't confirm order completion on server", Toast.LENGTH_SHORT).show();
 

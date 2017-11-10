@@ -208,7 +208,7 @@ public class Order {
             }
         }
 
-        Toast.makeText(ApplicationContext.getContext(), "All tasks completed", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(ApplicationContext.getContext(), "All tasks completed", Toast.LENGTH_SHORT).show();
 
         this.finished = true;
         ApplicationContext.getMessageService().completeOrder(this);
