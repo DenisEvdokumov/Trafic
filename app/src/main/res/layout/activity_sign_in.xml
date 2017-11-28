@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:gravity="center"
-            android:text="E-MAIL"
+            android:text="@string/text_email"
             android:textSize="@dimen/label_field_text_size"
             android:textColor="#AAAAAA" />
 
@@ -43,7 +43,6 @@
             android:background="@drawable/grey_field"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:hint="google account email"
             android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
             android:textSize="@dimen/input_field_text_size"
             android:maxLines="1" />
@@ -55,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:gravity="center"
-            android:text="ПАРОЛЬ"
+            android:text="@string/text_password"
             android:textSize="@dimen/label_field_text_size"
             android:textColor="#AAAAAA" />
 
@@ -64,7 +63,7 @@
             android:background="@drawable/grey_field"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:hint="enter password"
+            android:hint="@string/enter_password_hint"
             android:inputType="textPassword"
             android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
             android:textSize="@dimen/input_field_text_size"
@@ -85,7 +84,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="15dip"
             android:textSize="@dimen/button_text_size"
-            android:text="ВОЙТИ" />
+            android:text="@string/text_enter" />
 
         <Button
             android:id="@+id/btn_register"
@@ -96,7 +95,7 @@
             android:layout_marginTop="15dip"
             android:textSize="@dimen/button_text_size"
             android:textColor="#FFFFFF"
-            android:text="РЕГИСТРАЦИЯ" />
+            android:text="@string/text_register" />
 
         <TextView
             android:layout_width="match_parent"

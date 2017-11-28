@@ -1,10 +1,10 @@
-package com.professor.traficinspiration.model;
+package com.professor.traficinspiration.model.messages;
 
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class UserRequestMessage {
+public class UserRequestMessage extends RequestMessage{
     @SerializedName("email")
     @Expose
     private String email;

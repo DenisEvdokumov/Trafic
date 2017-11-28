@@ -45,8 +45,8 @@ public class NewOrders extends AppCompatActivity implements AdapterView.OnItemCl
         long orderId = (Long) view.getTag();
 
         // изъять заказ из newOrders и добавить в activeOrders
-        Order activatingOrder = ApplicationContext.getIdToNewOrderMap().remove(orderId);
-        ApplicationContext.getIdToActiveOrderMap().put(orderId, activatingOrder);
+//        Order activatingOrder = ApplicationContext.getIdToNewOrderMap().remove(orderId);
+//        ApplicationContext.getIdToActiveOrderMap().put(orderId, activatingOrder);
 
         Intent toOrderDetailsActivity = new Intent(this, OrderDetails.class).putExtra("id_order", orderId);
         startActivity(toOrderDetailsActivity);

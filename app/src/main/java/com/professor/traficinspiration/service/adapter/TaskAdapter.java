@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.professor.traficinspiration.ApplicationContext;
 import com.professor.traficinspiration.R;
 import com.professor.traficinspiration.activity.OrderDetails;
+import com.professor.traficinspiration.model.Order;
 import com.professor.traficinspiration.model.tasks.Task;
 
 import java.util.List;
@@ -56,6 +57,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
         taskDescriptionTextView.setText(item.description);
         taskTitleTextView.setText(item.titleString);
 
+
         if (item.isCompleted()) {
             taskCompleteCheckBox.setImageResource(R.drawable.checked);
 //            taskButton.setVisibility(View.GONE);
@@ -72,6 +74,13 @@ public class TaskAdapter extends ArrayAdapter<Task> {
                 boolean success = item.executeTask(ApplicationContext.getContext());
                 if (success) {
                     taskCompleteCheckBox.setImageResource(R.drawable.checked);
+
+                    // изъять заказ из newOrders и добавить в activeOrders если выполнен хотя бы один task
+                    Order activatingOrder = ApplicationContext.getIdToNewOrderMap().remove(item.getOrder().getId());
+
+                    if (activatingOrder != null) {
+                        ApplicationContext.getIdToActiveOrderMap().put(item.getOrder().getId(), activatingOrder);
+                    }
                 }
             }
         });

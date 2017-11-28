@@ -1,18 +1,12 @@
 package com.professor.traficinspiration.service;
 
 
-import com.professor.traficinspiration.model.User;
-import com.professor.traficinspiration.model.UserRequestMessage;
-import com.professor.traficinspiration.model.UserResponseMessage;
+import com.professor.traficinspiration.model.messages.UserRequestMessage;
+import com.professor.traficinspiration.model.messages.UserResponseMessage;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 public interface UserService {
 

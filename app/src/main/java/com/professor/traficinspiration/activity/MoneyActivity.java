@@ -79,7 +79,7 @@ public class MoneyActivity extends AppCompatActivity implements View.OnClickList
                 // вариант с числовым идентификатором типа оплаты
                 int type = transferTypeSpinner.getSelectedItemPosition();
 
-                ApplicationContext.getMessageService().transferMoney(amount, type, number);
+                ApplicationContext.getMessageService().withdraw(amount, false);
             }
         });
 

@@ -53,6 +53,10 @@ public abstract class Task {
 
     public void complete() {
         completed = true;
+
+        // обновить запись в локальной БД
+        ApplicationContext.getDatabaseManager().writeOrderToDB(order);
+
         // проверить все ли задачи выполнены
         order.checkCompletion();
     }

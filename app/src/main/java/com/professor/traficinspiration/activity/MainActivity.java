@@ -2,6 +2,8 @@ package com.professor.traficinspiration.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -31,7 +33,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
-    ListView listView;
+//    ListView listView;
+//    User user;
     private static final int RC_SIGN_IN = 9001;
 
     @Override
@@ -56,16 +59,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Drawable userPhoto = user.getPhoto();
             ImageView userPhotoView = (ImageView) ApplicationContext.getContext().findViewById(R.id.avatar);
 
-            if (userPhoto == null) {
+//            if (userPhoto == null) {
                 Uri uri = user.getPhotoUrl();
                 Picasso.with(ApplicationContext.getContext())
                         .load(uri)
+                        .placeholder(R.drawable.default_account_icon)
+                        .error(R.drawable.default_account_icon)
                         .into(userPhotoView);
 
-                user.setPhoto(userPhotoView.getDrawable());
-            } else {
-                userPhotoView.setImageDrawable(userPhoto);
-            }
+//                user.setPhoto(userPhotoView.getDrawable());
+//
+//            } else {
+//                userPhotoView.setImageDrawable(userPhoto);
+//            }
 
             String balanceString = "Баланс: " + user.getBalance();
             ((TextView) ApplicationContext.getContext().findViewById(R.id.txtName)).setText(user.getName());
@@ -81,7 +87,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.moneyButton).setOnClickListener(this);
 
         findViewById(R.id.historyButton).setOnClickListener(this);
+        findViewById(R.id.newsButton).setOnClickListener(this);
         findViewById(R.id.referralsButton).setOnClickListener(this);
+
+        findViewById(R.id.networkButton).setOnClickListener(this);
+        findViewById(R.id.supportButton).setOnClickListener(this);
+        findViewById(R.id.helpButton).setOnClickListener(this);
 
         findViewById(R.id.accountInfoButton).setOnClickListener(this);
 
@@ -159,9 +170,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.accountInfoButton:
+                if (ApplicationContext.getUser().getPhoto() == null) {
+                    ApplicationContext.getUser().setPhoto(((ImageView) ApplicationContext.getContext().findViewById(R.id.avatar)).getDrawable());
+                }
+
                 Intent toAccountInfoActivity = new Intent(this, UserInfoActivity.class);
                 startActivity(toAccountInfoActivity);
                 break;
+
+            default:
+                Toast.makeText(this, "Данный раздел находится в разработке", Toast.LENGTH_SHORT).show();
+
+
         }
     }
 
@@ -190,6 +210,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        }
 //        // сохранение информации о состоянии заказов в локальную БД
         ApplicationContext.getDatabaseManager().writeListToDB(ApplicationContext.getActiveOrderList());
+        ApplicationContext.getDatabaseManager().closeDB();
 
     }
 

@@ -1,21 +1,14 @@
-package com.professor.traficinspiration.model;
+package com.professor.traficinspiration.model.messages;
 
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Map;
 
-public class CompleteOrderResponse {
-
+public abstract class ResponseMessage {
     @SerializedName("errors")
     private Map<String, String[]> errors;
 
-    public CompleteOrderResponse() {
-    }
-
-    public CompleteOrderResponse(Map<String, String[]> errors) {
-        this.errors = errors;
-    }
 
     public Map<String, String[]> getErrors() {
         return errors;

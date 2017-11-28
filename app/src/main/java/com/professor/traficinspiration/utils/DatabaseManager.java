@@ -15,13 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseManager {
-
+    // подключаемся к БД
     DBHelper dbHelper = new DBHelper(ApplicationContext.getContext());
-    SQLiteDatabase db;
+    SQLiteDatabase db = dbHelper.getWritableDatabase();
 
     public void writeOrdersToDB() {
         // подключаемся к БД
-        db = dbHelper.getWritableDatabase();
+//        db = dbHelper.getWritableDatabase();
 
 //        db.beginTransaction();
         writeListToDB(ApplicationContext.getActiveOrderList());
@@ -32,47 +32,17 @@ public class DatabaseManager {
         // для ускорения также можно использовать SQLiteStatement
 
         // закрываем подключение к БД
-        db.close();
-        dbHelper.close();
+//        db.close();
+//        dbHelper.close();
     }
 
     public void writeListToDB(List<Order> orderList) {
-        // подключаемся к БД
-        db = dbHelper.getWritableDatabase();
-
-        // создаем объект для данных
-        ContentValues cv = new ContentValues();
-
         for (Order order : orderList) {
-            // подготовим данные для вставки в виде пар: наименование столбца - значение
-            cv.put("_id", order.getId());
-            cv.put("name", order.getName());
-            cv.put("package_name", order.getPackageName());
-            cv.put("payment", order.getPayment());
-            cv.put("finished", String.valueOf(order.isFinished()));
-            cv.put("payed", String.valueOf(order.isPayed()));
-            cv.put("open_date", order.getOpenDate().getTime());
-            cv.put("open_count", order.getOpenCount());
-            cv.put("open_interval", order.getOpenInterval());
-            cv.put("tasks_status", order.getTasksStatus());
-            cv.put("img_url", order.getImageUrl());
-
-            // вставляем или обновляем запись
-            int updateCount = db.update("orders", cv, "_id=?", new String[]{String.valueOf(order.getId())});
-            if (updateCount == 0) {
-                db.insert("orders", null, cv);
-            }
+            writeOrderToDB(order);
         }
-
-        // закрываем подключение к БД
-        db.close();
-        dbHelper.close();
     }
 
     public void writeOrderToDB(Order order) {
-        // подключаемся к БД
-        db = dbHelper.getWritableDatabase();
-
         // создаем объект для данных
         ContentValues cv = new ContentValues();
 
@@ -88,23 +58,18 @@ public class DatabaseManager {
         cv.put("open_interval", order.getOpenInterval());
         cv.put("tasks_status", order.getTasksStatus());
         cv.put("img_url", order.getImageUrl());
+        cv.put("key_words", order.getKeywords());
+
 
         // вставляем или обновляем запись
         int updateCount = db.update("orders", cv, "_id=?", new String[]{String.valueOf(order.getId())});
         if (updateCount == 0) {
             db.insert("orders", null, cv);
         }
-
-        // закрываем подключение к БД
-        db.close();
-        dbHelper.close();
-
     }
 
 
     public void readOrdersFromDB() {
-        // подключаемся к БД
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         // делаем запрос всех данных из таблицы mytable, получаем Cursor
         Cursor resultCursor = db.query("orders", null, null, null, null, null, null);
@@ -113,13 +78,7 @@ public class DatabaseManager {
         // если в выборке нет строк, вернется false
         if (!resultCursor.moveToFirst()) {
 //            Toast.makeText(ApplicationContext.getContext(), "no rows", Toast.LENGTH_LONG).show();
-
             resultCursor.close();
-
-            // закрываем подключение к БД
-            db.close();
-            dbHelper.close();
-
             return;
         }
 
@@ -135,6 +94,8 @@ public class DatabaseManager {
         int openIntervalColIndex = resultCursor.getColumnIndex("open_interval");
         int tasksStatusColIndex = resultCursor.getColumnIndex("tasks_status");
         int imageUrlColIndex = resultCursor.getColumnIndex("img_url");
+        int keywordsColIndex = resultCursor.getColumnIndex("key_words");
+
 
         List<Order> activeOrderList = new ArrayList<>();
         List<Order> historyOrderList = new ArrayList<>();
@@ -151,7 +112,8 @@ public class DatabaseManager {
                     resultCursor.getInt(openCountColIndex),
                     resultCursor.getInt(openIntervalColIndex),
                     resultCursor.getString(tasksStatusColIndex),
-                    resultCursor.getString(imageUrlColIndex)
+                    resultCursor.getString(imageUrlColIndex),
+                    resultCursor.getString(keywordsColIndex)
             );
 
             // разделить на активные и завершенные (оплаченные)
@@ -171,8 +133,10 @@ public class DatabaseManager {
         ApplicationContext.setHistoryOrderList(historyOrderList);
 
         resultCursor.close();
+    }
 
-        // закрываем подключение к БД
+    public void closeDB() {
+        db.close();
         dbHelper.close();
     }
 }

@@ -37,17 +37,23 @@ public class OrderDetails extends AppCompatActivity implements View.OnClickListe
 
         Long orderId = getIntent().getLongExtra("id_order", -1L);
 
+        // find order from one of lists
         order = ApplicationContext.getIdToActiveOrderMap().get(orderId);
+
+        if (order == null) {
+            order = ApplicationContext.getIdToNewOrderMap().get(orderId);
+        }
 
         if (order == null) {
             order = ApplicationContext.getIdToHistoryOrderMap().get(orderId);
         }
 
+
         String name = order.getName();
-        double payment = order.getPayment();
+        String payment = String.valueOf(order.getPayment()) + " руб.";
 
         ((TextView) findViewById(R.id.txtTitle)).setText(name);
-        ((TextView) findViewById(R.id.txtPrice)).setText(String.valueOf(payment));
+        ((TextView) findViewById(R.id.txtPrice)).setText(payment);
 //        ((TextView) findViewById(R.id.txtId)).setText(String.valueOf(order.getId()));
 
 
@@ -99,17 +105,22 @@ public class OrderDetails extends AppCompatActivity implements View.OnClickListe
         }
 
         int totalHeight = 0;
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+
+        listView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getMeasuredWidth(), View.MeasureSpec.EXACTLY);
         for (int i = 0; i < listAdapter.getCount(); i++) {
             View listItem = listAdapter.getView(i, null, listView);
             listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-            totalHeight += listItem.getMeasuredHeight() + 15;
+            totalHeight += listItem.getMeasuredHeight() + 50;
+
+
         }
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount()));
         listView.setLayoutParams(params);
         listView.requestLayout();
+
     }
 
     @Override

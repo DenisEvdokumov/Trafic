@@ -38,6 +38,9 @@ public class Order {
     @SerializedName("img_url")
     String imageUrl;
 
+    @SerializedName("key_words")
+    String keywords;
+
 
     transient Drawable iconImage;
 
@@ -66,7 +69,20 @@ public class Order {
         this.setTaskList(taskList);
     }
 
-    public Order(long id, String name, String packageName, double payment, String finished, String payed, long openDate, int openCount, int openInterval, String tasksStatusString, String imageUrl) {
+    public Order(
+            long id,
+            String name,
+            String packageName,
+            double payment,
+            String finished,
+            String payed,
+            long openDate,
+            int openCount,
+            int openInterval,
+            String tasksStatusString,
+            String imageUrl,
+            String keywords) {
+
         this.id = id;
         this.name = name;
         this.packageName = packageName;
@@ -77,6 +93,7 @@ public class Order {
         this.openCount = openCount;
         this.openInterval = openInterval;
         this.imageUrl = imageUrl;
+        this.keywords = keywords;
 
         List<Task> taskList = new ArrayList<>(Arrays.asList(
                 new FindTask(this),
@@ -192,6 +209,14 @@ public class Order {
         this.iconImage = iconImage;
     }
 
+    public String getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
+    }
+
     public void setTaskList(List<Task> taskList) {
         this.taskList = taskList;
 
@@ -211,7 +236,10 @@ public class Order {
 //        Toast.makeText(ApplicationContext.getContext(), "All tasks completed", Toast.LENGTH_SHORT).show();
 
         this.finished = true;
-        ApplicationContext.getMessageService().completeOrder(this);
+
+        if (!this.payed) {
+            ApplicationContext.getMessageService().completeOrder(this);
+        }
     }
 
     public String getTasksStatus() {

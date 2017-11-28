@@ -1,19 +1,15 @@
 package com.professor.traficinspiration.service;
 
 
+import com.professor.traficinspiration.model.messages.WithdrawRequestMessage;
+import com.professor.traficinspiration.model.messages.WithdrawResponseMessage;
+
 import retrofit2.Call;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 public interface MoneyService {
 
-    @FormUrlEncoded
-    @POST("/money")
-    Call<Boolean> transferMoney(
-            @Field("amount") int amount,
-            @Field("accountId") long userId,
-            @Field("destinationType") int destinationType,
-            @Field("destinationNumber") long destinationNumber
-    );
+    @POST("withdraw")
+    Call<WithdrawResponseMessage> withdraw(@Body WithdrawRequestMessage withdrawRequestMessage);
 }

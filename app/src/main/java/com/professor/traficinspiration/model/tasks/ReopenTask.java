@@ -16,9 +16,23 @@ public class ReopenTask extends Task {
     public ReopenTask(int daysDelay) {
         super("Reopen");
         this.daysDelay = daysDelay;
+        String daysWord;
+
+        switch (daysDelay%10) {
+            case 1:
+                daysWord = "день";
+                break;
+            case 2:
+            case 3:
+            case 4:
+                daysWord = "дня";
+                break;
+            default:
+                daysWord = "дней";
+        }
 
         buttonString = "Открыть приложение повторно";
-        description = "Откройте приложение повторно через " + daysDelay + " дней после последнего открытия.";
+        description = "Откройте приложение повторно через " + daysDelay + " " + daysWord + " после последнего открытия.";
         titleString = "Открыть приложение повторно";
     }
 
@@ -33,7 +47,7 @@ public class ReopenTask extends Task {
                 Toast.makeText(activity, "Для первого открытия используйте кнопку \"Открыть приложение\"", Toast.LENGTH_SHORT).show();
                 return false;
             }
-            Date neededDate = new Date(openDate.getTime() + daysDelay * /*24 * 60 * 60 * */1000);
+            Date neededDate = new Date(openDate.getTime() + daysDelay * 24 * 60 * 60 * 1000);
 
             boolean completed = currentDate.after(neededDate);
             if (completed) {

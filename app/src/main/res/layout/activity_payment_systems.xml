@@ -47,14 +47,14 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="МОБИЛЬНЫЙ СЧЕТ"
+                        android:text="@string/text_mobile"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Мгновенное пополнение мобильного счета" />
+                        android:text="@string/text_mobile_description" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -211,14 +211,14 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="ИСТОРИЯ ВЫПЛАТ"
+                        android:text="@string/money_history"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Вся история вывода денег" />
+                        android:text="@string/money_history_description" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

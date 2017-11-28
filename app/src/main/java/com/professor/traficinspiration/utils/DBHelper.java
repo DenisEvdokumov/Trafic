@@ -16,7 +16,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public DBHelper(Context context) {
         // конструктор суперкласса
-        super(context, DATABASE_NAME, null, 1);
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
@@ -24,7 +24,7 @@ public class DBHelper extends SQLiteOpenHelper {
 //        Toast.makeText(ApplicationContext.getContext(), "creating database", Toast.LENGTH_LONG).show();
 
         // создаем таблицу с полями
-        db.execSQL("create table orders(" +
+        db.execSQL("create table " + TABLE_ORDERS + "(" +
                 "_id integer primary key," +
 //                "order_id integer," +
                 "name text," +
@@ -36,7 +36,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 "open_count integer," +
                 "open_interval integer," +
                 "tasks_status text," +
-                "img_url text" +
+                "img_url text," +
+                "key_words text" +
                 ")");
 
     }

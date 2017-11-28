@@ -41,7 +41,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:lines="1"
-                    android:text="user name"
+                    android:textColor="@color/white"
                     android:textStyle="bold" />
 
                 <TextView
@@ -49,7 +49,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:lines="1"
-                    android:text="user balance" />
+                    android:textColor="@color/white" />
             </LinearLayout>
         </LinearLayout>
 
@@ -84,7 +84,7 @@
                     android:background="@drawable/yellow_button"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/icon_name_size"
-                    android:text="НОВЫЕ"
+                    android:text="@string/text_new"
                     android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
                     android:textAlignment="center" />
             </LinearLayout>
@@ -105,7 +105,7 @@
                     android:background="@drawable/yellow_button"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/icon_name_size"
-                    android:text="АКТИВНЫЕ"
+                    android:text="@string/text_active"
                     android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
                     android:textAlignment="center" />
             </LinearLayout>
@@ -126,7 +126,7 @@
                     android:background="@drawable/yellow_button"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/icon_name_size"
-                    android:text="КОШЕЛЕК"
+                    android:text="@string/text_money"
                     android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
                     android:textAlignment="center" />
             </LinearLayout>
@@ -156,7 +156,7 @@
                     android:background="@drawable/yellow_button"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/icon_name_size"
-                    android:text="АРХИВ"
+                    android:text="@string/text_history"
                     android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
                     android:textAlignment="center" />
             </LinearLayout>
@@ -177,7 +177,7 @@
                     android:background="@drawable/yellow_button"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/icon_name_size"
-                    android:text="НОВОСТИ"
+                    android:text="@string/text_news"
                     android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
                     android:textAlignment="center" />
             </LinearLayout>
@@ -198,7 +198,7 @@
                     android:background="@drawable/yellow_button"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/icon_name_size"
-                    android:text="РЕФЕРАЛЫ"
+                    android:text="@string/text_referrals"
                     android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
                     android:textAlignment="center" />
             </LinearLayout>
@@ -229,7 +229,7 @@
                     android:background="@drawable/yellow_button"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/icon_name_size"
-                    android:text="СОЦ.СЕТИ"
+                    android:text="@string/text_networks"
                     android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
                     android:textAlignment="center" />
             </LinearLayout>
@@ -250,13 +250,13 @@
                     android:background="@drawable/yellow_button"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/icon_name_size"
-                    android:text="ПОДДЕРЖКА"
+                    android:text="@string/text_support"
                     android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
                     android:textAlignment="center" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/infoButton"
+                android:id="@+id/helpButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/icon_margin"
@@ -271,7 +271,7 @@
                     android:background="@drawable/yellow_button"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/icon_name_size"
-                    android:text="СПРАВКА"
+                    android:text="@string/text_help"
                     android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
                     android:textAlignment="center" />
             </LinearLayout>

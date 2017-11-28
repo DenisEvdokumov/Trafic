@@ -87,7 +87,7 @@
         android:layout_margin="20dp"
         android:gravity="center"
         android:layout_gravity="center"
-        android:text="ВАШ РЕФЕРАЛЬНЫЙ КОД:"
+        android:text="@string/text_your_referral_code"
         android:textColor="#000000" />
 
     <TextView

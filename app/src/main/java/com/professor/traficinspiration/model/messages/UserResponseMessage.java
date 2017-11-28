@@ -1,16 +1,11 @@
-package com.professor.traficinspiration.model;
+package com.professor.traficinspiration.model.messages;
 
 
-import android.widget.Toast;
-
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.professor.traficinspiration.ApplicationContext;
 
-import java.util.Arrays;
 import java.util.Map;
 
-public class UserResponseMessage {
+public class UserResponseMessage extends ResponseMessage{
     @SerializedName("id")
     private long id;
 
@@ -28,12 +23,6 @@ public class UserResponseMessage {
 
     @SerializedName("token")
     private String token;
-
-//    @SerializedName("email")
-//    private String[] email;
-
-    @SerializedName("errors")
-    private Map<String, String[]> errors;
 
     /**
      * No args constructor for use in serialization
@@ -123,22 +112,6 @@ public class UserResponseMessage {
         this.token = token;
     }
 
-//    public String[] getEmail() {
-//        return email;
-//    }
-//
-//    public void setEmail(String[] email) {
-//        this.email = email;
-//    }
-
-
-    public Map<String, String[]> getErrors() {
-        return errors;
-    }
-
-    public void setErrors(Map<String, String[]> errors) {
-        this.errors = errors;
-    }
 
     @Override
     public String toString() {
@@ -149,7 +122,6 @@ public class UserResponseMessage {
                 ", ordersCompleted=" + ordersCompleted +
                 ", referralsCount=" + referralsCount +
                 ", token='" + token + '\'' +
-//                ", email=" + Arrays.toString(email) +
                 '}';
     }
 }

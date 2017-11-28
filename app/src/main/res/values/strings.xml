@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">TraficInspiration</string>
+    <string name="order_alert_message">Внимание! Все действия заказа обязательно должны выполняться через это приложение чтобы они были засчитаны.</string>
+    <string name="text_new">НОВЫЕ</string>
+    <string name="text_active">АКТИВНЫЕ</string>
+    <string name="text_money">КОШЕЛЕК</string>
+    <string name="text_history">АРХИВ</string>
+    <string name="text_news">НОВОСТИ</string>
+    <string name="text_referrals">РЕФЕРАЛЫ</string>
+    <string name="text_networks">СОЦ.СЕТИ</string>
+    <string name="text_support">ПОДДЕРЖКА</string>
+    <string name="text_help">СПРАВКА</string>
+    <string name="text_mobile_description">Мгновенное пополнение мобильного счета</string>
+    <string name="text_mobile">МОБИЛЬНЫЙ СЧЕТ</string>
+    <string name="money_history">ИСТОРИЯ ВЫПЛАТ</string>
+    <string name="money_history_description">Вся история вывода денег</string>
+    <string name="text_email">E-MAIL</string>
+    <string name="text_password">ПАРОЛЬ</string>
+    <string name="text_confirm_password">ПОДТВЕРДИТЕ ПАРОЛЬ</string>
+    <string name="text_referral_code">РЕФЕРАЛЬНЫЙ КОД</string>
+    <string name="text_register">ЗАРЕГИСТРИРОВАТЬСЯ</string>
+    <string name="enter_password_hint">введите пароль</string>
+    <string name="text_enter">ВОЙТИ</string>
+    <string name="text_your_referral_code">ВАШ РЕФЕРАЛЬНЫЙ КОД:</string>
 </resources>
