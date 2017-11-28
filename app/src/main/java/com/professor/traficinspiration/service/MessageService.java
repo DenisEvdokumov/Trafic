@@ -295,10 +295,8 @@ public class MessageService {
         });
     }
 
-    public void withdraw(int amount, boolean notice) {
-        final User user = ApplicationContext.getUser();
-
-        WithdrawRequestMessage withdrawRequestMessage = new WithdrawRequestMessage(user.getId(), ApplicationContext.getSessionToken(), amount, notice);
+    public void withdraw(int amount, String withdrawType, String accountNumber, String notice) {
+        WithdrawRequestMessage withdrawRequestMessage = new WithdrawRequestMessage(ApplicationContext.getUser().getId(), ApplicationContext.getSessionToken(), amount, withdrawType, accountNumber, notice);
 
         MoneyService moneyService = retrofit.create(MoneyService.class);
         Call<WithdrawResponseMessage> call = moneyService.withdraw(withdrawRequestMessage);
@@ -324,7 +322,6 @@ public class MessageService {
 
 
     public void sendSupportRequest(String message) {
-
         SupportRequestMessage supportRequestMessage = new SupportRequestMessage(ApplicationContext.getUser().getId(), ApplicationContext.getSessionToken(), message);
 
         SupportService supportService = retrofit.create(SupportService.class);
@@ -337,6 +334,8 @@ public class MessageService {
                 if (!isResponseSuccessful(response)) {
                     return;
                 }
+
+                Toast.makeText(ApplicationContext.getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
 
 
             }

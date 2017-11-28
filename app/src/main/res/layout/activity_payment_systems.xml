@@ -23,7 +23,8 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/btnMobile"
+                android:id="@+id/btn_mobile"
+                android:tag="mobile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
@@ -187,7 +188,7 @@
                 <!--android:background="@color/divider" />-->
 
             <LinearLayout
-                android:id="@+id/btnHistory"
+                android:id="@+id/btn_history"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"

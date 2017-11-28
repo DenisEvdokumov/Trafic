@@ -6,5 +6,15 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Map;
 
 public class SupportResponseMessage extends ResponseMessage{
+    @SerializedName("msg")
+    private String  message;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
 }

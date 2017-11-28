@@ -35,24 +35,27 @@ public class MoneyActivity extends AppCompatActivity implements View.OnClickList
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        Spinner transferTypeSpinner = (Spinner) findViewById(R.id.spinner_transfer_type);
-        transferTypeSpinner.setAdapter(adapter);
-        // заголовок
-        transferTypeSpinner.setPrompt("Transfer type");
-        // выделяем элемент
-        transferTypeSpinner.setSelection(1);
-        // устанавливаем обработчик нажатия
-        transferTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view,
-                                       int position, long id) {
-                // показываем позиция нажатого элемента
-//                Toast.makeText(getBaseContext(), "Position = " + position, Toast.LENGTH_SHORT).show();
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-            }
-        });
+//        Spinner transferTypeSpinner = (Spinner) findViewById(R.id.spinner_transfer_type);
+//        transferTypeSpinner.setAdapter(adapter);
+//        // заголовок
+//        transferTypeSpinner.setPrompt("Transfer type");
+//        // выделяем элемент
+//        transferTypeSpinner.setSelection(1);
+//        // устанавливаем обработчик нажатия
+//        transferTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view,
+//                                       int position, long id) {
+//                // показываем позиция нажатого элемента
+////                Toast.makeText(getBaseContext(), "Position = " + position, Toast.LENGTH_SHORT).show();
+//            }
+//            @Override
+//            public void onNothingSelected(AdapterView<?> arg0) {
+//            }
+//        });
+
+        final String withdrawType = getIntent().getStringExtra("withdrawType");
+        ((TextView)findViewById(R.id.lbl_transfer_type)).setText(withdrawType);
 
 
 
@@ -64,7 +67,7 @@ public class MoneyActivity extends AppCompatActivity implements View.OnClickList
 
                 EditText transferNumberEditText = (EditText) findViewById(R.id.et_transfer_number);
                 EditText transferAmountEditText = (EditText) findViewById(R.id.et_transfer_amount);
-                Spinner transferTypeSpinner = (Spinner) findViewById(R.id.spinner_transfer_type);
+//                Spinner transferTypeSpinner = (Spinner) findViewById(R.id.spinner_transfer_type);
 
                 String amountString = transferAmountEditText.getText().toString();
                 String numberString = transferNumberEditText.getText().toString();
@@ -77,9 +80,10 @@ public class MoneyActivity extends AppCompatActivity implements View.OnClickList
                 int amount = Integer.parseInt(amountString);
                 long number = Integer.parseInt(numberString);
                 // вариант с числовым идентификатором типа оплаты
-                int type = transferTypeSpinner.getSelectedItemPosition();
+//                int type = transferTypeSpinner.getSelectedItemPosition();
+//                String type = (String) transferTypeSpinner.getSelectedItem();
 
-                ApplicationContext.getMessageService().withdraw(amount, false);
+                ApplicationContext.getMessageService().withdraw(amount, withdrawType, String.valueOf(number), "");
             }
         });
 

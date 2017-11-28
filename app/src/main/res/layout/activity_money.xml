@@ -48,11 +48,11 @@
             android:textColor="#000000" />
 
 
-        <Spinner
-            android:id="@+id/spinner_transfer_type"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </Spinner>
+        <!--<Spinner-->
+            <!--android:id="@+id/spinner_transfer_type"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
+        <!--</Spinner>-->
 
 
         <TextView

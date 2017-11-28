@@ -178,6 +178,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(toAccountInfoActivity);
                 break;
 
+            case R.id.supportButton:
+                Intent toSupportActivity = new Intent(this, SupportActivity.class);
+                startActivity(toSupportActivity);
+                break;
+
             default:
                 Toast.makeText(this, "Данный раздел находится в разработке", Toast.LENGTH_SHORT).show();
 

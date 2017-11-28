@@ -9,6 +9,6 @@ import retrofit2.http.POST;
 
 public interface SupportService {
 
-    @POST("withdraw")
+    @POST("support")
     Call<SupportResponseMessage> sendSupportRequest(@Body SupportRequestMessage supportRequestMessage);
 }
