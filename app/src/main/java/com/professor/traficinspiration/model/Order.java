@@ -27,6 +27,8 @@ public class Order {
     double payment;
     boolean finished;
     boolean payed;
+
+    // transient
     Date openDate = new Date(0);
 
     @SerializedName("open_count")

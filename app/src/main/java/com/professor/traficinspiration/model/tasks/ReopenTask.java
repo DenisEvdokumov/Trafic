@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.widget.Toast;
 
 import com.professor.traficinspiration.model.Order;
+import com.professor.traficinspiration.utils.TimeHelper;
 
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
 
 public class ReopenTask extends Task {
 
@@ -40,7 +42,17 @@ public class ReopenTask extends Task {
     public boolean executeTask(Activity activity) {
         Intent launchIntent = activity.getPackageManager().getLaunchIntentForPackage(order.getPackageName());
         if (launchIntent != null) {
-            Date currentDate = new Date(System.currentTimeMillis());
+            String timeString = null;
+
+            try {
+                timeString = new TimeHelper().execute(this).get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+
+            Date currentDate = new Date(Long.parseLong(timeString));
 
             Date openDate = order.getOpenDate();
             if (openDate.equals(new Date(0))) {

@@ -5,9 +5,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.widget.Toast;
 
+import com.professor.traficinspiration.ApplicationContext;
 import com.professor.traficinspiration.model.Order;
+import com.professor.traficinspiration.utils.TimeHelper;
 
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
 
 public class OpenTask extends Task {
 
@@ -40,7 +43,21 @@ public class OpenTask extends Task {
         Intent launchIntent = activity.getPackageManager().getLaunchIntentForPackage(order.getPackageName());
         if (launchIntent != null) {
 
-            Date openDate = new Date(System.currentTimeMillis());
+            String timeString = null;
+
+            try {
+                timeString = new TimeHelper().execute(this).get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+
+
+            // проверка получена ли дата...
+
+
+            Date openDate = new Date(Long.parseLong(timeString));
             order.setOpenDate(openDate);
 
             activity.startActivity(launchIntent);

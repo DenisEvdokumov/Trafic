@@ -35,6 +35,9 @@ dependencies {
 
     compile 'de.hdodenhof:circleimageview:2.2.0'
 
+    compile group: 'org.jsoup', name: 'jsoup', version: '1.9.1'
+
+
     testCompile 'junit:junit:4.12'
 }
 

@@ -17,6 +17,7 @@ import com.professor.traficinspiration.utils.DatabaseManager;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,9 @@ public class ApplicationContext {
 
     // не совсем правильно записывать сюда конкретное Activity, так как оно может меняться...
     static Activity context;
+
+    // время получаемое от сервиса в интернете и используемое для исключения махинаций с изменением времени на телефоне
+    static Date currentDate;
 
     // DatabaseManager создается при установлении context =>
     //      вызов DatabaseManager до этого вызовет NullPointerException
@@ -190,4 +194,11 @@ public class ApplicationContext {
         return databaseManager;
     }
 
+    public static Date getCurrentDate() {
+        return currentDate;
+    }
+
+    public static void setCurrentDate(Date currentDate) {
+        ApplicationContext.currentDate = currentDate;
+    }
 }
