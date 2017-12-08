@@ -52,7 +52,13 @@ public class ReopenTask extends Task {
                 e.printStackTrace();
             }
 
-            Date currentDate = new Date(Long.parseLong(timeString));
+            Date currentDate;
+            // проверка получена ли дата...
+            if (timeString == null) {
+                currentDate = new Date(System.currentTimeMillis());
+            } else {
+                currentDate = new Date(Long.parseLong(timeString));
+            }
 
             Date openDate = order.getOpenDate();
             if (openDate.equals(new Date(0))) {

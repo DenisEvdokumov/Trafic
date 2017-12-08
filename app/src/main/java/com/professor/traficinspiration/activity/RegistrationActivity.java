@@ -71,7 +71,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 idReferrer = Long.parseLong(idReferrerString);
             }
 
-            ApplicationContext.getMessageService().getOrCreateUser(email, password, "registration", idReferrer);
+            ApplicationContext.getMessageService().executeEnterSequence(email, password, "registration", idReferrer);
 
             this.finish();
             // continued in MessageService onResponse

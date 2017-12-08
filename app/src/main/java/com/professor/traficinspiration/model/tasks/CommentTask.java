@@ -9,12 +9,16 @@ import com.professor.traficinspiration.model.Order;
 
 public class CommentTask extends Task {
 
-    public CommentTask() {
-        super("Comment");
-    }
-
     public CommentTask(Order order) {
         super(order, "Comment");
+
+        buttonString = "Оставить комментарий";
+        titleString = "Оставить комментарий";
+        description = "Оставьте комментарий к приложению с оценкой 5.";
+
+        if (order.getKeywords() != null && !order.getKeywords().equals("")) {
+            description = description + " Комментарий должен содержать слова: " + order.getKeywords();
+        }
     }
 
     @Override
@@ -24,6 +28,8 @@ public class CommentTask extends Task {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(baseUrl + order.getPackageName()));
         activity.startActivity(browserIntent);
 
-        return false;
+        complete();
+
+        return true;
     }
 }

@@ -2,8 +2,6 @@ package com.professor.traficinspiration.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,7 +9,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,9 +25,6 @@ import com.professor.traficinspiration.model.Order;
 import com.professor.traficinspiration.model.User;
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
 //    ListView listView;
@@ -42,19 +36,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+//        Toast.makeText(this, "MainActivity onCreate", Toast.LENGTH_SHORT).show();
+
         // не совсем правильно записывать конкретное Activity, так как оно может меняться...
         ApplicationContext.setContext(this);
-
-        // востановить активные задачи
-        // это происходит до получения данных с сервера
-        ApplicationContext.getDatabaseManager().readOrdersFromDB();
+//        ApplicationContext.notificator.init();
 
         // проверить не залогинен ли уже пользователь
         User user = ApplicationContext.getUser();
         if (user == null || user.getId() == 0) {
+//            Toast.makeText(this, "user not exists", Toast.LENGTH_SHORT).show();
+
+            // востановить активные задачи
+            // это происходит до получения данных с сервера
+            ApplicationContext.getDatabaseManager().readOrdersFromDB();
+
             // попытка автоматического входа
             tryAutoSignIn();
         } else {
+//            Toast.makeText(this, "user exists", Toast.LENGTH_SHORT).show();
+
             // отобразить информацию о пользователе
             Drawable userPhoto = user.getPhoto();
             ImageView userPhotoView = (ImageView) ApplicationContext.getContext().findViewById(R.id.avatar);
@@ -198,7 +199,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }
 
-        // попытка отправить сообщение о завершении задач которые сервер не принял до этого
+        // попытка отправить сообщение о завершении задач которые сервер не принял до этого или выполнение требует проверки
         // по идее, это будет происходить очень редко
         for (Order order : ApplicationContext.getActiveOrderList()) {
             if (order.isFinished() && !order.isPayed()) {
@@ -206,14 +207,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
 
-//        // задержка нужна для того, чтобы успеть получить ответ о выполнении задачи с сервера
-//        // желательно переделать на thread.join()
-//        try {
-//            Thread.sleep(3000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        // сохранение информации о состоянии заказов в локальную БД
+        // сохранение информации о состоянии заказов в локальную БД
         ApplicationContext.getDatabaseManager().writeListToDB(ApplicationContext.getActiveOrderList());
         ApplicationContext.getDatabaseManager().closeDB();
 
@@ -281,7 +275,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void loginExistingUser(String email, String password) {
         // it is possible retrieve id for existing user
 
-        ApplicationContext.getMessageService().getOrCreateUser(email, password, "authorization", 0L);
+        ApplicationContext.getMessageService().executeEnterSequence(email, password, "authorization", 0L);
         // continued in MessageService onResponse
     }
 

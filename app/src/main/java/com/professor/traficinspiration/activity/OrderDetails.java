@@ -85,6 +85,10 @@ public class OrderDetails extends AppCompatActivity implements View.OnClickListe
         setListViewHeightBasedOnChildren(tasksListView);
 
         if (order.isFinished()) {
+            ((TextView)findViewById(R.id.txtAlert)).setText("Ожидание подтверждения модератора");
+        }
+
+        if (order.isPayed()) {
             ((TextView)findViewById(R.id.txtAlert)).setText("Заказ выполнен!");
         }
 

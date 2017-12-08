@@ -21,6 +21,7 @@ public class TimeHelper extends AsyncTask<Task, Void, String> {
             Elements title = doc.select("#twd");
             time = title.text() + "000";
         } catch (IOException e) {
+
             // do nothing
             // or use locale time? ...
         }

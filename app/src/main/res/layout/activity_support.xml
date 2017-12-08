@@ -31,4 +31,11 @@
         android:text="Отправить"/>
 
 
+    <!--<Button-->
+        <!--android:id="@+id/btn_notification_off"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:text="Отключить уведомления"/>-->
+
 </LinearLayout>

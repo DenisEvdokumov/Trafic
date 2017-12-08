@@ -4,19 +4,13 @@ package com.professor.traficinspiration;
 import android.app.Activity;
 import android.content.SharedPreferences;
 
-import com.professor.traficinspiration.model.User;
-import com.professor.traficinspiration.model.tasks.CheckInstallTask;
-import com.professor.traficinspiration.model.tasks.FindTask;
-import com.professor.traficinspiration.model.tasks.OpenTask;
 import com.professor.traficinspiration.model.Order;
-import com.professor.traficinspiration.model.tasks.ReopenTask;
-import com.professor.traficinspiration.model.tasks.Task;
+import com.professor.traficinspiration.model.User;
+import com.professor.traficinspiration.service.AlarmManagerNotificator;
 import com.professor.traficinspiration.service.MessageService;
 import com.professor.traficinspiration.utils.DatabaseManager;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -56,6 +50,8 @@ public class ApplicationContext {
     static Map<Long, Order> idToActiveOrderMap = new HashMap<>();
 
     static Map<Long, Order> idToHistoryOrderMap = new HashMap<>();
+
+    public static AlarmManagerNotificator notificator = new AlarmManagerNotificator();
 
 
 //    static {

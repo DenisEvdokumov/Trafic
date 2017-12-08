@@ -1,7 +1,6 @@
 package com.professor.traficinspiration.model;
 
 import android.graphics.drawable.Drawable;
-import android.widget.Toast;
 
 import com.google.gson.annotations.SerializedName;
 import com.professor.traficinspiration.ApplicationContext;
@@ -47,6 +46,17 @@ public class Order {
     transient Drawable iconImage;
 
     //    double additionalOpenPayment;
+
+    @SerializedName("review")
+    int review;
+
+    boolean comment;
+
+    @SerializedName("needed_reviews")
+    int neededReviews;
+
+    @SerializedName("done_reviews")
+    int doneReviews;
 
 
     // transient
@@ -219,6 +229,38 @@ public class Order {
         this.keywords = keywords;
     }
 
+    public int getReview() {
+        return review;
+    }
+
+    public void setReview(int review) {
+        this.review = review;
+    }
+
+    public boolean isComment() {
+        return comment;
+    }
+
+    public void setComment(boolean comment) {
+        this.comment = comment;
+    }
+
+    public int getNeededReviews() {
+        return neededReviews;
+    }
+
+    public void setNeededReviews(int neededReviews) {
+        this.neededReviews = neededReviews;
+    }
+
+    public int getDoneReviews() {
+        return doneReviews;
+    }
+
+    public void setDoneReviews(int doneReviews) {
+        this.doneReviews = doneReviews;
+    }
+
     public void setTaskList(List<Task> taskList) {
         this.taskList = taskList;
 
@@ -229,13 +271,11 @@ public class Order {
 
     public void checkCompletion() {
         for (Task task: taskList) {
-//            Toast.makeText(ApplicationContext.getContext(), task.taskName + " - " + task.isCompleted(), Toast.LENGTH_SHORT).show();
             if (!task.isCompleted()) {
                 return;
             }
         }
 
-//        Toast.makeText(ApplicationContext.getContext(), "All tasks completed", Toast.LENGTH_SHORT).show();
 
         this.finished = true;
 

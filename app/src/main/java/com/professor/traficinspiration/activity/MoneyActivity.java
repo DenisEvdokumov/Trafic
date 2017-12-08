@@ -78,12 +78,13 @@ public class MoneyActivity extends AppCompatActivity implements View.OnClickList
                 }
 
                 int amount = Integer.parseInt(amountString);
-                long number = Integer.parseInt(numberString);
+//                long number = Long.parseLong(numberString);
+
                 // вариант с числовым идентификатором типа оплаты
 //                int type = transferTypeSpinner.getSelectedItemPosition();
 //                String type = (String) transferTypeSpinner.getSelectedItem();
 
-                ApplicationContext.getMessageService().withdraw(amount, withdrawType, String.valueOf(number), "");
+                ApplicationContext.getMessageService().withdraw(amount, withdrawType, numberString, "");
             }
         });
 

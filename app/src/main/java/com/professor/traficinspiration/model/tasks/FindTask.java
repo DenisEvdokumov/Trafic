@@ -33,13 +33,13 @@ public class FindTask extends Task {
             finalUrl = baseUrl + order.getKeywords() + urlEnd;
         }
 
-        complete();
-
 //        Intent browserIntent = new Intent(ApplicationContext.getContext(), WebViewActivity.class);
 //        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(baseUrl + order.getPackageName()));
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(finalUrl));
 
         activity.startActivity(browserIntent);
+
+        complete();
 
         return true;
     }

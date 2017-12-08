@@ -4,6 +4,7 @@ package com.professor.traficinspiration;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
@@ -30,7 +31,16 @@ public class MyAlertDialogFragment extends DialogFragment {
         MyAlertDialogFragment frag = new MyAlertDialogFragment();
         frag.setArguments(args);
 
-        frag.show(ApplicationContext.getContext().getFragmentManager(), "dialog");
+//        CheckinSuccessDialog dialog = new CheckinSuccessDialog();
+//dialog.show(getSupportFragmentManager(), null);
+        FragmentTransaction ft = ApplicationContext.getContext().getFragmentManager().beginTransaction();
+        ft.add(frag, null);
+        ft.commitAllowingStateLoss();
+
+//        frag.show(ApplicationContext.getContext().getFragmentManager(), "dialog");
+
+//        Toast.makeText(ApplicationContext.getContext(), "dialog created", Toast.LENGTH_LONG).show();
+
     }
 
     @Override

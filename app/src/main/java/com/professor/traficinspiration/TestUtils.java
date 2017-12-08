@@ -223,7 +223,7 @@ public class TestUtils {
 //                user.setPassword(password);
 //                user.setEmail(email);
 //
-//                ApplicationContext.getMessageService().getOrCreateUser(email, password, "login", 0L);
+//                ApplicationContext.getMessageService().executeEnterSequence(email, password, "login", 0L);
 //
 //                myDialog.dismiss();
 //            }
@@ -241,7 +241,7 @@ public class TestUtils {
 //                    return;
 //                }
 //
-//                ApplicationContext.getMessageService().getOrCreateUser(null, password, "login", 0L);
+//                ApplicationContext.getMessageService().executeEnterSequence(null, password, "login", 0L);
 //
 //                myDialog.dismiss();
 //            }

@@ -7,6 +7,9 @@ public class CompleteOrderRequestMessage extends RequestMessage{
     @SerializedName("id_order")
     private long orderId;
 
+    @SerializedName("review")
+    private boolean review;
+
     public CompleteOrderRequestMessage() {
     }
 
@@ -24,4 +27,11 @@ public class CompleteOrderRequestMessage extends RequestMessage{
         this.orderId = orderId;
     }
 
+    public boolean isReview() {
+        return review;
+    }
+
+    public void setReview(boolean review) {
+        this.review = review;
+    }
 }

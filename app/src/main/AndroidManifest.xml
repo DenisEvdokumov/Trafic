@@ -43,6 +43,11 @@
         <activity android:name=".activity.RegistrationActivity" />
         <activity android:name=".activity.PaymentSystemsActivity" />
         <activity android:name=".activity.SupportActivity"></activity>
+
+        <receiver
+            android:name=".service.Receiver"
+            android:process=":remote" >
+        </receiver>
     </application>
 
 </manifest>

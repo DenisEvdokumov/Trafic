@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.professor.traficinspiration.ApplicationContext;
 import com.professor.traficinspiration.R;
+import com.professor.traficinspiration.service.AlarmManagerNotificator;
 
 public class SupportActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -21,6 +22,8 @@ public class SupportActivity extends AppCompatActivity implements View.OnClickLi
         ((TextView)findViewById(R.id.header_title)).setText("Поддержка");
 
         findViewById(R.id.btn_support_request).setOnClickListener(this);
+//        findViewById(R.id.btn_notification_off).setOnClickListener(this);
+
 
         supportMessageTextView = (TextView)findViewById(R.id.support_message);
 
@@ -36,8 +39,10 @@ public class SupportActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.btn_support_request:
                 ApplicationContext.getMessageService().sendSupportRequest(String.valueOf(supportMessageTextView.getText()));
-
                 break;
+//            case R.id.btn_notification_off:
+////                ApplicationContext.notificator.cancelNotification();
+//                break;
         }
     }
 }

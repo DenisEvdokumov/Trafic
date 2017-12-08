@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.professor.traficinspiration.ApplicationContext;
 import com.professor.traficinspiration.R;
 import com.professor.traficinspiration.model.Order;
-import com.professor.traficinspiration.service.MessageService;
 import com.professor.traficinspiration.service.adapter.OrderAdapter;
 import com.squareup.picasso.Picasso;
 

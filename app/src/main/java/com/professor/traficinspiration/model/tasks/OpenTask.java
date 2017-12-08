@@ -53,12 +53,15 @@ public class OpenTask extends Task {
                 e.printStackTrace();
             }
 
-
+            Date currentDate;
             // проверка получена ли дата...
+            if (timeString == null) {
+                currentDate = new Date(System.currentTimeMillis());
+            } else {
+                currentDate = new Date(Long.parseLong(timeString));
+            }
 
-
-            Date openDate = new Date(Long.parseLong(timeString));
-            order.setOpenDate(openDate);
+            order.setOpenDate(currentDate);
 
             activity.startActivity(launchIntent);
             Toast.makeText(activity, "Выполнено", Toast.LENGTH_SHORT).show();
