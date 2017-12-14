@@ -46,7 +46,7 @@
 
         <receiver
             android:name=".service.Receiver"
-            android:process=":remote" >
+            android:process=":remote">
         </receiver>
     </application>
 

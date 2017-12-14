@@ -27,7 +27,7 @@ import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
-//    ListView listView;
+    //    ListView listView;
 //    User user;
     private static final int RC_SIGN_IN = 9001;
 
@@ -61,12 +61,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             ImageView userPhotoView = (ImageView) ApplicationContext.getContext().findViewById(R.id.avatar);
 
 //            if (userPhoto == null) {
-                Uri uri = user.getPhotoUrl();
-                Picasso.with(ApplicationContext.getContext())
-                        .load(uri)
-                        .placeholder(R.drawable.default_account_icon)
-                        .error(R.drawable.default_account_icon)
-                        .into(userPhotoView);
+            Uri uri = user.getPhotoUrl();
+            Picasso.with(ApplicationContext.getContext())
+                    .load(uri)
+                    .placeholder(R.drawable.default_account_icon)
+                    .error(R.drawable.default_account_icon)
+                    .into(userPhotoView);
 
 //                user.setPhoto(userPhotoView.getDrawable());
 //
@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.helpButton).setOnClickListener(this);
 
         findViewById(R.id.accountInfoButton).setOnClickListener(this);
+
 
 
     }

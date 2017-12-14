@@ -60,20 +60,14 @@ public class MessageService {
         retrofit = builder.build();
     }
 
+
     public void executeEnterSequence(final String email, final String password, final String action, final Long idReferrer) {
 
-        handleUser(getOrCreateUser(email, password, action, idReferrer));
-        handleOrders(getOrders(false));
-        handleOrderHistory(getOrders(true));
+        if (handleUser(getOrCreateUser(email, password, action, idReferrer))) {
+            handleOrders(getOrders(false));
+//            handleOrderHistory(getOrders(true));
+        }
 
-
-        // запрашивание истории если локальная история пуста
-        // (избыточный запрос если история в принципе пуста)
-        // (более рационально было бы запрашивать историю непосредственно при переходе на экран истории...)
-//        List<Order> historyOrderList = ApplicationContext.getHistoryOrderList();
-//        if (historyOrderList.size() == 0) {
-//            getOrderHistory();
-//        }
 
     }
 
@@ -118,14 +112,52 @@ public class MessageService {
     }
 
     public List<Order> getOrders(boolean history) {
+//        OrderService orderService = retrofit.create(OrderService.class);
+//
+//        Call<OrdersResponseMessage> call;
+//
+////        MyAlertDialogFragment.createAndShowErrorDialog(ApplicationContext.class.getClassLoader().toString());
+////        Toast.makeText(ApplicationContext.getContext(), ApplicationContext.class.getClassLoader().toString(), Toast.LENGTH_LONG).show();
+//
+//        if (history) {
+//            call = orderService.getOrdersHistory(ApplicationContext.getUser().getId(), ApplicationContext.getSessionToken());
+//        } else {
+//            call = orderService.getOrders(ApplicationContext.getUser().getId(), ApplicationContext.getSessionToken());
+//        }
+//
+//        Response<OrdersResponseMessage> response = null;
+//
+//        RequestExecutor requestExecutor = new RequestExecutor();
+//
+//        try {
+//            response = requestExecutor.execute(call).get();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        }
+//
+//        if (!isResponseSuccessful(response)) {
+//            return null;
+//        }
+//
+//        OrdersResponseMessage ordersResponseMessage = response.body();
+//
+//        return ordersResponseMessage.getOrderList();
+
+        return getOrders(ApplicationContext.getUser().getId(), ApplicationContext.getSessionToken(), history);
+
+    }
+
+    public List<Order> getOrders(long userId, String sessionToken, boolean history) {
         OrderService orderService = retrofit.create(OrderService.class);
 
         Call<OrdersResponseMessage> call;
 
         if (history) {
-            call = orderService.getOrdersHistory(ApplicationContext.getUser().getId(), ApplicationContext.getSessionToken());
+            call = orderService.getOrdersHistory(userId, sessionToken);
         } else {
-            call = orderService.getOrders(ApplicationContext.getUser().getId(), ApplicationContext.getSessionToken());
+            call = orderService.getOrders(userId, sessionToken);
         }
 
         Response<OrdersResponseMessage> response = null;
@@ -147,14 +179,15 @@ public class MessageService {
         OrdersResponseMessage ordersResponseMessage = response.body();
 
         return ordersResponseMessage.getOrderList();
-
     }
 
-    public void handleUser(User user) {
+    public boolean handleUser(User user) {
 
         if (user == null) {
             Intent toSignInActivity = new Intent(ApplicationContext.getContext(), SignInActivity.class);
             ApplicationContext.getContext().startActivity(toSignInActivity);
+//            Toast.makeText(ApplicationContext.getContext(), "Can't retrieve orders", Toast.LENGTH_SHORT).show();
+            return false;
         }
 
         // отобразить информацию о пользователе
@@ -178,6 +211,9 @@ public class MessageService {
         SharedPreferences sharedPreferences = ApplicationContext.getContext().getSharedPreferences(user.getEmail(), Context.MODE_PRIVATE);
         sharedPreferences.edit().putString("password", user.getPassword()).apply();
 
+        ApplicationContext.notificator.init();
+
+        return true;
     }
 
     public void handleOrders(List<Order> orderList) {
@@ -252,6 +288,11 @@ public class MessageService {
             for (int i = 1; i < order.getOpenCount(); i++) {
                 taskList.add(new ReopenTask(order.getOpenInterval()));
             }
+
+            for (Task task : taskList) {
+                task.setCompleted(true);
+            }
+
             order.setTaskList(taskList);
 
             order.setFinished(true);
@@ -269,6 +310,8 @@ public class MessageService {
     }
 
     public void completeOrder(final Order order) {
+        // метод использует ApplicationContext и он должен быть доступен при выполнении
+
         final User user = ApplicationContext.getUser();
 
         CompleteOrderRequestMessage completeOrderRequestMessage = new CompleteOrderRequestMessage(user.getId(), ApplicationContext.getSessionToken(), order.getId());
@@ -371,8 +414,10 @@ public class MessageService {
 
     private boolean isResponseSuccessful(Response<? extends ResponseMessage> response) {
 
-        if (!response.isSuccessful()) {
-            MyAlertDialogFragment.createAndShowErrorDialog(response.toString());
+        if (response == null || !response.isSuccessful()) {
+            Toast.makeText(ApplicationContext.getContext(), "No response from server", Toast.LENGTH_SHORT).show();
+
+            MyAlertDialogFragment.createAndShowErrorDialog("" + response);
             return false;
         }
 

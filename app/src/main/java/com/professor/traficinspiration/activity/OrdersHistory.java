@@ -30,35 +30,7 @@ public class OrdersHistory extends AppCompatActivity implements AdapterView.OnIt
         ((TextView)findViewById(R.id.header_title)).setText("История заказов");
 
 
-
-
-//        Thread thread = new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                ApplicationContext.getMessageService().getOrderHistory();
-//            }
-//        });
-//        thread.start();
-//
-//        try {
-//            thread.join();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-
-
-
-        // получить историю с сервера
-//        ApplicationContext.getMessageService().getOrderHistory();
-
-
-//        try {
-//            Thread.sleep(3000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-
-        // отрисовка происходит раньше чем с сервера приходят данные
+        ApplicationContext.getMessageService().handleOrderHistory(ApplicationContext.getMessageService().getOrders(true));
 
         List<Order> orderList = ApplicationContext.getHistoryOrderList();
 
