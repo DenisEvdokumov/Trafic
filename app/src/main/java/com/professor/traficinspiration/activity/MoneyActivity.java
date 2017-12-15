@@ -24,10 +24,10 @@ public class MoneyActivity extends AppCompatActivity implements View.OnClickList
         findViewById(R.id.back_button).setOnClickListener(this);
         ((TextView)findViewById(R.id.header_title)).setText("Вывод денег");
 
-        double balance = ApplicationContext.getUser().getBalance();
+        final double balance = ApplicationContext.getUser().getBalance();
 
         TextView balanceView = (TextView) findViewById(R.id.balance_view);
-        balanceView.setText(String .valueOf(balance));
+        balanceView.setText(String.valueOf(balance));
 
         String[] data = {"mobile", "webMoney"};
 
@@ -55,7 +55,7 @@ public class MoneyActivity extends AppCompatActivity implements View.OnClickList
 //        });
 
         final String withdrawType = getIntent().getStringExtra("withdrawType");
-        ((TextView)findViewById(R.id.lbl_transfer_type)).setText(withdrawType);
+//        ((TextView)findViewById(R.id.lbl_transfer_type)).setText(withdrawType);
 
 
 
@@ -73,7 +73,17 @@ public class MoneyActivity extends AppCompatActivity implements View.OnClickList
                 String numberString = transferNumberEditText.getText().toString();
 
                 if (amountString.equals("") || numberString.equals("")) {
-                    Toast.makeText(MoneyActivity.this, "You must fill all fields", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MoneyActivity.this, "Должны быть заполнены все поля", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (Integer.parseInt(amountString) < 100) {
+                    Toast.makeText(MoneyActivity.this, "Минимальная сумма для вывода 100 руб.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (Integer.parseInt(amountString) > balance) {
+                    Toast.makeText(MoneyActivity.this, "Недостаточно средств на счету", Toast.LENGTH_SHORT).show();
                     return;
                 }
 

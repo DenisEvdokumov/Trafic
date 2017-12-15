@@ -13,8 +13,13 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="Опишите вашу проблему:"
-        android:maxLines="1" />
+        android:paddingLeft="20dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingRight="20dp"
+        android:textAlignment="center"
+        android:text="Если у Вас возникли вопросы, опишите их в заявке."
+        android:textSize="18sp"/>
 
 
     <EditText
@@ -25,9 +30,11 @@
 
     <Button
         android:id="@+id/btn_support_request"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:background="@drawable/yellow_button3"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:layout_gravity="center"
+        android:textSize="@dimen/button_text_size"
         android:text="Отправить"/>
 
 

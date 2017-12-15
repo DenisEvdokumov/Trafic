@@ -9,39 +9,73 @@
 
     <include layout="@layout/toolbar" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
 
-    <TextView
-        android:id="@+id/lbl_referrals_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dip"
-        android:gravity="center"
-        android:text="referrals count:"
-        android:textColor="#000000" />
+        <TextView
+            android:id="@+id/lbl_referrals_explanation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:gravity="center"
+            android:text="Приводите друзей и зарабатывайте 10% от их заказов! Каждый, кто введет ваш код, получит бонус 5 руб"
+            android:textColor="#000000" />
 
-    <TextView
-        android:id="@+id/text_referrals_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dip"
-        android:gravity="center"
-        android:textColor="#000000" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/lbl_referral_code"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dip"
-        android:gravity="center"
-        android:text="referral code:"
-        android:textColor="#000000" />
+            <TextView
+                android:id="@+id/lbl_referral_code"
+                android:background="@drawable/yellow_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:gravity="center"
+                android:text="Ваш реферальный код"
+                android:textColor="#000000" />
 
-    <TextView
-        android:id="@+id/text_referral_code"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dip"
-        android:gravity="center"
-        android:textColor="#000000" />
+            <TextView
+                android:id="@+id/text_referral_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:paddingRight="40dp"
+                android:gravity="right"
+                android:textColor="#000000" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/lbl_referrals_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:gravity="center"
+                android:text="Всего рефералов"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/text_referrals_count"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:paddingRight="40dp"
+                android:gravity="right"
+                android:textColor="#000000" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
 
 </LinearLayout>

@@ -94,7 +94,7 @@ public class MessageService {
             return null;
         }
 
-        Toast.makeText(ApplicationContext.getContext(), "Success", Toast.LENGTH_LONG).show();
+//        Toast.makeText(ApplicationContext.getContext(), "Success", Toast.LENGTH_LONG).show();
 
         UserResponseMessage userResponseMessage = response.body();
         ApplicationContext.setSessionToken(userResponseMessage.getToken());
@@ -219,7 +219,7 @@ public class MessageService {
     public void handleOrders(List<Order> orderList) {
 
         if (orderList == null) {
-            Toast.makeText(ApplicationContext.getContext(), "Can't retrieve orders", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ApplicationContext.getContext(), "Не удалось получить список заказов", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -263,7 +263,7 @@ public class MessageService {
     public void handleOrderHistory(List<Order> orderList) {
 
         if (orderList == null) {
-            Toast.makeText(ApplicationContext.getContext(), "Can't retrieve orders", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ApplicationContext.getContext(), "Не удалось получить список заказов", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -415,7 +415,7 @@ public class MessageService {
     private boolean isResponseSuccessful(Response<? extends ResponseMessage> response) {
 
         if (response == null || !response.isSuccessful()) {
-            Toast.makeText(ApplicationContext.getContext(), "No response from server", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ApplicationContext.getContext(), "Сервер не отвечает. Проверьте соединение с интернетом", Toast.LENGTH_SHORT).show();
 
             MyAlertDialogFragment.createAndShowErrorDialog("" + response);
             return false;
@@ -437,7 +437,7 @@ public class MessageService {
             try {
                 return calls[0].execute();
             } catch (IOException e) {
-                MyAlertDialogFragment.createAndShowErrorDialog("network error");
+                MyAlertDialogFragment.createAndShowErrorDialog("Ошибка соединения");
 //                e.printStackTrace();
             }
             return null;

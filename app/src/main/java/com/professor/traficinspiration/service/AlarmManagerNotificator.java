@@ -31,7 +31,7 @@ public class AlarmManagerNotificator {
         intent2 = createIntent();
         pIntent2 = PendingIntent.getBroadcast(ApplicationContext.getContext(), 0, intent2, 0);
 
-        am.set(AlarmManager.RTC, System.currentTimeMillis() + /*12 * 60 * */60 * 1000, pIntent2);
+        am.set(AlarmManager.RTC, System.currentTimeMillis() + 12 * 60 * 60 * 1000, pIntent2);
 //        am.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 3000, /*60 * */60 * 1000, pIntent2);
 
     }
@@ -39,14 +39,6 @@ public class AlarmManagerNotificator {
     public void cancelNotification() {
         am.cancel(pIntent2);
     }
-
-//    void sendNotif(int id, PendingIntent pIntent) {
-//        Notification notif = new Notification(R.drawable.image, "Notif "
-//                + id, System.currentTimeMillis());
-//        notif.flags |= Notification.FLAG_AUTO_CANCEL;
-//        notif.setLatestEventInfo(this, "Title " + id, "Content " + id, pIntent);
-//        nm.notify(id, notif);
-//    }
 
 
     Intent createIntent() {
