@@ -64,7 +64,7 @@ public class OpenTask extends Task {
             order.setOpenDate(currentDate);
 
             activity.startActivity(launchIntent);
-            Toast.makeText(activity, "Выполнено", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(activity, "Выполнено", Toast.LENGTH_SHORT).show();
             // отметить задачу как выполненную
             complete();
 

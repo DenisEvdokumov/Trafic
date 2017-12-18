@@ -196,6 +196,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onDestroy() {
         super.onDestroy();
 
+//        Toast.makeText(this, "MainActivity onDestroy", Toast.LENGTH_SHORT).show();
+
         if (ApplicationContext.getUser() == null) {
             return;
         }
@@ -216,7 +218,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Toast.makeText(this, "Connection to google api failed", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Не удалось подключиться к Google api", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -268,7 +270,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             // Signed out
 
-            MyAlertDialogFragment.createAndShowErrorDialog("Fail to login. Can't find google account or network connection failed");
+            MyAlertDialogFragment.createAndShowErrorDialog("Не удалось авторизироваться. Проверьте наличие интернета и аккаунта Google на устройстве");
 
         }
     }

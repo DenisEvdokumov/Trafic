@@ -56,6 +56,7 @@ public class DatabaseManager {
         cv.put("open_date", order.getOpenDate().getTime());
         cv.put("open_count", order.getOpenCount());
         cv.put("open_interval", order.getOpenInterval());
+        cv.put("comment", String.valueOf(order.isComment()));
         cv.put("tasks_status", order.getTasksStatus());
         cv.put("img_url", order.getImageUrl());
         cv.put("key_words", order.getKeywords());
@@ -92,6 +93,7 @@ public class DatabaseManager {
         int openDateColIndex = resultCursor.getColumnIndex("open_date");
         int openCountColIndex = resultCursor.getColumnIndex("open_count");
         int openIntervalColIndex = resultCursor.getColumnIndex("open_interval");
+        int commentColIndex = resultCursor.getColumnIndex("comment");
         int tasksStatusColIndex = resultCursor.getColumnIndex("tasks_status");
         int imageUrlColIndex = resultCursor.getColumnIndex("img_url");
         int keywordsColIndex = resultCursor.getColumnIndex("key_words");
@@ -111,6 +113,7 @@ public class DatabaseManager {
                     resultCursor.getLong(openDateColIndex),
                     resultCursor.getInt(openCountColIndex),
                     resultCursor.getInt(openIntervalColIndex),
+                    resultCursor.getString(commentColIndex),
                     resultCursor.getString(tasksStatusColIndex),
                     resultCursor.getString(imageUrlColIndex),
                     resultCursor.getString(keywordsColIndex)

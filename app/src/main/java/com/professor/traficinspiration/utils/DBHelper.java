@@ -15,7 +15,6 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TABLE_ORDERS = "orders";
 
     public DBHelper(Context context) {
-        // конструктор суперкласса
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -35,6 +34,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "open_date integer," +
                 "open_count integer," +
                 "open_interval integer," +
+                "comment text," +
                 "tasks_status text," +
                 "img_url text," +
                 "key_words text" +

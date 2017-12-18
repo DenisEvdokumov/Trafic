@@ -54,7 +54,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
                 // password check
                 if (password.equals("")){
-                    Toast.makeText(SignInActivity.this, "Passwords must not be empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignInActivity.this, "Пароль не может быть пустым", Toast.LENGTH_SHORT).show();
                     return;
                 }
 

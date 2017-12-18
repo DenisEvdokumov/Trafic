@@ -1,10 +1,12 @@
 package com.professor.traficinspiration.model;
 
 import android.graphics.drawable.Drawable;
+import android.widget.Toast;
 
 import com.google.gson.annotations.SerializedName;
 import com.professor.traficinspiration.ApplicationContext;
 import com.professor.traficinspiration.model.tasks.CheckInstallTask;
+import com.professor.traficinspiration.model.tasks.CommentTask;
 import com.professor.traficinspiration.model.tasks.FindTask;
 import com.professor.traficinspiration.model.tasks.OpenTask;
 import com.professor.traficinspiration.model.tasks.ReopenTask;
@@ -91,6 +93,7 @@ public class Order {
             long openDate,
             int openCount,
             int openInterval,
+            String comment,
             String tasksStatusString,
             String imageUrl,
             String keywords) {
@@ -104,6 +107,7 @@ public class Order {
         this.openDate = new Date(openDate);
         this.openCount = openCount;
         this.openInterval = openInterval;
+        this.comment = Boolean.parseBoolean(comment);
         this.imageUrl = imageUrl;
         this.keywords = keywords;
 
@@ -112,6 +116,10 @@ public class Order {
                 new CheckInstallTask(this),
                 new OpenTask(this)
         ));
+
+        if (Boolean.parseBoolean(comment)) {
+            taskList.add(new CommentTask(this));
+        }
 
         for (int i = 1; i < openCount; i++) {
             taskList.add(new ReopenTask(openInterval));

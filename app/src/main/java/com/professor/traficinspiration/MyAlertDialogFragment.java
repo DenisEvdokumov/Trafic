@@ -14,15 +14,15 @@ public class MyAlertDialogFragment extends DialogFragment {
 
     public static void createAndShowErrorDialog(String errorString) {
 
-//        if (ApplicationContext.getContext() == null) {
-//            return;
-//        }
+        if (ApplicationContext.getContext() == null) {
+            return;
+        }
 
         // temporal variant
         // it will crush on version lesser than 17
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             if (ApplicationContext.getContext().isDestroyed()) {
-                Toast.makeText(ApplicationContext.getContext(), errorString, Toast.LENGTH_LONG).show();
+//                Toast.makeText(ApplicationContext.getContext(), errorString, Toast.LENGTH_LONG).show();
                 return;
             }
         }

@@ -7,4 +7,5 @@
     <color name="white">#FFFFFF</color>
     <color name="grey">#EEEEEE</color>
     <color name="main_green">#2DCF70</color>
+    <color name="hint_text_color">#CCCCCC</color>
 </resources>

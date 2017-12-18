@@ -22,4 +22,5 @@
     <string name="enter_password_hint">введите пароль</string>
     <string name="text_enter">ВОЙТИ</string>
     <string name="text_your_referral_code">ВАШ РЕФЕРАЛЬНЫЙ КОД:</string>
+    <string name="referral_system_explanation">Приводите друзей и зарабатывайте 10% от их заказов! Каждый, кто введет ваш код, получит бонус 5 руб</string>
 </resources>

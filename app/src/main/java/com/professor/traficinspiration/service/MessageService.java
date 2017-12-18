@@ -66,8 +66,9 @@ public class MessageService {
         if (handleUser(getOrCreateUser(email, password, action, idReferrer))) {
             handleOrders(getOrders(false));
 //            handleOrderHistory(getOrders(true));
-        }
 
+            ApplicationContext.notificator.init();
+        }
 
     }
 
@@ -85,8 +86,10 @@ public class MessageService {
             response = requestExecutor.execute(call).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
+            return null;
         } catch (ExecutionException e) {
             e.printStackTrace();
+            return null;
         }
 
 
@@ -112,41 +115,7 @@ public class MessageService {
     }
 
     public List<Order> getOrders(boolean history) {
-//        OrderService orderService = retrofit.create(OrderService.class);
-//
-//        Call<OrdersResponseMessage> call;
-//
-////        MyAlertDialogFragment.createAndShowErrorDialog(ApplicationContext.class.getClassLoader().toString());
-////        Toast.makeText(ApplicationContext.getContext(), ApplicationContext.class.getClassLoader().toString(), Toast.LENGTH_LONG).show();
-//
-//        if (history) {
-//            call = orderService.getOrdersHistory(ApplicationContext.getUser().getId(), ApplicationContext.getSessionToken());
-//        } else {
-//            call = orderService.getOrders(ApplicationContext.getUser().getId(), ApplicationContext.getSessionToken());
-//        }
-//
-//        Response<OrdersResponseMessage> response = null;
-//
-//        RequestExecutor requestExecutor = new RequestExecutor();
-//
-//        try {
-//            response = requestExecutor.execute(call).get();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        } catch (ExecutionException e) {
-//            e.printStackTrace();
-//        }
-//
-//        if (!isResponseSuccessful(response)) {
-//            return null;
-//        }
-//
-//        OrdersResponseMessage ordersResponseMessage = response.body();
-//
-//        return ordersResponseMessage.getOrderList();
-
         return getOrders(ApplicationContext.getUser().getId(), ApplicationContext.getSessionToken(), history);
-
     }
 
     public List<Order> getOrders(long userId, String sessionToken, boolean history) {
@@ -168,8 +137,10 @@ public class MessageService {
             response = requestExecutor.execute(call).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
+            return null;
         } catch (ExecutionException e) {
             e.printStackTrace();
+            return null;
         }
 
         if (!isResponseSuccessful(response)) {
@@ -186,7 +157,9 @@ public class MessageService {
         if (user == null) {
             Intent toSignInActivity = new Intent(ApplicationContext.getContext(), SignInActivity.class);
             ApplicationContext.getContext().startActivity(toSignInActivity);
-//            Toast.makeText(ApplicationContext.getContext(), "Can't retrieve orders", Toast.LENGTH_SHORT).show();
+//            MyAlertDialogFragment.createAndShowErrorDialog("Сервер не отвечает. Проверьте соединение с интернетом");
+
+            Toast.makeText(ApplicationContext.getContext(), "Сервер не отвечает. Проверьте соединение с интернетом", Toast.LENGTH_SHORT).show();
             return false;
         }
 
@@ -210,8 +183,6 @@ public class MessageService {
 
         SharedPreferences sharedPreferences = ApplicationContext.getContext().getSharedPreferences(user.getEmail(), Context.MODE_PRIVATE);
         sharedPreferences.edit().putString("password", user.getPassword()).apply();
-
-        ApplicationContext.notificator.init();
 
         return true;
     }
@@ -329,8 +300,10 @@ public class MessageService {
             response = requestExecutor.execute(call).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
+            return;
         } catch (ExecutionException e) {
             e.printStackTrace();
+            return;
         }
 
         if (!isResponseSuccessful(response)) {
@@ -339,7 +312,6 @@ public class MessageService {
 
         if (order.isComment()) {
             Toast.makeText(ApplicationContext.getContext(), "Оплата за выполнение будет перечислена после проверки модератором", Toast.LENGTH_LONG).show();
-
         } else {
             double payment = order.getPayment();
             user.setBalance(user.getBalance() + payment);
@@ -378,7 +350,7 @@ public class MessageService {
 
             @Override
             public void onFailure(Call<WithdrawResponseMessage> call, Throwable t) {
-                MyAlertDialogFragment.createAndShowErrorDialog("something went wrong in withdraw");
+                MyAlertDialogFragment.createAndShowErrorDialog("Возникла ошибка в процессе попытки вывода средств");
             }
         });
     }
@@ -416,8 +388,7 @@ public class MessageService {
 
         if (response == null || !response.isSuccessful()) {
             Toast.makeText(ApplicationContext.getContext(), "Сервер не отвечает. Проверьте соединение с интернетом", Toast.LENGTH_SHORT).show();
-
-            MyAlertDialogFragment.createAndShowErrorDialog("" + response);
+//            MyAlertDialogFragment.createAndShowErrorDialog("Сервер не отвечает. Проверьте соединение с интернетом");
             return false;
         }
 

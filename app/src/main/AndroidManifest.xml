@@ -29,7 +29,8 @@
         <activity android:name=".activity.WebViewActivity" />
         <activity android:name=".activity.MoneyActivity" />
         <activity android:name=".activity.ReferralsActivity" />
-        <activity android:name=".activity.SignInActivity">
+        <activity android:name=".activity.SignInActivity"
+            android:launchMode="singleTask">
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
