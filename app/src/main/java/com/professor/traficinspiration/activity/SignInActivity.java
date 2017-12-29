@@ -18,7 +18,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     CheckBox remainSignedInCheckBox;
 
 
-    String userEmail;
+    String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +30,10 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
 //        ApplicationContext.setContext(this);
 
-        userEmail = ApplicationContext.getUser().getEmail();
+        email = ApplicationContext.getUser().getEmail();
 
         TextView emailEditText = (TextView) findViewById(R.id.et_email);
-        emailEditText.setText(userEmail);
+        emailEditText.setText(email);
 
         passwordEditText = (EditText) findViewById(R.id.et_password);
 //        remainSignedInCheckBox = (CheckBox) findViewById(R.id.cb_remain_signed_in);
@@ -58,9 +58,10 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                     return;
                 }
 
-                ApplicationContext.getMessageService().executeEnterSequence(userEmail, password, "authorization", 0L);
-
                 this.finish();
+
+                ApplicationContext.getMessageService().executeEnterSequence(email, password, "authorization", 0L);
+
                 // continued in MessageService onResponse
                 break;
 

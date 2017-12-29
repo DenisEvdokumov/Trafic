@@ -31,7 +31,7 @@ public class AlarmManagerNotificator {
         intent2 = createIntent();
         pIntent2 = PendingIntent.getBroadcast(ApplicationContext.getContext(), 0, intent2, 0);
 
-        am.set(AlarmManager.RTC, System.currentTimeMillis() + 12 * 60 * 60 * 1000, pIntent2);
+        am.set(AlarmManager.RTC, System.currentTimeMillis() + 6 * 60 * 60 * 1000, pIntent2);
 //        am.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 3000, /*60 * */60 * 1000, pIntent2);
 
     }

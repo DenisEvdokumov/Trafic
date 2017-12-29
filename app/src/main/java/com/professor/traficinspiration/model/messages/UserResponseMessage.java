@@ -24,6 +24,9 @@ public class UserResponseMessage extends ResponseMessage{
     @SerializedName("token")
     private String token;
 
+    @SerializedName("ref_income")
+    private double referralIncome;
+
     /**
      * No args constructor for use in serialization
      */
@@ -112,6 +115,13 @@ public class UserResponseMessage extends ResponseMessage{
         this.token = token;
     }
 
+    public double getReferralIncome() {
+        return referralIncome;
+    }
+
+    public void setReferralIncome(double referralIncome) {
+        this.referralIncome = referralIncome;
+    }
 
     @Override
     public String toString() {

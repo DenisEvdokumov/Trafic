@@ -10,9 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.professor.traficinspiration.ApplicationContext;
 import com.professor.traficinspiration.R;
 import com.professor.traficinspiration.model.Order;
 import com.squareup.picasso.Picasso;
@@ -25,7 +23,7 @@ public class OrderAdapter extends ArrayAdapter<Order> {
     private List<Order> values;
 
     public OrderAdapter(@NonNull Context context, List<Order> values) {
-        super(context, R.layout.list_item_pagination, values);
+        super(context, R.layout.order_list_item_pagination, values);
 
         this.context = context;
         this.values = values;
@@ -39,7 +37,7 @@ public class OrderAdapter extends ArrayAdapter<Order> {
         if (row == null) {
             LayoutInflater inflater =
                     (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row = inflater.inflate(R.layout.list_item_pagination, parent, false);
+            row = inflater.inflate(R.layout.order_list_item_pagination, parent, false);
         }
 
 //        android.R.layout.simple_list_item_1 - встроенный элемент для отображения элемента списка

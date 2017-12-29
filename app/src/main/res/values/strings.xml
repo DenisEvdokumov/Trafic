@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TraficInspiration</string>
+    <string name="app_name">Click coin</string>
     <string name="order_alert_message">Внимание! Все действия заказа обязательно должны выполняться через это приложение чтобы они были засчитаны.</string>
     <string name="text_new">НОВЫЕ</string>
     <string name="text_active">АКТИВНЫЕ</string>

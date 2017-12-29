@@ -185,6 +185,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(toSupportActivity);
                 break;
 
+            case R.id.helpButton:
+                Intent toHelpActivity = new Intent(this, HelpActivity.class);
+                startActivity(toHelpActivity);
+                break;
+
+            case R.id.networkButton:
+                Intent toNetworkActivity = new Intent(this, NetworkActivity.class);
+                startActivity(toNetworkActivity);
+                break;
+
+            case R.id.newsButton:
+                Intent toNewsActivity = new Intent(this, NewsActivity.class);
+                startActivity(toNewsActivity);
+                break;
+
             default:
                 Toast.makeText(this, "Данный раздел находится в разработке", Toast.LENGTH_SHORT).show();
 
@@ -269,9 +284,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         } else {
             // Signed out
-
             MyAlertDialogFragment.createAndShowErrorDialog("Не удалось авторизироваться. Проверьте наличие интернета и аккаунта Google на устройстве");
-
         }
     }
 

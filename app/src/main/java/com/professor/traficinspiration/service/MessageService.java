@@ -17,6 +17,7 @@ import com.professor.traficinspiration.R;
 import com.professor.traficinspiration.activity.SignInActivity;
 import com.professor.traficinspiration.model.Order;
 import com.professor.traficinspiration.model.User;
+import com.professor.traficinspiration.model.WithdrawHistoryEntry;
 import com.professor.traficinspiration.model.messages.CompleteOrderRequestMessage;
 import com.professor.traficinspiration.model.messages.CompleteOrderResponseMessage;
 import com.professor.traficinspiration.model.messages.OrdersResponseMessage;
@@ -25,6 +26,7 @@ import com.professor.traficinspiration.model.messages.SupportRequestMessage;
 import com.professor.traficinspiration.model.messages.SupportResponseMessage;
 import com.professor.traficinspiration.model.messages.UserRequestMessage;
 import com.professor.traficinspiration.model.messages.UserResponseMessage;
+import com.professor.traficinspiration.model.messages.WithdrawHistoryResponseMessage;
 import com.professor.traficinspiration.model.messages.WithdrawRequestMessage;
 import com.professor.traficinspiration.model.messages.WithdrawResponseMessage;
 import com.professor.traficinspiration.model.tasks.CheckInstallTask;
@@ -109,6 +111,7 @@ public class MessageService {
         user.setBalance(userResponseMessage.getBalance());
         user.setOrdersCompleted(userResponseMessage.getOrdersCompleted());
         user.setReferralsCount(userResponseMessage.getReferralsCount());
+        user.setReferralIncome(userResponseMessage.getReferralIncome());
 
 
         return user;
@@ -159,7 +162,11 @@ public class MessageService {
             ApplicationContext.getContext().startActivity(toSignInActivity);
 //            MyAlertDialogFragment.createAndShowErrorDialog("Сервер не отвечает. Проверьте соединение с интернетом");
 
-            Toast.makeText(ApplicationContext.getContext(), "Сервер не отвечает. Проверьте соединение с интернетом", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(ApplicationContext.getContext(), "intent - " + toSignInActivity.toString(), Toast.LENGTH_SHORT).show();
+
+
+//            Toast.makeText(ApplicationContext.getContext(), "Сервер не отвечает. Проверьте соединение с интернетом", Toast.LENGTH_SHORT).show();
+
             return false;
         }
 
@@ -283,7 +290,7 @@ public class MessageService {
     public void completeOrder(final Order order) {
         // метод использует ApplicationContext и он должен быть доступен при выполнении
 
-        final User user = ApplicationContext.getUser();
+        User user = ApplicationContext.getUser();
 
         CompleteOrderRequestMessage completeOrderRequestMessage = new CompleteOrderRequestMessage(user.getId(), ApplicationContext.getSessionToken(), order.getId());
         completeOrderRequestMessage.setReview(order.isComment());
@@ -353,6 +360,41 @@ public class MessageService {
                 MyAlertDialogFragment.createAndShowErrorDialog("Возникла ошибка в процессе попытки вывода средств");
             }
         });
+    }
+
+    public List<WithdrawHistoryEntry> getWithdrawHistory() {
+
+        MoneyService moneyService = retrofit.create(MoneyService.class);
+
+        User user = ApplicationContext.getUser();
+
+        Call<WithdrawHistoryResponseMessage> call = moneyService.getWithdrawHistory(user.getId(), ApplicationContext.getSessionToken());
+
+        Response<WithdrawHistoryResponseMessage> response = null;
+
+        RequestExecutor requestExecutor = new RequestExecutor();
+
+        try {
+            response = requestExecutor.execute(call).get();
+
+//            Toast.makeText(ApplicationContext.getContext(), "" + response.toString(), Toast.LENGTH_LONG).show();
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return null;
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        if (!isResponseSuccessful(response)) {
+            return null;
+        }
+
+        WithdrawHistoryResponseMessage withdrawHistoryResponseMessage = response.body();
+
+        return withdrawHistoryResponseMessage.getWithdrawList();
+
     }
 
 

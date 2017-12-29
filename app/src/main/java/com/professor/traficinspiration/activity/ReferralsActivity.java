@@ -20,6 +20,8 @@ public class ReferralsActivity extends AppCompatActivity implements View.OnClick
 
         ((TextView) findViewById(R.id.text_referrals_count)).setText(String.valueOf(ApplicationContext.getUser().getReferralsCount()));
         ((TextView) findViewById(R.id.text_referral_code)).setText(String.valueOf(ApplicationContext.getUser().getId()));
+        ((TextView) findViewById(R.id.text_referral_income)).setText(String.valueOf(ApplicationContext.getUser().getReferralIncome()));
+
     }
 
     @Override

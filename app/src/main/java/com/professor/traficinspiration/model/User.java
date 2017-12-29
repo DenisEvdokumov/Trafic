@@ -11,28 +11,29 @@ public class User {
     private String password;
     private double balance;
     private String email;
-    private long createdAt;
+//    private long createdAt;
     private long ordersCompleted;
     private long referralsCount;
     private Uri photoUrl;
+    private double referralIncome;
 
     private Drawable photo;
 
     public User() {
     }
 
-    public User(long id, long idReferrer, String name, String password, double balance, String email, long createdAt, long ordersCompleted, long referralsCount) {
-        super();
-        this.id = id;
-        this.idReferrer = idReferrer;
-        this.name = name;
-        this.password = password;
-        this.balance = balance;
-        this.email = email;
-        this.createdAt = createdAt;
-        this.ordersCompleted = ordersCompleted;
-        this.referralsCount = referralsCount;
-    }
+//    public User(long id, long idReferrer, String name, String password, double balance, String email, long createdAt, long ordersCompleted, long referralsCount) {
+//        super();
+//        this.id = id;
+//        this.idReferrer = idReferrer;
+//        this.name = name;
+//        this.password = password;
+//        this.balance = balance;
+//        this.email = email;
+//        this.createdAt = createdAt;
+//        this.ordersCompleted = ordersCompleted;
+//        this.referralsCount = referralsCount;
+//    }
 
     public long getId() {
         return id;
@@ -82,13 +83,13 @@ public class User {
         this.email = email;
     }
 
-    public long getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(long createdAt) {
-        this.createdAt = createdAt;
-    }
+//    public long getCreatedAt() {
+//        return createdAt;
+//    }
+//
+//    public void setCreatedAt(long createdAt) {
+//        this.createdAt = createdAt;
+//    }
 
     public long getOrdersCompleted() {
         return ordersCompleted;
@@ -112,6 +113,14 @@ public class User {
 
     public void setPhotoUrl(Uri photoUrl) {
         this.photoUrl = photoUrl;
+    }
+
+    public double getReferralIncome() {
+        return referralIncome;
+    }
+
+    public void setReferralIncome(double referralIncome) {
+        this.referralIncome = referralIncome;
     }
 
     public Drawable getPhoto() {

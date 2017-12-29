@@ -34,7 +34,9 @@ public class PaymentSystemsActivity extends AppCompatActivity implements View.On
                 finish();
                 break;
             case R.id.btn_history:
-                Toast.makeText(this, "У Вас нет ни одной выплаты", Toast.LENGTH_LONG).show();
+//                Toast.makeText(this, "У Вас нет ни одной выплаты", Toast.LENGTH_LONG).show();
+                Intent toWithdrawHistoryActivity = new Intent(this, WithdrawHistoryActivity.class);
+                startActivity(toWithdrawHistoryActivity);
                 break;
             case R.id.btn_mobile:
                 Intent toMoneyActivity = new Intent(this, MoneyActivity.class).putExtra("withdrawType", (String) v.getTag());
