@@ -14,7 +14,8 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
     EditText passwordEditText;
     EditText confirmPasswordEditText;
-    EditText referrerEditText;
+    EditText referrerEditText,emailEditText;
+    //emailEditText
 
     String userEmail;
 
@@ -30,7 +31,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
         userEmail = ApplicationContext.getUser().getEmail();
 
-        TextView emailEditText = (TextView) findViewById(R.id.et_email);
+        emailEditText = (EditText) findViewById(R.id.et_email);
         emailEditText.setText(userEmail);
 
         passwordEditText = (EditText) findViewById(R.id.et_password);
@@ -47,9 +48,10 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         if (id == R.id.back_button) {
             finish();
         } else if (id == R.id.btn_register) {
-            String password;
+            String password,email;
 
             password = passwordEditText.getText().toString();
+            email = emailEditText.getText().toString();
             String confirmPassword = confirmPasswordEditText.getText().toString();
 
             // password check
@@ -58,12 +60,16 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 Toast.makeText(RegistrationActivity.this, "Passwords must not be empty", Toast.LENGTH_SHORT).show();
                 return;
             }
+            if (email.equals("")){
+                Toast.makeText(RegistrationActivity.this, "Passwords must not be empty", Toast.LENGTH_SHORT).show();
+                return;
+            }
             if (!password.equals(confirmPassword)){
                 Toast.makeText(RegistrationActivity.this, "Passwords not match", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            String email = userEmail;
+
             String idReferrerString = referrerEditText.getText().toString();
             Long idReferrer = null;
 

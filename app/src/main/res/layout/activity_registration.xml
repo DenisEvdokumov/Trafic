@@ -38,7 +38,7 @@
             android:textSize="@dimen/label_field_text_size"
             android:textColor="#AAAAAA" />
 
-        <TextView
+        <EditText
             android:id="@+id/et_email"
             android:background="@drawable/grey_field"
             android:layout_width="fill_parent"

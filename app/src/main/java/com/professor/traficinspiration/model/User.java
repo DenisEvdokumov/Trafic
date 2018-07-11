@@ -11,6 +11,8 @@ public class User {
     private String password;
     private double balance;
     private String email;
+
+    private String token;
 //    private long createdAt;
     private long ordersCompleted;
     private long referralsCount;
@@ -129,5 +131,14 @@ public class User {
 
     public void setPhoto(Drawable photo) {
         this.photo = photo;
+    }
+
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

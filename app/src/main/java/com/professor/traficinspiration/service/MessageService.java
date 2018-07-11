@@ -244,6 +244,9 @@ public class MessageService {
             ApplicationContext.setKeyMAC(KeyMAC_real);
             Log.i("1", "KeyMAC_real    "  + KeyMAC_real);
 
+
+            return user;
+
         }
 
 
@@ -254,11 +257,29 @@ public class MessageService {
 
     private User getUserForResponse(UserResponseMessage userResponseMessage) {
         User user = new User();
-        user.setId(Long.parseLong(decrypt(userResponseMessage.getId())));
+        user.setId(Long.parseLong(decryptAES(userResponseMessage.getId())));
+        user.setBalance(Long.parseLong(decryptAES(userResponseMessage.getId())));
+        user.setToken(decryptAES(userResponseMessage.getToken()));
+        user.setOrdersCompleted(Long.parseLong(decryptAES(userResponseMessage.getOrdersCompleted())));
+        user.setReferralsCount(Long.parseLong(decryptAES(userResponseMessage.getReferralsCount())));
+
+//        Log.i("1", "KeyMAC_real    "  + decryptAES(userResponseMessage.getId()));
+//        Log.i("1", "KeyMAC_real    "  + decryptAES(userResponseMessage.getBalance()));
+//        Log.i("1", "KeyMAC_real    "  + decryptAES(userResponseMessage.getRefIncome()));
+//        Log.i("1", "KeyMAC_real    "  + decryptAES(userResponseMessage.getToken()));
+//        Log.i("1", "KeyMAC_real    "  + decryptAES(userResponseMessage.getOrdersCompleted()));
+//        Log.i("1", "KeyMAC_real    "  + decryptAES(userResponseMessage.getReferralsCount()));
+
+        return user;
     }
 
     private String decrypt(String string) {
         String encryptString = FirstStep2.decrypt(string,ApplicationContext.getKeyMAC());
+        return encryptString;
+    }
+
+    private String decryptAES(String string) {
+        String encryptString = FirstStep2.decrypt(string,ApplicationContext.getKeyAES());
         return encryptString;
     }
 
