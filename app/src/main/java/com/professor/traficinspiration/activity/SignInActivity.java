@@ -14,7 +14,7 @@ import com.professor.traficinspiration.R;
 
 public class SignInActivity extends AppCompatActivity implements View.OnClickListener {
 
-    EditText passwordEditText;
+    EditText passwordEditText,emailEditText;
     CheckBox remainSignedInCheckBox;
 
 
@@ -32,7 +32,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
         email = ApplicationContext.getUser().getEmail();
 
-        TextView emailEditText = (TextView) findViewById(R.id.et_email);
+        emailEditText = (EditText) findViewById(R.id.et_email);
         emailEditText.setText(email);
 
         passwordEditText = (EditText) findViewById(R.id.et_password);
@@ -48,12 +48,14 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         String password;
+        String email;
         switch (v.getId()) {
             case R.id.btn_login:
                 password = passwordEditText.getText().toString();
+                email = emailEditText.getText().toString();
 
                 // password check
-                if (password.equals("")){
+                if (password.equals("")|email.equals("")){
                     Toast.makeText(SignInActivity.this, "Пароль не может быть пустым", Toast.LENGTH_SHORT).show();
                     return;
                 }

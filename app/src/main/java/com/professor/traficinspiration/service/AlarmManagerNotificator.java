@@ -2,20 +2,13 @@ package com.professor.traficinspiration.service;
 
 
 import android.app.AlarmManager;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.os.SystemClock;
-import android.widget.Toast;
 
 import com.professor.traficinspiration.ApplicationContext;
-import com.professor.traficinspiration.R;
 
 import static android.content.Context.ALARM_SERVICE;
-import static android.content.Context.NOTIFICATION_SERVICE;
 
 public class AlarmManagerNotificator {
 
@@ -42,9 +35,9 @@ public class AlarmManagerNotificator {
 
 
     Intent createIntent() {
-        Intent intent = new Intent(ApplicationContext.getContext(), Receiver.class);
+        Intent intent = new Intent(ApplicationContext.getContext(), NotificationReceiver.class);
         intent.putExtra("userId", ApplicationContext.getUser().getId());
-        intent.putExtra("sessionToken", ApplicationContext.getSessionToken());
+        intent.putExtra("sessionToken", ApplicationContext.getIdSession());
         return intent;
     }
 

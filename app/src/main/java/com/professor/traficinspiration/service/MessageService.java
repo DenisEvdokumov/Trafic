@@ -1,25 +1,21 @@
 package com.professor.traficinspiration.service;
 
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.professor.traficinspiration.ApplicationContext;
 import com.professor.traficinspiration.MyAlertDialogFragment;
-import com.professor.traficinspiration.R;
-import com.professor.traficinspiration.activity.SignInActivity;
 import com.professor.traficinspiration.model.Order;
 import com.professor.traficinspiration.model.User;
 import com.professor.traficinspiration.model.WithdrawHistoryEntry;
 import com.professor.traficinspiration.model.messages.CompleteOrderRequestMessage;
 import com.professor.traficinspiration.model.messages.CompleteOrderResponseMessage;
+import com.professor.traficinspiration.model.messages.EncryptionRequestMessage;
+import com.professor.traficinspiration.model.messages.EncryptionRequestMessage2;
+import com.professor.traficinspiration.model.messages.EncryptionResponseMessage;
+import com.professor.traficinspiration.model.messages.EncryptionResponseMessage2;
 import com.professor.traficinspiration.model.messages.OrdersResponseMessage;
 import com.professor.traficinspiration.model.messages.ResponseMessage;
 import com.professor.traficinspiration.model.messages.SupportRequestMessage;
@@ -29,16 +25,12 @@ import com.professor.traficinspiration.model.messages.UserResponseMessage;
 import com.professor.traficinspiration.model.messages.WithdrawHistoryResponseMessage;
 import com.professor.traficinspiration.model.messages.WithdrawRequestMessage;
 import com.professor.traficinspiration.model.messages.WithdrawResponseMessage;
-import com.professor.traficinspiration.model.tasks.CheckInstallTask;
-import com.professor.traficinspiration.model.tasks.CommentTask;
-import com.professor.traficinspiration.model.tasks.FindTask;
-import com.professor.traficinspiration.model.tasks.OpenTask;
-import com.professor.traficinspiration.model.tasks.ReopenTask;
-import com.professor.traficinspiration.model.tasks.Task;
-import com.squareup.picasso.Picasso;
+import com.professor.traficinspiration.service.handler.OrdersHandler;
+import com.professor.traficinspiration.service.handler.UserHandler;
+import com.professor.traficinspiration.utils.FirstStep;
+import com.professor.traficinspiration.utils.FirstStep2;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -49,7 +41,10 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.professor.traficinspiration.ApplicationContext.getContext;
+
 public class MessageService {
+
 
     static Retrofit retrofit;
 
@@ -65,18 +60,158 @@ public class MessageService {
 
     public void executeEnterSequence(final String email, final String password, final String action, final Long idReferrer) {
 
-        if (handleUser(getOrCreateUser(email, password, action, idReferrer))) {
-            handleOrders(getOrders(false));
-//            handleOrderHistory(getOrders(true));
+        if(connectToServer()) {
 
-            ApplicationContext.notificator.init();
+
+            if (UserHandler.handle(getOrCreateUser(email, password, action, idReferrer))) {
+                OrdersHandler.handle(getOrders(false));
+
+                ApplicationContext.notificator.init();
+            }
         }
 
     }
 
+    private Boolean connectToServer() {
+
+
+
+        EncryptionResponseMessage encryptionResponseMessage = SendFistEncryptKey();
+
+
+        EncryptionResponseMessage2 encryptionResponseMessage2 = RequestEncryptKey(encryptionResponseMessage);
+
+
+
+        if(chekcMAC_MAC(encryptionResponseMessage2.getKeyMAC_MAC(),encryptionResponseMessage2.getKeyMAC())){
+
+            String KeyMAC_real = FirstStep2.decrypt(encryptionResponseMessage2.getKeyMAC(), ApplicationContext.getKeyAES());
+            ApplicationContext.setKeyMAC(KeyMAC_real);
+            Log.i("1", "KeyMAC_real    "  + KeyMAC_real);
+            return true;
+        }
+
+
+        return false;
+    }
+
+    private EncryptionResponseMessage2 RequestEncryptKey(EncryptionResponseMessage encryptionResponseMessage) {
+        final EncryptionRequestMessage2 encryptionRequestMessage2 = FirstStep2.
+                genetateEncryptionRequestMessage(encryptionResponseMessage);
+        FistConnectToServerAPI fistConnectToServerAPI = retrofit.create(FistConnectToServerAPI.class);
+        final Call<EncryptionResponseMessage2> call2 = fistConnectToServerAPI.getFirstKey2(encryptionRequestMessage2);
+
+        Response<EncryptionResponseMessage2> response2 = null;
+
+        RequestExecutor requestExecutor2 = new RequestExecutor();
+
+        Log.i("1", encryptionRequestMessage2.getIdSessionMAC().toString());
+        try {
+            response2 = requestExecutor2.execute(call2).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            Log.i("1", e.toString());
+            return null;
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            Log.i("1", e.toString());
+            return null;
+        }
+
+
+        if (!isResponseSuccessful(response2)) {
+            try {
+                Log.i("1", response2.errorBody().string().toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+            return null;
+        }
+
+        return response2.body();
+
+    }
+
+    private EncryptionResponseMessage SendFistEncryptKey() {
+        final EncryptionRequestMessage encryptionRequestMessage = FirstStep.genetateEncryptionRequestMessage();
+        FistConnectToServerAPI fistConnectToServerAPI = retrofit.create(FistConnectToServerAPI.class);
+        final Call<EncryptionResponseMessage> call = fistConnectToServerAPI.getFirstKey(encryptionRequestMessage);
+
+        Response<EncryptionResponseMessage> response = null;
+
+        RequestExecutor requestExecutor = new RequestExecutor();
+
+        try {
+            response = requestExecutor.execute(call).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            Log.i("1", e.toString());
+            return null;
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            Log.i("1", e.toString());
+            return null;
+        }
+
+
+        if (!isResponseSuccessful(response)) {
+            Log.i("1", "no isResponseSuccessful");
+            return null;
+        }
+        return response.body();
+    }
+
+    private Boolean chekcMAC_MAC(String keyMAC_MAC,String keyMAC) {
+
+
+
+        String keyMACold = ApplicationContext.getKeyMAC();
+
+        String KeyMAC_from_MAC = FirstStep2.decrypt(keyMAC_MAC, keyMACold);
+        //Проверка равен ли KeyMAC к KeyMAC_MACdecoded
+        if(keyMAC.equals(KeyMAC_from_MAC)) {
+            Log.i("1","KeyMAC == KeyMAC_MACdecoded ---------------------------");
+        }else {
+            return false;
+        }
+        return true;
+    }
+
     public User getOrCreateUser(final String email, final String password, final String action, final Long idReferrer) {
 
-        final UserRequestMessage userRequestMessage = new UserRequestMessage(email, password, action, idReferrer);
+        // !!! encrypt password...
+
+        final UserRequestMessage userRequestMessage = new UserRequestMessage();
+
+        Log.i("1", "KeyMAC_real         ----------------   "  + ApplicationContext.getKeyMAC());
+        Log.i("1", "KeyAES         -----------------      "  + ApplicationContext.getKeyAES());
+        Log.i("1", "SessionID       -----------------      "  + ApplicationContext.getIdSession());
+
+        String emailAES = encryptAES(email);
+        userRequestMessage.setEmail(emailAES);
+        userRequestMessage.setEmailMAC(encrypt(emailAES));
+
+        String passwordAES = encryptAES(password);
+        userRequestMessage.setPassword(passwordAES);
+        userRequestMessage.setPasswordMAC(encrypt(passwordAES));
+
+        userRequestMessage.setAction(action);
+
+
+        userRequestMessage.setIdSession(ApplicationContext.getIdSession());
+        userRequestMessage.setIdSessionMAC(encrypt(ApplicationContext.getIdSession()));
+
+        String sequenceAES = encryptAES(String.valueOf(Integer.parseInt(ApplicationContext.getSequence())));
+
+        userRequestMessage.setSequence(sequenceAES);
+        userRequestMessage.setSequenceMAC(encrypt(sequenceAES));
+
+
+
+
+
         UserService userService = retrofit.create(UserService.class);
         final Call<UserResponseMessage> call = userService.getOrCreateUser(userRequestMessage);
 
@@ -99,26 +234,47 @@ public class MessageService {
             return null;
         }
 
-//        Toast.makeText(ApplicationContext.getContext(), "Success", Toast.LENGTH_LONG).show();
-
         UserResponseMessage userResponseMessage = response.body();
-        ApplicationContext.setSessionToken(userResponseMessage.getToken());
+
+        User user = getUserForResponse(userResponseMessage);
+
+        if(chekcMAC_MAC(userResponseMessage.getKeyMACMAC(),userResponseMessage.getKeyMAC())){
+
+            String KeyMAC_real = FirstStep2.decrypt(userResponseMessage.getKeyMAC(), ApplicationContext.getKeyAES());
+            ApplicationContext.setKeyMAC(KeyMAC_real);
+            Log.i("1", "KeyMAC_real    "  + KeyMAC_real);
+
+        }
 
 
-        User user = ApplicationContext.getUser();
-        user.setId(userResponseMessage.getId());
-        user.setPassword(password);
-        user.setBalance(userResponseMessage.getBalance());
-        user.setOrdersCompleted(userResponseMessage.getOrdersCompleted());
-        user.setReferralsCount(userResponseMessage.getReferralsCount());
-        user.setReferralIncome(userResponseMessage.getReferralIncome());
 
 
-        return user;
+        return null;
+    }
+
+    private User getUserForResponse(UserResponseMessage userResponseMessage) {
+        User user = new User();
+        user.setId(Long.parseLong(decrypt(userResponseMessage.getId())));
+    }
+
+    private String decrypt(String string) {
+        String encryptString = FirstStep2.decrypt(string,ApplicationContext.getKeyMAC());
+        return encryptString;
+    }
+
+    private String encryptAES(String string) {
+        String encryptString = FirstStep2.encrypt(string,ApplicationContext.getKeyAES());
+        return encryptString;
+
+    }
+
+    private String encrypt(String string) {
+        String encryptString = FirstStep2.encrypt(string,ApplicationContext.getKeyMAC());
+        return encryptString;
     }
 
     public List<Order> getOrders(boolean history) {
-        return getOrders(ApplicationContext.getUser().getId(), ApplicationContext.getSessionToken(), history);
+        return getOrders(ApplicationContext.getUser().getId(), ApplicationContext.getIdSession(), history);
     }
 
     public List<Order> getOrders(long userId, String sessionToken, boolean history) {
@@ -155,144 +311,12 @@ public class MessageService {
         return ordersResponseMessage.getOrderList();
     }
 
-    public boolean handleUser(User user) {
-
-        if (user == null) {
-            Intent toSignInActivity = new Intent(ApplicationContext.getContext(), SignInActivity.class);
-            ApplicationContext.getContext().startActivity(toSignInActivity);
-//            MyAlertDialogFragment.createAndShowErrorDialog("Сервер не отвечает. Проверьте соединение с интернетом");
-
-//            Toast.makeText(ApplicationContext.getContext(), "intent - " + toSignInActivity.toString(), Toast.LENGTH_SHORT).show();
-
-
-//            Toast.makeText(ApplicationContext.getContext(), "Сервер не отвечает. Проверьте соединение с интернетом", Toast.LENGTH_SHORT).show();
-
-            return false;
-        }
-
-        // отобразить информацию о пользователе
-        ImageView userPhotoView = (ImageView) ApplicationContext.getContext().findViewById(R.id.avatar);
-
-        Uri uri = user.getPhotoUrl();
-        Picasso.with(ApplicationContext.getContext())
-                .load(uri)
-                .placeholder(R.drawable.default_account_icon)
-                .error(R.drawable.default_account_icon)
-                .into(userPhotoView);
-
-//                    user.setPhoto(userPhotoView.getDrawable());
-
-        String balanceString = "Баланс: " + user.getBalance();
-        ((TextView) ApplicationContext.getContext().findViewById(R.id.txtName)).setText(user.getName());
-        ((TextView) ApplicationContext.getContext().findViewById(R.id.txtMoney)).setText(balanceString);
-        ApplicationContext.getContext().findViewById(R.id.accountInfoButton).setVisibility(View.VISIBLE);
-
-
-        SharedPreferences sharedPreferences = ApplicationContext.getContext().getSharedPreferences(user.getEmail(), Context.MODE_PRIVATE);
-        sharedPreferences.edit().putString("password", user.getPassword()).apply();
-
-        return true;
-    }
-
-    public void handleOrders(List<Order> orderList) {
-
-        if (orderList == null) {
-            Toast.makeText(ApplicationContext.getContext(), "Не удалось получить список заказов", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        List<Order> newOrderList = new ArrayList<>();
-        List<Order> activeOrderList = ApplicationContext.getActiveOrderList();
-
-
-        for (Order order : orderList) {
-//                        if (activeOrderList.contains(order)) {
-//                            continue;
-//                        }
-
-            // если заказ не поступил с сервера, то он был удален или его выполнение уже невозможно => нужно убрать его из активных заказов...
-
-            List<Task> taskList = new ArrayList<>(Arrays.asList(
-                    new FindTask(order),
-                    new CheckInstallTask(order),
-                    new OpenTask(order)
-            ));
-
-            if (order.getNeededReviews() > order.getDoneReviews()) {
-                order.setComment(true);
-                taskList.add(new CommentTask(order));
-            }
-
-            for (int i = 1; i < order.getOpenCount(); i++) {
-                taskList.add(new ReopenTask(order.getOpenInterval()));
-            }
-            order.setTaskList(taskList);
-
-            newOrderList.add(order);
-        }
-
-        activeOrderList.retainAll(newOrderList);
-        newOrderList.removeAll(activeOrderList);
-
-        ApplicationContext.setNewOrderList(newOrderList);
-        ApplicationContext.setActiveOrderList(activeOrderList);
-    }
-
-    public void handleOrderHistory(List<Order> orderList) {
-
-        if (orderList == null) {
-            Toast.makeText(ApplicationContext.getContext(), "Не удалось получить список заказов", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        List<Order> currentHistoryOrderList = ApplicationContext.getHistoryOrderList();
-
-        for (Order order : orderList) {
-            if (currentHistoryOrderList.contains(order)) {
-                continue;
-            }
-
-            List<Task> taskList = new ArrayList<>(Arrays.asList(
-                    new FindTask(order),
-                    new CheckInstallTask(order),
-                    new OpenTask(order)
-            ));
-
-            if (order.getNeededReviews() > order.getDoneReviews()) {
-                order.setComment(true);
-                taskList.add(new CommentTask(order));
-            }
-
-            for (int i = 1; i < order.getOpenCount(); i++) {
-                taskList.add(new ReopenTask(order.getOpenInterval()));
-            }
-
-            for (Task task : taskList) {
-                task.setCompleted(true);
-            }
-
-            order.setTaskList(taskList);
-
-            order.setFinished(true);
-
-            if (order.getReview() == 1) {
-                order.setPayed(true);
-            }
-
-            currentHistoryOrderList.add(order);
-        }
-
-        ApplicationContext.setHistoryOrderList(currentHistoryOrderList);
-
-        ApplicationContext.getDatabaseManager().writeListToDB(currentHistoryOrderList);
-    }
-
     public void completeOrder(final Order order) {
         // метод использует ApplicationContext и он должен быть доступен при выполнении
 
         User user = ApplicationContext.getUser();
 
-        CompleteOrderRequestMessage completeOrderRequestMessage = new CompleteOrderRequestMessage(user.getId(), ApplicationContext.getSessionToken(), order.getId());
+        CompleteOrderRequestMessage completeOrderRequestMessage = new CompleteOrderRequestMessage(user.getId(), ApplicationContext.getIdSession(), order.getId());
         completeOrderRequestMessage.setReview(order.isComment());
 
         OrderService orderService = retrofit.create(OrderService.class);
@@ -318,15 +342,12 @@ public class MessageService {
         }
 
         if (order.isComment()) {
-            Toast.makeText(ApplicationContext.getContext(), "Оплата за выполнение будет перечислена после проверки модератором", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Оплата за выполнение будет перечислена после проверки модератором", Toast.LENGTH_LONG).show();
         } else {
             double payment = order.getPayment();
             user.setBalance(user.getBalance() + payment);
             order.setPayed(true);
         }
-
-
-//        Toast.makeText(ApplicationContext.getContext(), "Order completed", Toast.LENGTH_SHORT).show();
 
         // переместить выполненную задачу в архив
         ApplicationContext.getIdToActiveOrderMap().remove(order.getId());
@@ -338,7 +359,7 @@ public class MessageService {
     }
 
     public void withdraw(int amount, String withdrawType, String accountNumber, String notice) {
-        WithdrawRequestMessage withdrawRequestMessage = new WithdrawRequestMessage(ApplicationContext.getUser().getId(), ApplicationContext.getSessionToken(), amount, withdrawType, accountNumber, notice);
+        WithdrawRequestMessage withdrawRequestMessage = new WithdrawRequestMessage(ApplicationContext.getUser().getId(), ApplicationContext.getIdSession(), amount, withdrawType, accountNumber, notice);
 
         MoneyService moneyService = retrofit.create(MoneyService.class);
         Call<WithdrawResponseMessage> call = moneyService.withdraw(withdrawRequestMessage);
@@ -351,7 +372,7 @@ public class MessageService {
                     return;
                 }
 
-                Toast.makeText(ApplicationContext.getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
 
             }
 
@@ -368,7 +389,7 @@ public class MessageService {
 
         User user = ApplicationContext.getUser();
 
-        Call<WithdrawHistoryResponseMessage> call = moneyService.getWithdrawHistory(user.getId(), ApplicationContext.getSessionToken());
+        Call<WithdrawHistoryResponseMessage> call = moneyService.getWithdrawHistory(user.getId(), ApplicationContext.getIdSession());
 
         Response<WithdrawHistoryResponseMessage> response = null;
 
@@ -397,9 +418,8 @@ public class MessageService {
 
     }
 
-
     public void sendSupportRequest(String message) {
-        SupportRequestMessage supportRequestMessage = new SupportRequestMessage(ApplicationContext.getUser().getId(), ApplicationContext.getSessionToken(), message);
+        SupportRequestMessage supportRequestMessage = new SupportRequestMessage(ApplicationContext.getUser().getId(), ApplicationContext.getIdSession(), message);
 
         SupportService supportService = retrofit.create(SupportService.class);
         Call<SupportResponseMessage> call = supportService.sendSupportRequest(supportRequestMessage);
@@ -412,7 +432,7 @@ public class MessageService {
                     return;
                 }
 
-                Toast.makeText(ApplicationContext.getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
 
 
             }
@@ -423,25 +443,57 @@ public class MessageService {
             }
         });
 
-
     }
+
+//    public int getServerKey(int clientKey) {
+//        EncryptingService encryptingService = retrofit.create(EncryptingService.class);
+//
+//        Call<EncryptionResponseMessage> call = encryptingService.getServerKey(clientKey);
+//
+//        Response<EncryptionResponseMessage> response = null;
+//
+//        RequestExecutor requestExecutor = new RequestExecutor();
+//
+//        try {
+//            response = requestExecutor.execute(call).get();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//            return -1;
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//            return -1;
+//        }
+//
+//        if (!isResponseSuccessful(response)) {
+//            return -1;
+//        }
+//
+//        EncryptionResponseMessage encryptionResponseMessage = response.body();
+//
+////        ApplicationContext.setIdSession(encryptionResponseMessage.getToken());
+//
+//        return encryptionResponseMessage.getServerKey();
+//    }
 
     private boolean isResponseSuccessful(Response<? extends ResponseMessage> response) {
 
         if (response == null || !response.isSuccessful()) {
-            Toast.makeText(ApplicationContext.getContext(), "Сервер не отвечает. Проверьте соединение с интернетом", Toast.LENGTH_SHORT).show();
+            if (getContext() != null) {
+                Toast.makeText(getContext(), "Сервер не отвечает. Проверьте соединение с интернетом", Toast.LENGTH_SHORT).show();
+            }
 //            MyAlertDialogFragment.createAndShowErrorDialog("Сервер не отвечает. Проверьте соединение с интернетом");
             return false;
         }
 
         if (response.body().getErrors() != null) {
-            Toast.makeText(ApplicationContext.getContext(), Arrays.deepToString(response.body().getErrors().values().toArray()), Toast.LENGTH_LONG).show();
+            if (getContext() != null) {
+                Toast.makeText(getContext(), Arrays.deepToString(response.body().getErrors().values().toArray()), Toast.LENGTH_LONG).show();
+            }
             return false;
         }
 
         return true;
     }
-
 
     static class RequestExecutor extends AsyncTask<Call, Void, Response> {
 

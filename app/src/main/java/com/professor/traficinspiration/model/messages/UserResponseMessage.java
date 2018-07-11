@@ -6,105 +6,100 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Map;
 
 public class UserResponseMessage extends ResponseMessage{
+    @SerializedName("KeyMAC")
+    private String keyMAC;
+    @SerializedName("KeyMAC_MAC")
+    private String keyMACMAC;
     @SerializedName("id")
-    private long id;
-
-    @SerializedName("name")
-    private String name;
-
+    private String id;
+    @SerializedName("id_MAC")
+    private String idMAC;
     @SerializedName("balance")
-    private double balance;
-
-    @SerializedName("orders_completed")
-    private long ordersCompleted;
-
-    @SerializedName("referrals_count")
-    private long referralsCount;
-
+    private String balance;
+    @SerializedName("balance_MAC")
+    private String balanceMAC;
+    @SerializedName("ref_income")
+    private String refIncome;
+    @SerializedName("ref_income_MAC")
+    private String refIncomeMAC;
     @SerializedName("token")
     private String token;
-
-    @SerializedName("ref_income")
-    private double referralIncome;
-
+    @SerializedName("token_MAC")
+    private String tokenMAC;
+    @SerializedName("orders_completed")
+    private String ordersCompleted;
+    @SerializedName("orders_completed_MAC")
+    private String ordersCompletedMAC;
+    @SerializedName("referrals_count")
+    private String referralsCount;
+    @SerializedName("referrals_count_MAC")
+    private String referralsCountMAC;
     /**
      * No args constructor for use in serialization
      */
-    public UserResponseMessage() {
+
+    public String getKeyMAC() {
+        return keyMAC;
     }
 
-    /**
-     * @param ordersCompleted
-     * @param id
-     * @param balance
-     * @param referralsCount
-     */
-    public UserResponseMessage(long id, double balance, long ordersCompleted, long referralsCount) {
-        super();
-        this.id = id;
-        this.balance = balance;
-        this.ordersCompleted = ordersCompleted;
-        this.referralsCount = referralsCount;
+    public void setKeyMAC(String keyMAC) {
+        this.keyMAC = keyMAC;
     }
 
-    public long getId() {
+    public String getKeyMACMAC() {
+        return keyMACMAC;
+    }
+
+    public void setKeyMACMAC(String keyMACMAC) {
+        this.keyMACMAC = keyMACMAC;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public UserResponseMessage withId(long id) {
-        this.id = id;
-        return this;
+    public String getIdMAC() {
+        return idMAC;
     }
 
-    public String getName() {
-        return name;
+    public void setIdMAC(String idMAC) {
+        this.idMAC = idMAC;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double getBalance() {
+    public String getBalance() {
         return balance;
     }
 
-    public void setBalance(double balance) {
+    public void setBalance(String balance) {
         this.balance = balance;
     }
 
-    public UserResponseMessage withBalance(double balance) {
-        this.balance = balance;
-        return this;
+    public String getBalanceMAC() {
+        return balanceMAC;
     }
 
-    public long getOrdersCompleted() {
-        return ordersCompleted;
+    public void setBalanceMAC(String balanceMAC) {
+        this.balanceMAC = balanceMAC;
     }
 
-    public void setOrdersCompleted(long ordersCompleted) {
-        this.ordersCompleted = ordersCompleted;
+    public String getRefIncome() {
+        return refIncome;
     }
 
-    public UserResponseMessage withOrdersCompleted(long ordersCompleted) {
-        this.ordersCompleted = ordersCompleted;
-        return this;
+    public void setRefIncome(String refIncome) {
+        this.refIncome = refIncome;
     }
 
-    public long getReferralsCount() {
-        return referralsCount;
+    public String getRefIncomeMAC() {
+        return refIncomeMAC;
     }
 
-    public void setReferralsCount(long referralsCount) {
-        this.referralsCount = referralsCount;
-    }
-
-    public UserResponseMessage withReferralsCount(long referralsCount) {
-        this.referralsCount = referralsCount;
-        return this;
+    public void setRefIncomeMAC(String refIncomeMAC) {
+        this.refIncomeMAC = refIncomeMAC;
     }
 
     public String getToken() {
@@ -115,23 +110,43 @@ public class UserResponseMessage extends ResponseMessage{
         this.token = token;
     }
 
-    public double getReferralIncome() {
-        return referralIncome;
+    public String getTokenMAC() {
+        return tokenMAC;
     }
 
-    public void setReferralIncome(double referralIncome) {
-        this.referralIncome = referralIncome;
+    public void setTokenMAC(String tokenMAC) {
+        this.tokenMAC = tokenMAC;
     }
 
-    @Override
-    public String toString() {
-        return "UserResponseMessage{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", balance=" + balance +
-                ", ordersCompleted=" + ordersCompleted +
-                ", referralsCount=" + referralsCount +
-                ", token='" + token + '\'' +
-                '}';
+    public String getOrdersCompleted() {
+        return ordersCompleted;
+    }
+
+    public void setOrdersCompleted(String ordersCompleted) {
+        this.ordersCompleted = ordersCompleted;
+    }
+
+    public String getOrdersCompletedMAC() {
+        return ordersCompletedMAC;
+    }
+
+    public void setOrdersCompletedMAC(String ordersCompletedMAC) {
+        this.ordersCompletedMAC = ordersCompletedMAC;
+    }
+
+    public String getReferralsCount() {
+        return referralsCount;
+    }
+
+    public void setReferralsCount(String referralsCount) {
+        this.referralsCount = referralsCount;
+    }
+
+    public String getReferralsCountMAC() {
+        return referralsCountMAC;
+    }
+
+    public void setReferralsCountMAC(String referralsCountMAC) {
+        this.referralsCountMAC = referralsCountMAC;
     }
 }

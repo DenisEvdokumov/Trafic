@@ -4,6 +4,7 @@ package com.professor.traficinspiration;
 import android.app.Activity;
 import android.content.SharedPreferences;
 
+import com.professor.traficinspiration.model.EncryptKeys;
 import com.professor.traficinspiration.model.Order;
 import com.professor.traficinspiration.model.User;
 import com.professor.traficinspiration.service.AlarmManagerNotificator;
@@ -33,7 +34,11 @@ public class ApplicationContext {
 
     // или не хранить эту информацию в приложении и при необходимости запрашивать из файловой системы
     static User user;
-    static String sessionToken;
+    static EncryptKeys encryptKeys;
+    static String keyAES;
+    static String keyMAC;
+    static String sequence;
+    static String idSession;
 //    public static GoogleSignInAccount acct;
 
     static MessageService messageService = new MessageService();
@@ -95,6 +100,16 @@ public class ApplicationContext {
         editor.putLong("userId", user.getId());
         editor.apply();
     }
+
+
+    public static EncryptKeys getEncryptKeys() {
+        return encryptKeys;
+    }
+
+    public static void setEncryptKeys(EncryptKeys encryptKeys) {
+        ApplicationContext.encryptKeys = encryptKeys;
+    }
+
 
 
     public static List<Order> getNewOrderList() {
@@ -178,12 +193,12 @@ public class ApplicationContext {
         ApplicationContext.idToHistoryOrderMap = idToHistoryOrderMap;
     }
 
-    public static String getSessionToken() {
-        return sessionToken;
+    public static String getIdSession() {
+        return idSession;
     }
 
-    public static void setSessionToken(String sessionToken) {
-        ApplicationContext.sessionToken = sessionToken;
+    public static void setIdSession(String idSession) {
+        ApplicationContext.idSession = idSession;
     }
 
     public static DatabaseManager getDatabaseManager() {
@@ -196,5 +211,31 @@ public class ApplicationContext {
 
     public static void setCurrentDate(Date currentDate) {
         ApplicationContext.currentDate = currentDate;
+    }
+
+    public static String getKeyMAC() {
+        return keyMAC;
+    }
+
+    public static void setKeyMAC(String keyMAC) {
+        ApplicationContext.keyMAC = keyMAC;
+    }
+
+    public static String getKeyAES() {
+        return keyAES;
+    }
+
+    public static void setKeyAES(String keyAES) {
+        ApplicationContext.keyAES = keyAES;
+    }
+
+    public static String getSequence() {
+        int oldSequense = Integer.parseInt(sequence) + 1;
+        sequence = String.valueOf(oldSequense);
+        return sequence;
+    }
+
+    public static void setSequence(String sequence) {
+        ApplicationContext.sequence = sequence;
     }
 }

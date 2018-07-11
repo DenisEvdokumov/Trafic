@@ -5,65 +5,49 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class UserRequestMessage extends RequestMessage{
-    @SerializedName("email")
+
+    @SerializedName("idSession")
     @Expose
-    private String email;
-    @SerializedName("password")
+    private String idSession;
+    @SerializedName("idSession_MAC")
     @Expose
-    private String password;
+    private String idSessionMAC;
     @SerializedName("action")
     @Expose
     private String action;
-    @SerializedName("id_referrer")
+    @SerializedName("sequence")
     @Expose
-    private Long idReferrer;
+    private String sequence;
+    @SerializedName("sequence_MAC")
+    @Expose
+    private String sequenceMAC;
+    @SerializedName("email")
+    @Expose
+    private String email;
+    @SerializedName("email_MAC")
+    @Expose
+    private String emailMAC;
+    @SerializedName("password")
+    @Expose
+    private String password;
+    @SerializedName("password_MAC")
+    @Expose
+    private String passwordMAC;
 
-    /**
-     * No args constructor for use in serialization
-     *
-     */
-    public UserRequestMessage() {
+    public String getIdSession() {
+        return idSession;
     }
 
-    /**
-     *
-     * @param email
-     * @param idReferrer
-     * @param action
-     * @param password
-     */
-    public UserRequestMessage(String email, String password, String action, Long idReferrer) {
-        super();
-        this.email = email;
-        this.password = password;
-        this.action = action;
-        this.idReferrer = idReferrer;
+    public void setIdSession(String idSession) {
+        this.idSession = idSession;
     }
 
-    public String getEmail() {
-        return email;
+    public String getIdSessionMAC() {
+        return idSessionMAC;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public UserRequestMessage withEmail(String email) {
-        this.email = email;
-        return this;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public UserRequestMessage withPassword(String password) {
-        this.password = password;
-        return this;
+    public void setIdSessionMAC(String idSessionMAC) {
+        this.idSessionMAC = idSessionMAC;
     }
 
     public String getAction() {
@@ -74,21 +58,52 @@ public class UserRequestMessage extends RequestMessage{
         this.action = action;
     }
 
-    public UserRequestMessage withAction(String action) {
-        this.action = action;
-        return this;
+    public String getSequence() {
+        return sequence;
     }
 
-    public Long getIdReferrer() {
-        return idReferrer;
+    public void setSequence(String sequence) {
+        this.sequence = sequence;
     }
 
-    public void setIdReferrer(Long idReferrer) {
-        this.idReferrer = idReferrer;
+    public String getSequenceMAC() {
+        return sequenceMAC;
     }
 
-    public UserRequestMessage withIdReferrer(long idReferrer) {
-        this.idReferrer = idReferrer;
-        return this;
+    public void setSequenceMAC(String sequenceMAC) {
+        this.sequenceMAC = sequenceMAC;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getEmailMAC() {
+        return emailMAC;
+    }
+
+    public void setEmailMAC(String emailMAC) {
+        this.emailMAC = emailMAC;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPasswordMAC() {
+        return passwordMAC;
+    }
+
+    public void setPasswordMAC(String passwordMAC) {
+        this.passwordMAC = passwordMAC;
+    }
+
 }

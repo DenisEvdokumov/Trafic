@@ -1,72 +1,27 @@
 {
   "project_info": {
-    "project_number": "1007957454644",
-    "project_id": "motivator-89a75"
+    "project_number": "431575198328",
+    "firebase_url": "https://click-coin-209109.firebaseio.com",
+    "project_id": "click-coin-209109",
+    "storage_bucket": "click-coin-209109.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1007957454644:android:e0305fa9d8ae5e29",
-        "android_client_info": {
-          "package_name": "com.trafic.motivator"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1007957454644-ipirpargf64g979caf3gpfb8dusd5o7m.apps.googleusercontent.com",
-          "client_type": 3
-        },
-        {
-          "client_id": "1007957454644-3lk6sjsljatu70pti2lnt7pkbjocm8js.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.trafic.motivator",
-            "certificate_hash": "5c91b4f62eaa70e6b18e59e75991a9f5f9349c4f"
-          }
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAesYHkg3VtECettu7kUVfSxWf-82NMCbg"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 1
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1007957454644:android:71b4f254a6565273",
+        "mobilesdk_app_id": "1:431575198328:android:71b4f254a6565273",
         "android_client_info": {
           "package_name": "com.tramot.clickcoin"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1007957454644-6a4l0i5v902l9nd8n4mhnspcbhn4lf2u.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.tramot.clickcoin",
-            "certificate_hash": "5c91b4f62eaa70e6b18e59e75991a9f5f9349c4f"
-          }
-        },
-        {
-          "client_id": "1007957454644-ipirpargf64g979caf3gpfb8dusd5o7m.apps.googleusercontent.com",
+          "client_id": "431575198328-967ijm5eb7366458v136s9tg9djks303.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAesYHkg3VtECettu7kUVfSxWf-82NMCbg"
+          "current_key": "AIzaSyB1JWtKATbHlr3qCl-swCEGTqVzhlWBu_0"
         }
       ],
       "services": {
@@ -78,7 +33,7 @@
           "other_platform_oauth_client": []
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }

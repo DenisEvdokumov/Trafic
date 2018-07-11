@@ -153,14 +153,6 @@ public class Order {
         this.payment = payment;
     }
 
-//    public double getAdditionalOpenPayment() {
-//        return additionalOpenPayment;
-//    }
-//
-//    public void setAdditionalOpenPayment(double additionalOpenPayment) {
-//        this.additionalOpenPayment = additionalOpenPayment;
-//    }
-
     public boolean isFinished() {
         return finished;
     }

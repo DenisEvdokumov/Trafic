@@ -9,7 +9,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
-import android.widget.Toast;
 
 import com.professor.traficinspiration.ApplicationContext;
 import com.professor.traficinspiration.R;
@@ -21,7 +20,7 @@ import java.util.List;
 import static android.content.Context.ALARM_SERVICE;
 import static android.content.Context.NOTIFICATION_SERVICE;
 
-public class Receiver extends BroadcastReceiver {
+public class NotificationReceiver extends BroadcastReceiver {
 
     long userId;
     String sessionToken;
@@ -52,7 +51,7 @@ public class Receiver extends BroadcastReceiver {
 
         String notificatorText = "У Вас есть незавершенные задачи";
 
-        if (orderList.size() == 0) {
+        if (orderList == null || orderList.size() == 0) {
 //            notificatorText = "У Вас нет незавершенных задач :-)";
             return;
         }
@@ -80,7 +79,7 @@ public class Receiver extends BroadcastReceiver {
 
 
     Intent createIntent() {
-        Intent intent = new Intent(context, Receiver.class);
+        Intent intent = new Intent(context, NotificationReceiver.class);
         intent.putExtra("userId", userId);
         intent.putExtra("sessionToken", sessionToken);
         return intent;

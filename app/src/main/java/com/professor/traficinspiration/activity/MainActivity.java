@@ -2,7 +2,6 @@ package com.professor.traficinspiration.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,12 +22,11 @@ import com.professor.traficinspiration.MyAlertDialogFragment;
 import com.professor.traficinspiration.R;
 import com.professor.traficinspiration.model.Order;
 import com.professor.traficinspiration.model.User;
+import com.professor.traficinspiration.utils.NetworkChecker;
 import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
-    //    ListView listView;
-//    User user;
     private static final int RC_SIGN_IN = 9001;
 
     @Override
@@ -36,16 +34,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        Toast.makeText(this, "MainActivity onCreate", Toast.LENGTH_SHORT).show();
-
-        // не совсем правильно записывать конкретное Activity, так как оно может меняться...
         ApplicationContext.setContext(this);
 //        ApplicationContext.notificator.init();
 
         // проверить не залогинен ли уже пользователь
         User user = ApplicationContext.getUser();
         if (user == null || user.getId() == 0) {
-//            Toast.makeText(this, "user not exists", Toast.LENGTH_SHORT).show();
 
             // востановить активные задачи
             // это происходит до получения данных с сервера
@@ -54,10 +48,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // попытка автоматического входа
             tryAutoSignIn();
         } else {
-//            Toast.makeText(this, "user exists", Toast.LENGTH_SHORT).show();
 
             // отобразить информацию о пользователе
-            Drawable userPhoto = user.getPhoto();
+//            Drawable userPhoto = user.getPhoto();
             ImageView userPhotoView = (ImageView) ApplicationContext.getContext().findViewById(R.id.avatar);
 
 //            if (userPhoto == null) {
@@ -99,6 +92,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
+        // test encrypting
+//        EncryptingHelperTry encryptingHelper = new EncryptingHelperTry();
+//        Toast.makeText(this, "" + Arrays.toString(encryptingHelper.symbols) + " - " + encryptingHelper.symbols.length, Toast.LENGTH_LONG).show();
+//        encryptingHelper.generateKey();
+//        Toast.makeText(this, "" + Arrays.toString(encryptingHelper.symbols) + " - " + encryptingHelper.symbols.length, Toast.LENGTH_LONG).show();
+
+
     }
 
     @Override
@@ -110,14 +110,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             ((TextView) ApplicationContext.getContext().findViewById(R.id.txtMoney)).setText(balanceString);
         }
 
-//        setContentView(R.layout.activity_main);
-//
-//        ApplicationContext.setContext(this);
     }
 
     private void tryAutoSignIn() {
         // get google account
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                //.requestIdToken("431575198328-53nakug7bt53up5cv77u0o14p4ubc063.apps.googleusercontent.com")
                 .requestEmail()
 //                .requestIdToken("252203805123-qg4h4omjn5ichi8b951n9k4bsg2i11jd.apps.googleusercontent.com")
                 .build();
@@ -153,20 +151,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.moneyButton:
-//                Intent toMoneyActivity = new Intent(this, MoneyActivity.class);
-//                startActivity(toMoneyActivity);
-
                 Intent toMoneyActivity = new Intent(this, PaymentSystemsActivity.class);
                 startActivity(toMoneyActivity);
-
                 break;
 
             case R.id.referralsButton:
-
-//                Order order = new Order();
-//                order.setId(7);
-//                ApplicationContext.getMessageService().completeOrder(order);
-
                 Intent toReferralsActivity = new Intent(this, ReferralsActivity.class);
                 startActivity(toReferralsActivity);
                 break;
@@ -211,8 +200,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onDestroy() {
         super.onDestroy();
 
-//        Toast.makeText(this, "MainActivity onDestroy", Toast.LENGTH_SHORT).show();
-
         if (ApplicationContext.getUser() == null) {
             return;
         }
@@ -253,8 +240,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // Signed in successfully
             final GoogleSignInAccount googleAccount = result.getSignInAccount();
             String email = googleAccount.getEmail();
-//            String email = "qwe2@gmail.com";
-
 
             // create user and put in ApplicationContext
             User user = new User();
@@ -284,16 +269,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         } else {
             // Signed out
-            MyAlertDialogFragment.createAndShowErrorDialog("Не удалось авторизироваться. Проверьте наличие интернета и аккаунта Google на устройстве");
+            MyAlertDialogFragment.createAndShowErrorDialog(String.valueOf("Please check you INTERNET connection"));
         }
     }
 
     private void loginExistingUser(String email, String password) {
-        // it is possible retrieve id for existing user
+        // it is possible to retrieve id for existing user
 
         ApplicationContext.getMessageService().executeEnterSequence(email, password, "authorization", 0L);
         // continued in MessageService onResponse
+
     }
 
-
+    @Override
+    public void startActivity(Intent intent) {
+        if (NetworkChecker.isOnline()) {
+            super.startActivity(intent);
+        } else {
+            Toast.makeText(this, "Нет соединения с интернетом", Toast.LENGTH_SHORT).show();
+        }
+    }
 }

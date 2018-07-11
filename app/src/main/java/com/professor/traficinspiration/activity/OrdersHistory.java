@@ -12,6 +12,7 @@ import com.professor.traficinspiration.ApplicationContext;
 import com.professor.traficinspiration.R;
 import com.professor.traficinspiration.model.Order;
 import com.professor.traficinspiration.service.adapter.OrderAdapter;
+import com.professor.traficinspiration.service.handler.OrderHistoryHandler;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -30,7 +31,7 @@ public class OrdersHistory extends AppCompatActivity implements AdapterView.OnIt
         ((TextView)findViewById(R.id.header_title)).setText("История заказов");
 
 
-        ApplicationContext.getMessageService().handleOrderHistory(ApplicationContext.getMessageService().getOrders(true));
+        OrderHistoryHandler.handle(ApplicationContext.getMessageService().getOrders(true));
 
         List<Order> orderList = ApplicationContext.getHistoryOrderList();
 
