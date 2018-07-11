@@ -16,6 +16,7 @@ import com.professor.traficinspiration.model.messages.EncryptionRequestMessage;
 import com.professor.traficinspiration.model.messages.EncryptionRequestMessage2;
 import com.professor.traficinspiration.model.messages.EncryptionResponseMessage;
 import com.professor.traficinspiration.model.messages.EncryptionResponseMessage2;
+import com.professor.traficinspiration.model.messages.OrdersRequestMessage;
 import com.professor.traficinspiration.model.messages.OrdersResponseMessage;
 import com.professor.traficinspiration.model.messages.ResponseMessage;
 import com.professor.traficinspiration.model.messages.SupportRequestMessage;
@@ -263,12 +264,6 @@ public class MessageService {
         user.setOrdersCompleted(Long.parseLong(decryptAES(userResponseMessage.getOrdersCompleted())));
         user.setReferralsCount(Long.parseLong(decryptAES(userResponseMessage.getReferralsCount())));
 
-//        Log.i("1", "KeyMAC_real    "  + decryptAES(userResponseMessage.getId()));
-//        Log.i("1", "KeyMAC_real    "  + decryptAES(userResponseMessage.getBalance()));
-//        Log.i("1", "KeyMAC_real    "  + decryptAES(userResponseMessage.getRefIncome()));
-//        Log.i("1", "KeyMAC_real    "  + decryptAES(userResponseMessage.getToken()));
-//        Log.i("1", "KeyMAC_real    "  + decryptAES(userResponseMessage.getOrdersCompleted()));
-//        Log.i("1", "KeyMAC_real    "  + decryptAES(userResponseMessage.getReferralsCount()));
 
         return user;
     }
@@ -299,16 +294,39 @@ public class MessageService {
     }
 
     public List<Order> getOrders(long userId, String sessionToken, boolean history) {
+        final OrdersRequestMessage ordersRequestMessage = new OrdersRequestMessage();
         OrderService orderService = retrofit.create(OrderService.class);
+
+
+        Log.i("1", "------------------------------------------------------------------");
+        String idSession = ApplicationContext.getIdSession();
+        Log.i("1", "idSession" + idSession);
+        Log.i("1","encrypt(idSession)" + encrypt(idSession));
+
+        String userIdAES = String.valueOf(userId);
+        Log.i("1","userIdAES" + userIdAES);
+        Log.i("1","encrypt(userIdAES)" + encrypt(userIdAES));
+
+        String tokenAES = encryptAES(String.valueOf(sessionToken));
+        Log.i("1", "tokenAES" + tokenAES);
+        Log.i("1", "encrypt(tokenAES)" +encrypt(tokenAES));
+
+        String sequenceAES = encryptAES(ApplicationContext.getSequence());
+        Log.i("1","sequenceAES" + sequenceAES);
+        Log.i("1", "encrypt(sequenceAES)" + encrypt(sequenceAES));
+
+        String action = "list-orders";
+        Log.i("1", "action" + action);
+        Log.i("1", "encrypt(action)" + encrypt(action));
+
 
         Call<OrdersResponseMessage> call;
 
         if (history) {
-            call = orderService.getOrdersHistory(userId, sessionToken);
+            call = orderService.getOrdersHistory(ordersRequestMessage);
         } else {
-            call = orderService.getOrders(userId, sessionToken);
+            call = orderService.getOrders(ordersRequestMessage);
         }
-
         Response<OrdersResponseMessage> response = null;
 
         RequestExecutor requestExecutor = new RequestExecutor();
