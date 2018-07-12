@@ -313,9 +313,7 @@ public class MessageService {
         Log.i("1","sequenceAES " + sequenceAES);
         Log.i("1", "encrypt(sequenceAES) " + encrypt(sequenceAES));
 
-        String action = "list-orders";
-        Log.i("1", "action " + action);
-        Log.i("1", "encrypt(action) " + encrypt(action));
+
 
         ordersRequestMessage.setIdSession(idSession);
         ordersRequestMessage.setIdSessionMAC(encrypt(idSession));
@@ -329,16 +327,23 @@ public class MessageService {
         ordersRequestMessage.setSequence(sequenceAES);
         ordersRequestMessage.setSequenceMAC(encrypt(sequenceAES));
 
-        ordersRequestMessage.setAction(action);
-        ordersRequestMessage.setAction_MAC(encrypt(action));
+
 
         Call<OrdersResponseMessage> call;
-
+        String action;
         if (history) {
+            action = "get-list";
+            ordersRequestMessage.setAction(action);
+            ordersRequestMessage.setAction_MAC(encrypt(action));
             call = orderService.getOrdersHistory(ordersRequestMessage);
         } else {
+            action = "list-orders";
+            ordersRequestMessage.setAction(action);
+            ordersRequestMessage.setAction_MAC(encrypt(action));
             call = orderService.getOrders(ordersRequestMessage);
         }
+        Log.i("1", "action " + action);
+        Log.i("1", "encrypt(action) " + encrypt(action));
         Response<OrdersResponseMessage> response = null;
 
         RequestExecutor requestExecutor = new RequestExecutor();
@@ -384,8 +389,59 @@ public class MessageService {
 
         User user = ApplicationContext.getUser();
 
-        CompleteOrderRequestMessage completeOrderRequestMessage = new CompleteOrderRequestMessage(user.getId(), ApplicationContext.getIdSession(), order.getId());
-        completeOrderRequestMessage.setReview(order.isComment());
+        CompleteOrderRequestMessage completeOrderRequestMessage = new CompleteOrderRequestMessage();
+        String idSession = ApplicationContext.getIdSession();
+        Log.i("1", "idSession " + idSession);
+        Log.i("1","encrypt(idSession) " + encrypt(idSession));
+
+        String userIdAES = encryptAES(String.valueOf(user.getId()));
+        Log.i("1","userIdAES " + userIdAES);
+        Log.i("1","encrypt(userIdAES) " + encrypt(userIdAES));
+
+        String tokenAES = encryptAES(String.valueOf(user.getToken()));
+        Log.i("1", "tokenAES " + tokenAES);
+        Log.i("1", "encrypt(tokenAES) " +encrypt(tokenAES));
+
+        String sequenceAES = encryptAES(ApplicationContext.getSequence());
+        Log.i("1","sequenceAES " + sequenceAES);
+        Log.i("1", "encrypt(sequenceAES) " + encrypt(sequenceAES));
+
+        String action = "set-completed-order";
+        Log.i("1", "action " + action);
+        Log.i("1", "encrypt(action) " + encrypt(action));
+
+        String idOrderAES = encryptAES(String.valueOf(order.getId()));
+        Log.i("1", "idOrderAES " + idOrderAES);
+        Log.i("1", "encrypt(idOrderAES) " + encrypt(idOrderAES));
+
+
+        String review = String.valueOf(order.getReview());
+        Log.i("1", "review " + review);
+        Log.i("1", "encrypt(review) " + encrypt(review));
+
+
+        completeOrderRequestMessage.setIdSession(idSession);
+        completeOrderRequestMessage.setIdSessionMAC(encrypt(idSession));
+
+        completeOrderRequestMessage.setId(userIdAES);
+        completeOrderRequestMessage.setIdMAC(encrypt(userIdAES));
+
+        completeOrderRequestMessage.setToken(tokenAES);
+        completeOrderRequestMessage.setTokenMAC(encrypt(tokenAES));
+
+        completeOrderRequestMessage.setSequence(sequenceAES);
+        completeOrderRequestMessage.setSequenceMAC(encrypt(sequenceAES));
+
+
+        completeOrderRequestMessage.setAction(action);
+        completeOrderRequestMessage.setActionMAC(encrypt(action));
+
+        completeOrderRequestMessage.setIdOrder(idOrderAES);
+        completeOrderRequestMessage.setIdOrderMAC(encrypt(idOrderAES));
+
+        completeOrderRequestMessage.setReview(review);
+        completeOrderRequestMessage.setReviewMAC(encrypt(review));
+
 
         OrderService orderService = retrofit.create(OrderService.class);
         Call<CompleteOrderResponseMessage> call = orderService.completeOrder(completeOrderRequestMessage);

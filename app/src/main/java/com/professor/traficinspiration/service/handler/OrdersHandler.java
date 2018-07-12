@@ -45,7 +45,7 @@ public class OrdersHandler {
             order.setDoneReviews(Integer.parseInt(decryptAES(orderResponse.getDoneReviews())));
             order.setReview(Integer.parseInt(decryptAES(orderResponse.getNeededReviews())));
             orderList.add(order);
-            Log.i("1","IMAGE " + order.getImageUrl());
+
         }
 
         for (Order order : orderList) {
