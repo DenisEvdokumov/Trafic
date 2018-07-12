@@ -16,6 +16,7 @@ import com.professor.traficinspiration.model.messages.EncryptionRequestMessage;
 import com.professor.traficinspiration.model.messages.EncryptionRequestMessage2;
 import com.professor.traficinspiration.model.messages.EncryptionResponseMessage;
 import com.professor.traficinspiration.model.messages.EncryptionResponseMessage2;
+import com.professor.traficinspiration.model.messages.OrderResponse;
 import com.professor.traficinspiration.model.messages.OrdersRequestMessage;
 import com.professor.traficinspiration.model.messages.OrdersResponseMessage;
 import com.professor.traficinspiration.model.messages.ResponseMessage;
@@ -186,9 +187,6 @@ public class MessageService {
 
         final UserRequestMessage userRequestMessage = new UserRequestMessage();
 
-        Log.i("1", "KeyMAC_real         ----------------   "  + ApplicationContext.getKeyMAC());
-        Log.i("1", "KeyAES         -----------------      "  + ApplicationContext.getKeyAES());
-        Log.i("1", "SessionID       -----------------      "  + ApplicationContext.getIdSession());
 
         String emailAES = encryptAES(email);
         userRequestMessage.setEmail(emailAES);
@@ -238,12 +236,11 @@ public class MessageService {
         UserResponseMessage userResponseMessage = response.body();
 
         User user = getUserForResponse(userResponseMessage);
-
+//        ApplicationContext.setUser(user);
         if(chekcMAC_MAC(userResponseMessage.getKeyMACMAC(),userResponseMessage.getKeyMAC())){
 
             String KeyMAC_real = FirstStep2.decrypt(userResponseMessage.getKeyMAC(), ApplicationContext.getKeyAES());
             ApplicationContext.setKeyMAC(KeyMAC_real);
-            Log.i("1", "KeyMAC_real    "  + KeyMAC_real);
 
 
             return user;
@@ -259,7 +256,7 @@ public class MessageService {
     private User getUserForResponse(UserResponseMessage userResponseMessage) {
         User user = new User();
         user.setId(Long.parseLong(decryptAES(userResponseMessage.getId())));
-        user.setBalance(Long.parseLong(decryptAES(userResponseMessage.getId())));
+        user.setBalance(Long.parseLong(decryptAES(userResponseMessage.getBalance())));
         user.setToken(decryptAES(userResponseMessage.getToken()));
         user.setOrdersCompleted(Long.parseLong(decryptAES(userResponseMessage.getOrdersCompleted())));
         user.setReferralsCount(Long.parseLong(decryptAES(userResponseMessage.getReferralsCount())));
@@ -289,36 +286,51 @@ public class MessageService {
         return encryptString;
     }
 
-    public List<Order> getOrders(boolean history) {
-        return getOrders(ApplicationContext.getUser().getId(), ApplicationContext.getIdSession(), history);
+    public List<OrderResponse> getOrders(boolean history) {
+        return getOrders(ApplicationContext.getUser().getId(), ApplicationContext.getUser().getToken(), history);
     }
 
-    public List<Order> getOrders(long userId, String sessionToken, boolean history) {
+
+    public List<OrderResponse> getOrders(long userId, String sessionToken, boolean history) {
         final OrdersRequestMessage ordersRequestMessage = new OrdersRequestMessage();
         OrderService orderService = retrofit.create(OrderService.class);
 
 
-        Log.i("1", "------------------------------------------------------------------");
+//        Log.i("1", "------------------------------------------------------------------");
         String idSession = ApplicationContext.getIdSession();
-        Log.i("1", "idSession" + idSession);
-        Log.i("1","encrypt(idSession)" + encrypt(idSession));
+        Log.i("1", "idSession " + idSession);
+        Log.i("1","encrypt(idSession) " + encrypt(idSession));
 
-        String userIdAES = String.valueOf(userId);
-        Log.i("1","userIdAES" + userIdAES);
-        Log.i("1","encrypt(userIdAES)" + encrypt(userIdAES));
+        String userIdAES = encryptAES(String.valueOf(userId));
+        Log.i("1","userIdAES " + userIdAES);
+        Log.i("1","encrypt(userIdAES) " + encrypt(userIdAES));
 
         String tokenAES = encryptAES(String.valueOf(sessionToken));
-        Log.i("1", "tokenAES" + tokenAES);
-        Log.i("1", "encrypt(tokenAES)" +encrypt(tokenAES));
+        Log.i("1", "tokenAES " + tokenAES);
+        Log.i("1", "encrypt(tokenAES) " +encrypt(tokenAES));
 
         String sequenceAES = encryptAES(ApplicationContext.getSequence());
-        Log.i("1","sequenceAES" + sequenceAES);
-        Log.i("1", "encrypt(sequenceAES)" + encrypt(sequenceAES));
+        Log.i("1","sequenceAES " + sequenceAES);
+        Log.i("1", "encrypt(sequenceAES) " + encrypt(sequenceAES));
 
         String action = "list-orders";
-        Log.i("1", "action" + action);
-        Log.i("1", "encrypt(action)" + encrypt(action));
+        Log.i("1", "action " + action);
+        Log.i("1", "encrypt(action) " + encrypt(action));
 
+        ordersRequestMessage.setIdSession(idSession);
+        ordersRequestMessage.setIdSessionMAC(encrypt(idSession));
+
+        ordersRequestMessage.setId(userIdAES);
+        ordersRequestMessage.setIdMAC(encrypt(userIdAES));
+
+        ordersRequestMessage.setToken(tokenAES);
+        ordersRequestMessage.setTokenMAC(encrypt(tokenAES));
+
+        ordersRequestMessage.setSequence(sequenceAES);
+        ordersRequestMessage.setSequenceMAC(encrypt(sequenceAES));
+
+        ordersRequestMessage.setAction(action);
+        ordersRequestMessage.setAction_MAC(encrypt(action));
 
         Call<OrdersResponseMessage> call;
 
@@ -342,12 +354,29 @@ public class MessageService {
         }
 
         if (!isResponseSuccessful(response)) {
+            try {
+                Log.i("1",response.errorBody().string().toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             return null;
         }
 
         OrdersResponseMessage ordersResponseMessage = response.body();
 
-        return ordersResponseMessage.getOrderList();
+        if(chekcMAC_MAC(ordersResponseMessage.getKeyMACMAC(),ordersResponseMessage.getKeyMAC())){
+
+            String KeyMAC_real = FirstStep2.decrypt(ordersResponseMessage.getKeyMAC(), ApplicationContext.getKeyAES());
+            ApplicationContext.setKeyMAC(KeyMAC_real);
+
+
+            return ordersResponseMessage.getOrders();
+
+        }
+
+
+
+        return null;
     }
 
     public void completeOrder(final Order order) {

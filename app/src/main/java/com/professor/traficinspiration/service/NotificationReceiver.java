@@ -14,6 +14,7 @@ import com.professor.traficinspiration.ApplicationContext;
 import com.professor.traficinspiration.R;
 import com.professor.traficinspiration.activity.MainActivity;
 import com.professor.traficinspiration.model.Order;
+import com.professor.traficinspiration.model.messages.OrderResponse;
 
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         // проверить наличие незавершенных задач
         // есть - создать уведомление
         // нет - ничего не делать
-        List<Order> orderList = ApplicationContext.getMessageService().getOrders(userId, sessionToken, false);
+        List<OrderResponse> orderList = ApplicationContext.getMessageService().getOrders(userId, sessionToken, false);
 
         String notificatorText = "У Вас есть незавершенные задачи";
 

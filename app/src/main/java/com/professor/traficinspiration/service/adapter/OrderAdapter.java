@@ -3,6 +3,7 @@ package com.professor.traficinspiration.service.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.professor.traficinspiration.ApplicationContext;
 import com.professor.traficinspiration.R;
 import com.professor.traficinspiration.model.Order;
 import com.squareup.picasso.Picasso;
@@ -55,15 +57,24 @@ public class OrderAdapter extends ArrayAdapter<Order> {
 
         ImageView orderIcon = (ImageView) row.findViewById(R.id.list_item_pagination_icon);
         Drawable savedImage = item.getIconImage();
+        try {
 
-        if (savedImage == null) {
-            Picasso.with(context)
-                    .load(item.getImageUrl())
-                    .into(orderIcon);
 
-            item.setIconImage(orderIcon.getDrawable());
-        } else {
-            orderIcon.setImageDrawable(savedImage);
+            if (savedImage == null) {
+                Picasso.with(context)
+                        .load(item.getImageUrl())
+                        .into(orderIcon);
+
+                item.setIconImage(orderIcon.getDrawable());
+            } else {
+                orderIcon.setImageDrawable(savedImage);
+            }
+        }
+        catch (Exception e){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                savedImage = ApplicationContext.getContext().getDrawable(R.drawable.main_new);
+                orderIcon.setImageDrawable(savedImage);
+            }
         }
 
 

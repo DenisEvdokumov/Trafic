@@ -1,6 +1,7 @@
 package com.professor.traficinspiration.activity;
 
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -60,15 +61,24 @@ public class OrderDetails extends AppCompatActivity implements View.OnClickListe
         // set order icon
         ImageView orderIcon = (ImageView) this.findViewById(R.id.order_icon);
         Drawable savedImage = order.getIconImage();
+        try {
 
-        if (savedImage == null) {
-            Picasso.with(this)
-                    .load(order.getImageUrl())
-                    .into(orderIcon);
 
-            order.setIconImage(orderIcon.getDrawable());
-        } else {
-            orderIcon.setImageDrawable(savedImage);
+            if (savedImage == null) {
+                Picasso.with(this)
+                        .load(order.getImageUrl())
+                        .into(orderIcon);
+
+                order.setIconImage(orderIcon.getDrawable());
+            } else {
+                orderIcon.setImageDrawable(savedImage);
+            }
+        }
+        catch (Exception e){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                savedImage = ApplicationContext.getContext().getDrawable(R.drawable.main_new);
+                orderIcon.setImageDrawable(savedImage);
+            }
         }
 
         taskList = order.getTaskList();

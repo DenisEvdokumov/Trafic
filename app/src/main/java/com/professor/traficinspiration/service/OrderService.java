@@ -17,9 +17,9 @@ public interface OrderService {
     @POST("clientorders")
     Call<OrdersResponseMessage> getOrders(@Body OrdersRequestMessage ordersRequestMessage );
 
-    @POST("completedorders")
+    @POST("clientorders")
     Call<OrdersResponseMessage> getOrdersHistory(@Body OrdersRequestMessage ordersRequestMessage);
 
-    @POST("completedorders")
+    @POST("clientorders")
     Call<CompleteOrderResponseMessage> completeOrder(@Body CompleteOrderRequestMessage completeOrderRequestMessage);
 }

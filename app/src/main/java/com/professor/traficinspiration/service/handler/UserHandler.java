@@ -17,8 +17,8 @@ import com.squareup.picasso.Picasso;
 
 public class UserHandler {
 
-    public static boolean handle(User user) {
-        if (user == null) {
+    public static boolean handle(User userServer) {
+        if (userServer == null) {
             Intent toSignInActivity = new Intent(ApplicationContext.getContext(), SignInActivity.class);
             ApplicationContext.getContext().startActivity(toSignInActivity);
 //            MyAlertDialogFragment.createAndShowErrorDialog("Сервер не отвечает. Проверьте соединение с интернетом");
@@ -30,6 +30,13 @@ public class UserHandler {
 
             return false;
         }
+        User user = ApplicationContext.getUser();
+
+        user.setId(userServer.getId());
+        user.setBalance(userServer.getBalance());
+        user.setToken(userServer.getToken());
+        user.setOrdersCompleted(userServer.getOrdersCompleted());
+        user.setReferralsCount(userServer.getReferralsCount());
 
         // отобразить информацию о пользователе
         ImageView userPhotoView = (ImageView) ApplicationContext.getContext().findViewById(R.id.avatar);
