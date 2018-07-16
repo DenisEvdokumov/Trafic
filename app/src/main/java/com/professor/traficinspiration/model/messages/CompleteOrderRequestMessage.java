@@ -4,7 +4,7 @@ package com.professor.traficinspiration.model.messages;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CompleteOrderRequestMessage extends RequestMessage{
+public class CompleteOrderRequestMessage {
     @SerializedName("idSession")
     @Expose
     private String idSession;

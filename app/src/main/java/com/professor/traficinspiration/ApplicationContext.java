@@ -230,12 +230,17 @@ public class ApplicationContext {
     }
 
     public static String getSequence() {
-        int oldSequense = Integer.parseInt(sequence) + 1;
-        sequence = String.valueOf(oldSequense);
+
         return sequence;
     }
 
     public static void setSequence(String sequence) {
         ApplicationContext.sequence = sequence;
+    }
+
+    public static void sequensePlus() {
+        int oldSequense = Integer.parseInt(sequence) + 1;
+        sequence = String.valueOf(oldSequense);
+
     }
 }

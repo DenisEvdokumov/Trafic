@@ -131,7 +131,7 @@ public class MessageService {
 
             return null;
         }
-
+        ApplicationContext.sequensePlus();
         return response2.body();
 
     }
@@ -237,12 +237,16 @@ public class MessageService {
 
         User user = getUserForResponse(userResponseMessage);
 //        ApplicationContext.setUser(user);
+
+
+
+
         if(chekcMAC_MAC(userResponseMessage.getKeyMACMAC(),userResponseMessage.getKeyMAC())){
 
             String KeyMAC_real = FirstStep2.decrypt(userResponseMessage.getKeyMAC(), ApplicationContext.getKeyAES());
             ApplicationContext.setKeyMAC(KeyMAC_real);
 
-
+            ApplicationContext.sequensePlus();
             return user;
 
         }
@@ -374,7 +378,7 @@ public class MessageService {
             String KeyMAC_real = FirstStep2.decrypt(ordersResponseMessage.getKeyMAC(), ApplicationContext.getKeyAES());
             ApplicationContext.setKeyMAC(KeyMAC_real);
 
-
+            ApplicationContext.sequensePlus();
             return ordersResponseMessage.getOrders();
 
         }
@@ -462,6 +466,7 @@ public class MessageService {
         }
 
         if (!isResponseSuccessful(response)) {
+
             return;
         }
 
@@ -479,6 +484,7 @@ public class MessageService {
 
 
         ApplicationContext.getDatabaseManager().writeOrderToDB(order);
+        ApplicationContext.sequensePlus();
 
     }
 
@@ -603,7 +609,12 @@ public class MessageService {
 
         if (response == null || !response.isSuccessful()) {
             if (getContext() != null) {
-                Toast.makeText(getContext(), "Сервер не отвечает. Проверьте соединение с интернетом", Toast.LENGTH_SHORT).show();
+                Log.i("1","--------------------------------------------------------------------");
+                try {
+                    Log.i("1",response.errorBody().string().toString());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 //            MyAlertDialogFragment.createAndShowErrorDialog("Сервер не отвечает. Проверьте соединение с интернетом");
             return false;
